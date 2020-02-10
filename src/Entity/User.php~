@@ -53,9 +53,21 @@ class User
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Trip", mappedBy="user", orphanRemoval=true)
+     */
+    private $organizer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\School", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $school;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
+        $this->organizer = new ArrayCollection();
     }
 
 
@@ -160,6 +172,49 @@ class User
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trip[]
+     */
+    public function getOrganizer(): Collection
+    {
+        return $this->organizer;
+    }
+
+    public function addOrganizer(Trip $organizer): self
+    {
+        if (!$this->organizer->contains($organizer)) {
+            $this->organizer[] = $organizer;
+            $organizer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganizer(Trip $organizer): self
+    {
+        if ($this->organizer->contains($organizer)) {
+            $this->organizer->removeElement($organizer);
+            // set the owning side to null (unless already changed)
+            if ($organizer->getUser() === $this) {
+                $organizer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): self
+    {
+        $this->school = $school;
 
         return $this;
     }
