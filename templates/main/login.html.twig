@@ -1,3 +1,5 @@
+{% extends'layout.html.twig' %}
+
 {% block title %}CONNEXION{% endblock %}
 
 
@@ -8,7 +10,7 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('login') }}" method="post">
+    <form action="{{ path('home') }}" method="post">
 
         <label for="email">email:</label>
         <input type="text" id="email" name="_username" />
@@ -21,7 +23,7 @@
             is redirected to on success (more details below)
             <input type="hidden" name="_target_path" value="/account"/>
         #}
-{#        <input type="hidden" name="_target_path" value="{{ url('idea_list') }}"/>#}
+{#       <input type="hidden" name="_target_path" value="{{ url('idea_list') }}"/>#}
 
         <button type="submit">Connexion</button>
     </form>
