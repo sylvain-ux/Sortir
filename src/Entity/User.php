@@ -234,6 +234,18 @@ class User implements userInterface
         return $this-> roles;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function setRoles(array $roles): self
+    {
+        $this -> roles = $roles;
+        return $this;
+
+    }
+
+
+
 
     /**
      * @inheritDoc
