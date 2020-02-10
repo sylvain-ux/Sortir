@@ -6,14 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-/**
- * @Route("/main",name="main_")
- *
- */
 
-
-class MainController extends Controller
+class MainController extends AbstractController
 {
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function index()
+    {
+        return $this->render('main/index.html.twig', [
+            'controller_name' => 'MainController',
+        ]);
+    }
+
+
     /**
      * @Route("/login", name="login")
      */
@@ -31,6 +38,8 @@ class MainController extends Controller
         ]);
 
     }
+
+
 
 
 }
