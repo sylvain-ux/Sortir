@@ -1,0 +1,106 @@
+body{
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+h1,h2,h3{
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size:72px;
+    font-weight: 500;
+}
+/*h1,h2,h3{text-shadow: 1px 1px 1px  rgba(0,0,0,0.3)}*/
+h2{font-size:40px;}
+h3{font-size:32px;}
+.black{color:#000}
+.white{color:#fff;}
+.blue{color:#bae1ff}
+.green{color:#baffc9}
+.orange{color:#ffdfba}
+.yellow{color:#ffffba}
+.bg_white{background-color:rgba(255,255,255,0.7)}
+.bg_blue{background-color:#bae1ff}
+.bg_green{background-color:#baffc9}
+.bg_orange{background-color:#ffdfba}
+.bg_yellow{background-color:#ffffba}
+
+.navbar-brand{font-family: 'Darker Grotesque', sans-serif;color:#000;font-size:36px;font-weight: 700;transition:all 0.3s ease}
+.navbar-brand:hover{color:#fff}
+.navbar-brand img{max-width:70px}
+.main{padding-bottom:150px}
+
+.alerts-container{position:fixed;bottom:50px;right:15px;max-width:40%;}
+.alerts-container .alert{border-radius:0;}
+.alerts-container .alert .alert-danger{background:rgba(248,215,218,0.7)!important}
+.alerts-container .alert .alert-success{background:rgba(212,237,218,0.7)!important}
+
+
+/*index*/
+.main_index .col{transition:all 0.4s ease}
+.main_index .col:hover{background-color: rgba(0, 0, 255, 0.5);}
+.main_index .col .col_content{position:absolute;top:50%;left:50%;transform: translateY(-50%) translateX(-50%);text-align: center}
+.main_index .col .col_content h1,.main_index .col .col_content h2{font-size:50px}
+.main_index .col .col_content p{font-size:15px}
+.col_home{background:url(bg/home.jpg) no-repeat center center / cover}
+.col_bio{background:url(bg/bio.jpg) no-repeat center center / cover}
+.col_ceremonie{background:url(bg/ceremonie.jpeg) no-repeat center center / cover}
+.col_profil{background:url(bg/profil.jpg) no-repeat right / cover}
+.col_file{background:url(bg/file2.jpg) no-repeat left / cover}
+
+/*list*/
+.file_container.sizer{width:33%;}
+.file_container.db-sizer{width:66%;}
+.file_container a{display:block;box-shadow: 0 0 10px 0 rgba(0,0,0,0.1)}
+.file_container > a{position:relative}
+.file_container > a .hover{position: absolute;top:0;left:0;width:0%;height:0%;background:rgba(0,0,0,0.6);transition:all 0.3s ease;overflow: hidden}
+.file_container > a:hover .hover{height:100%;width:100%}
+.file_container > a .hover i{position:absolute;color:#fff;top:50%;left:50%;transform: translateY(-50%) translateX(-50%);height:64px;width:64px;background:url("plume.png") no-repeat center;border:1px solid #fff;border-radius:50%;background:rgba(255,255,255,0.3)}
+
+/*profil*/
+.main.about{min-height:100vh;background:url(bg/home.jpg) no-repeat center center / cover}
+.main.register{min-height:100vh;background:url(bg/register.jpg) no-repeat center center / cover}
+.main.login{min-height:100vh;background:url(bg/login.jpg) no-repeat center center / cover}
+.main.profil{min-height:100vh;background:url(bg/profil.jpg) no-repeat center center / cover}
+.main.bio{min-height:100vh;background:url(bg/bio.jpg) no-repeat center center / cover}
+.main.ceremonie{min-height:100vh;background:url(bg/ceremonie.jpeg) no-repeat center center / cover}
+.main.file{min-height:100vh;background:url(bg/file2.jpg) no-repeat center center / cover}
+.main .form_container{padding:25px;margin-top:10%;background:rgba(255,255,255,0.7)}
+.main.file .form_container{margin-top:0;padding-top:50px}
+fieldset{background:rgba(255,255,255,0.7);margin:20px 0}
+
+/*lien home*/
+.col_content h2:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    visibility: hidden;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: .25s linear;
+}
+.col_content h2:hover:before,
+.col_content h2:focus:before {
+    visibility: visible;
+    transform: scaleX(1);
+}
+
+
+
+@media (min-width: 1200px) {
+    .main_index{min-height:100vh}
+    .main_index .col{min-height:100vh;position:relative;}
+
+}
+
+@media (max-width: 1200px) {
+    .main_index{min-height:100vh}
+    .main_index .col{min-height:33vh;position:relative;}
+}
+@media (max-width: 768px) {
+    .main_index{min-height:100vh}
+    .main_index .col{min-height:33vh;position:relative;}
+}
