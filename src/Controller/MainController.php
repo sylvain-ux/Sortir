@@ -4,16 +4,33 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class MainController extends AbstractController
+/**
+ * @Route("/main",name="main_")
+ *
+ */
+
+
+class MainController extends Controller
 {
     /**
-     * @Route("/main", name="main")
+     * @Route("/login", name="login")
      */
-    public function index()
+    public function login(AuthenticationUtils $authenticationUtils)
     {
-        return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError(); // Est-ce qu'il y a eu des erreurs ?
+
+        // last name entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('main/login.html.twig', [
+            'last_username' => $lastUsername, // dernier username connecté
+            'error' => $error, // les erreurs de connexion
         ]);
+
     }
+
+
 }

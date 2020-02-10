@@ -5,14 +5,24 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+=======
+>>>>>>> 8d549f1b49a46d9fc0edf7740a6c972a4ca5233f
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+<<<<<<< HEAD
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
+=======
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this pseudo")
+ */
+class User implements userInterface
+
+>>>>>>> 8d549f1b49a46d9fc0edf7740a6c972a4ca5233f
 {
     /**
      * @ORM\Id()
@@ -228,9 +238,19 @@ class User implements UserInterface
      */
     public function getRoles()
     {
+<<<<<<< HEAD
         // TODO: Implement getRoles() method.
     }
 
+=======
+        if (empty($this->roles)){
+            $this->roles = ['ROLE_USER'];
+        }
+        return $this-> roles;
+    }
+
+
+>>>>>>> 8d549f1b49a46d9fc0edf7740a6c972a4ca5233f
     /**
      * @inheritDoc
      */
@@ -244,7 +264,11 @@ class User implements UserInterface
      */
     public function getUsername()
     {
+<<<<<<< HEAD
         // TODO: Implement getUsername() method.
+=======
+        return $this->email;
+>>>>>>> 8d549f1b49a46d9fc0edf7740a6c972a4ca5233f
     }
 
     /**
