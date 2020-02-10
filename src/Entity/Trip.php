@@ -58,6 +58,30 @@ class Trip
      */
     private $users;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="organizer")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\School", inversedBy="trip")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $school;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="trips")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $state;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TripLocation", inversedBy="trips")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $location;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -178,6 +202,54 @@ class Trip
             $this->users->removeElement($user);
             $user->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): self
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    public function getState(): ?State
+    {
+        return $this->state;
+    }
+
+    public function setState(?State $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getLocation(): ?TripLocation
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?TripLocation $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }
