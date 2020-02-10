@@ -5,11 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this pseudo")
  */
-class User
+class User implements userInterface
+
 {
     /**
      * @ORM\Id()
@@ -219,6 +222,40 @@ class User
         return $this;
     }
 
-   
 
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        if (empty($this->roles)){
+            $this->roles = ['ROLE_USER'];
+        }
+        return $this-> roles;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }
