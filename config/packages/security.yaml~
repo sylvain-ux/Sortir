@@ -15,12 +15,12 @@ security:
       provider: user_provider
       anonymous: ~
       form-login:
-        login_path: login
-        check_path: login
+        login_path: main_login
+        check_path: main_login
       logout_on_user_change: true
       logout:
         path: logout
-        target: login
+        target: main_login
 
 
       # activate different ways to authenticate
@@ -29,17 +29,16 @@ security:
       # https://symfony.com/doc/current/security/impersonating_user.html
       switch_user: true
 
+  role_hierarchy:
+    ROLE_ADMIN:       ROLE_USER
+    #ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+      #- { path: ^/idea, roles: ROLE_USER }
+      - { path: ^/admin, roles: ROLE_ADMIN }
+      # - { path: ^/profile, roles: ROLE_USER }
   encoders:
     App\Entity\User:
       algorithm: argon2i
-
-  role_hierarchy:
-    ROLE_ADMIN:       ROLE_USER
-  #       ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-
-  # Easy way to control access for large sections of your site
-  # Note: Only the *first* access control that matches will be used
-  access_control:
-   # - { path: ^/admin, roles: ROLE_ADMIN }
-   # - { path: ^/, roles: ROLE_USER }
