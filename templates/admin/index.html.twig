@@ -26,6 +26,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="school-tab" data-toggle="tab" href="#schools" role="tab" aria-controls="schools" aria-selected="false">Écoles</a>
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -37,12 +38,14 @@
             <div class="col-12">
                 <div class="border border-dark p-5">
                     <div class="tab-content" id="myTabContent">
+
                         {{ include('admin/inc/tab-user.html.twig') }}
                         {{ include('admin/inc/tab-trip.html.twig') }}
                         {{ include('admin/inc/tab-city.html.twig') }}
                         {{ include('admin/inc/tab-location.html.twig') }}
                         {{ include('admin/inc/tab-state.html.twig') }}
                         {{ include('admin/inc/tab-school.html.twig') }}
+
                     </div>
 
                 </div>

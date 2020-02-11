@@ -93,7 +93,10 @@ class ComposerStaticInit0c14fce3b58683ff872f41a4ce567310
         ),
         'E' => 
         array (
+<<<<<<< HEAD
             'Egulias\\EmailValidator\\' => 23,
+=======
+>>>>>>> 16c175b9cfcb88f6323ea8d66ea3074db83b5d5c
             'EasyCorp\\EasyLog\\' => 17,
         ),
         'D' => 
@@ -360,10 +363,13 @@ class ComposerStaticInit0c14fce3b58683ff872f41a4ce567310
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+<<<<<<< HEAD
         'Egulias\\EmailValidator\\' => 
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator',
         ),
+=======
+>>>>>>> 16c175b9cfcb88f6323ea8d66ea3074db83b5d5c
         'EasyCorp\\EasyLog\\' => 
         array (
             0 => __DIR__ . '/..' . '/easycorp/easy-log-handler/src',

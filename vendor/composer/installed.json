@@ -1224,6 +1224,7 @@
         ]
     },
     {
+<<<<<<< HEAD
         "name": "egulias/email-validator",
         "version": "2.1.15",
         "version_normalized": "2.1.15.0",
@@ -1284,6 +1285,8 @@
         ]
     },
     {
+=======
+>>>>>>> 16c175b9cfcb88f6323ea8d66ea3074db83b5d5c
         "name": "jdorn/sql-formatter",
         "version": "v1.2.17",
         "version_normalized": "1.2.17.0",
@@ -2209,7 +2212,11 @@
                 "dev-master": "4.4-dev"
             }
         },
+<<<<<<< HEAD
         "installation-source": "dist",
+=======
+        "installation-source": "source",
+>>>>>>> 16c175b9cfcb88f6323ea8d66ea3074db83b5d5c
         "autoload": {
             "psr-4": {
                 "Symfony\\Bundle\\DebugBundle\\": ""
@@ -3648,7 +3655,11 @@
                 "dev-master": "4.4-dev"
             }
         },
+<<<<<<< HEAD
         "installation-source": "dist",
+=======
+        "installation-source": "source",
+>>>>>>> 16c175b9cfcb88f6323ea8d66ea3074db83b5d5c
         "autoload": {
             "psr-4": {
                 "Symfony\\Bridge\\Monolog\\": ""
@@ -5328,7 +5339,11 @@
                 "dev-master": "4.4-dev"
             }
         },
+<<<<<<< HEAD
         "installation-source": "dist",
+=======
+        "installation-source": "source",
+>>>>>>> 16c175b9cfcb88f6323ea8d66ea3074db83b5d5c
         "autoload": {
             "psr-4": {
                 "Symfony\\Bundle\\WebProfilerBundle\\": ""
