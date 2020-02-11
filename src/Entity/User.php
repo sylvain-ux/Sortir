@@ -66,6 +66,11 @@ class User implements UserInterface
      */
     private $school;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $roles = ['ROLE_USER'];
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
