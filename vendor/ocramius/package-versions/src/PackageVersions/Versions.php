@@ -102,6 +102,13 @@ final class Versions
   'twig/twig' => 'v3.0.1@28f856a4c57eeb24485916e8a68403f41a133616',
   'zendframework/zend-code' => '3.4.1@268040548f92c2bfcba164421c1add2ba43abaaa',
   'zendframework/zend-eventmanager' => '3.2.1@a5e2583a211f73604691586b8406ff7296a946dd',
+  'paragonie/random_compat' => '2.*@ad17de229df8d9b53bfad64ffca70bd042bd3ef9',
+  'symfony/polyfill-ctype' => '*@ad17de229df8d9b53bfad64ffca70bd042bd3ef9',
+  'symfony/polyfill-iconv' => '*@ad17de229df8d9b53bfad64ffca70bd042bd3ef9',
+  'symfony/polyfill-php71' => '*@ad17de229df8d9b53bfad64ffca70bd042bd3ef9',
+  'symfony/polyfill-php70' => '*@ad17de229df8d9b53bfad64ffca70bd042bd3ef9',
+  'symfony/polyfill-php56' => '*@ad17de229df8d9b53bfad64ffca70bd042bd3ef9',
+  '__root__' => 'dev-master@ad17de229df8d9b53bfad64ffca70bd042bd3ef9',
 );
 
     private function __construct()

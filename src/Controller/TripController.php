@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TripController extends AbstractController
 {
     /**
-     * @Route("/trip2", name="trip2_")
+     * @Route("/", name="home")
      */
     public function index()
     {
@@ -30,7 +30,7 @@ class TripController extends AbstractController
 
 
     /**
-     * @Route("/createtrip", name="createtrip_")
+     * @Route("/create", name="create")
      */
     public function createtrip(Request $request, EntityManagerInterface $entityManager)
     {
