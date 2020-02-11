@@ -37,7 +37,7 @@
        <button type="submit">Connexion</button>
 
 
-        {% if is granted('IS_AUTHENTICATED_REMEBERED') %}
+        {% if app.user %}
         <a href="{{ path('logout')}}">Deconnexion</a>
         {% endif %}
 
