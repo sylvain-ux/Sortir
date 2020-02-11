@@ -23,55 +23,73 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('actif',HiddenType::class, ['data' => 1])
-            ->add('name',TextType::class)
-            ->add('firstname',TextType::class)
-            ->add('school', EntityType::class,[
-                // looks for choices from this entity
-                'class' => School::class,
+            ->add('actif', HiddenType::class, ['data' => 1])
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'label' => 'Nom',
+                ]
+            )
+            ->add('firstname', TextType::class,
+                [
+                    'label' => 'Prénom',
+                ])
+            ->add(
+                'school',
+                EntityType::class,
+                [
+                    // looks for choices from this entity
+                    'class' => School::class,
 
-                // uses the User.username property as the visible option string
-                'choice_label' => 'name',
+                    // uses the User.username property as the visible option string
+                    'choice_label' => 'name',
 
-                // used to render a select box, check boxes or radios
+                    // used to render a select box, check boxes or radios
 
-                'multiple' => false,
-                'expanded' => false,
-            ])
-            ->add('phone',TextType::class)
+                    'multiple' => false,
+                    'expanded' => false,
+                    'label' => 'Ecole',
+                ]
+            )
+            ->add('phone', TextType::class,
+                [
+                    'label' => 'Téléphone',
+                ])
             ->add('email')
-
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
-        ;
+            ->add(
+                'plainPassword',
+                PasswordType::class,
+                [
+                    // instead of being set onto the object directly,
+                    // this is read and encoded in the controller
+                    'mapped' => false,
+                    'constraints' => [
+                        new NotBlank(
+                            [
+                                'message' => 'Please enter a password',
+                            ]
+                        ),
+                        new Length(
+                            [
+                                'min' => 6,
+                                'minMessage' => 'Your password should be at least {{ limit }} characters',
+                                // max length allowed by Symfony for security reasons
+                                'max' => 4096,
+                            ]
+                        ),
+                    ],
+                    'label' => 'Mot de passe',
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => User::class,
+            ]
+        );
     }
 }

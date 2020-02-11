@@ -3,52 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicon/') }}/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicon/') }}/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/favicon/') }}/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/favicon/') }}/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/favicon/') }}/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/favicon/') }}/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/favicon/') }}/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/favicon/') }}/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/') }}/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('assets/favicon/') }}/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/') }}/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon/') }}/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/') }}/favicon-16x16.png">
-    <link rel="manifest" href="{{ asset('assets/favicon/') }}/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{ asset('assets/favicon/') }}/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque|Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/sortir.css') }}">
     <script src="https://kit.fontawesome.com/96225b8db3.js" crossorigin="anonymous"></script>
-
-    <script src="{{ asset('assets/js/holder.min.js') }}"></script>
-
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/space10-community/conversational-form@1.0.1/dist/conversational-form.min.js" crossorigin></script>
-
-
-
-    <nav>
-        {% if app.user %} {#si je suis connecté#}
-            <a href="{{path('logout')  }}">Déconnexion</a>
-            <h1>Bienvenue {{ app.user.username }}</h1>
-
-        {% else %}
-            <a href="{{ path('login') }}">Connexion</a>
-            <a href="{{ path('app_register') }}">S'enregistrer</a>
-        {% endif %}
-    </nav>
-
-
-
-
-
-
-
 
 
 
@@ -57,10 +15,28 @@
 
 </head>
 <body>
+{{ include ('inc/navbar.html.twig') }}
+
+
+<div class="container">
 
 {% block body %}{% endblock %}
 
+</div>
+
+<div class="alerts-container">
+    {% for label, msgs in app.flashes %}
+        {% for msg in msgs %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
 
 
+<script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+{% block javascripts %}{% endblock %}
 </body>
 </html>
