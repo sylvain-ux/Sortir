@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\School;
+use App\Entity\Trip;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,6 +67,11 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private $school;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $roles = ['ROLE_USER'];
 
     public function __construct()
     {

@@ -1,8 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
+
+
     {{ form_start(registrationForm) }}
     {{ form_row(registrationForm.name) }}
     {{ form_row(registrationForm.firstname) }}
@@ -14,4 +16,6 @@
 
     <button class="btn">Register</button>
     {{ form_end(registrationForm) }}
+
+
 {% endblock %}
