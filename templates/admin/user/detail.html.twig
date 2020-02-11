@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Admin - Utilisateur {{ currentUser.id }}{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="border border-dark p-5">
+                    <h2 class="text-center">{{ currentUser.firstname }} {{ currentUser.name }}</h2>
+                    <table id="userTable" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>actif</th>
+                            <th>role</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ currentUser.id }}</td>
+                                <td>{{ currentUser.name }}</td>
+                                <td>{{ currentUser.firstname }}</td>
+                                <td>{{ currentUser.email }}</td>
+                                <td>{{ currentUser.actif }}</td>
+                                <td>
+                                    {% set roles = currentUser.getRoles() %}
+                                    {% for role in roles %}
+                                        {{ role }}
+                                    {% endfor %}
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

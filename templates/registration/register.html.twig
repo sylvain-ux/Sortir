@@ -1,17 +1,39 @@
-{% extends 'base.html.twig' %}
+{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+
+
+{% extends 'layout.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.name) }}
-    {{ form_row(registrationForm.firstname) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.school) }}
-    {{ form_row(registrationForm.phone) }}
-    {{ form_row(registrationForm.plainPassword) }}
-    {{ form_row(registrationForm.agreeTerms) }}
 
-    <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    {#<form id="register" cf-form>#}
+
+    <div class="container-fluid pt-5 mt-5">
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <div class="form_container">
+
+                    {{ form(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {#</form>#}
+
 {% endblock %}
+{#{% block javascripts %}#}
+
+{#<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/space10-community/conversational-form@1.0.1/dist/conversational-form.min.js" crossorigin></script>#}
+{#    <script>#}
+{#        this.cf = ConversationalForm.startTheConversation({#}
+{#            options: {#}
+{#                theme: 'blue',#}
+{#                submitCallback: this.submitCallback,#}
+{#                preventAutoFocus: true,#}
+{#            },#}
+{#            tags: this.formFields#}
+{#        });#}
+
+{#    </script>#}
+{#{% endblock %}#}

@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Trip;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -13,18 +16,20 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index()
+    public function index(EntityManagerInterface $entityManager)
     {
-        return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
-        ]);
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $tripRepository->findAll();
+
+        return $this->render('trip/index.html.twig', compact('allTrips'));
+
     }
 
 
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError(); // Est-ce qu'il y a eu des erreurs ?
@@ -32,10 +37,13 @@ class MainController extends AbstractController
         // last name entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('main/login.html.twig', [
-            'last_username' => $lastUsername, // dernier username connecté
-            'error' => $error, // les erreurs de connexion
-        ]);
+        return $this->render(
+            'main/login.html.twig',
+            [
+                'last_username' => $lastUsername, // dernier username connecté
+                'error' => $error, // les erreurs de connexion
+            ]
+        );
 
     }
 

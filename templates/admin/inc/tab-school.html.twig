@@ -1,0 +1,26 @@
+<div class="tab-pane fade show" id="schools" role="tabpanel" aria-labelledby="school-tab">
+    <h2 class="text-center">Écoles</h2>
+    <p class="text-center"><a class="btn btn-success" href="{{ path('admin_school_add') }}">Ajouter une école</a></p>
+    <table id="userTable" class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%  for school in allSchools %}
+            <tr>
+                <td>{{ school.id }}</td>
+                <td>{{ school.name }}</td>
+                <td>{{ school.latitude }}</td>
+                <td>{{ school.longitude }}</td>
+                <td><a href="{{ path('admin_school_update',{ 'id': school.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
