@@ -43,5 +43,5 @@ security:
       algorithm: argon2i
 
   access_control:
-  # - { path: ^/admin, roles: ROLE_ADMIN }
+   - { path: ^/admin, roles: ROLE_ADMIN }
 
