@@ -1,5 +1,4 @@
 security:
-
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
       user_provider:
@@ -67,6 +66,6 @@ security:
       App\Entity\User:
         algorithm: argon2i
 
-    access_control:
-    # - { path: ^/admin, roles: ROLE_ADMIN }
+  access_control:
+  # - { path: ^/admin, roles: ROLE_ADMIN }
 
