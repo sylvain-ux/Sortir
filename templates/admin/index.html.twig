@@ -1,7 +1,84 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Admin - Tableau de bord{% endblock %}
 
 {% block body %}
 
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 p-5">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="user-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Utilisateurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="trip-tab" data-toggle="tab" href="#trips" role="tab" aria-controls="trips" aria-selected="false">Sorties</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="border border-dark p-5">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
+                            <h2 class="text-center">Utilisateurs</h2>
+                            <p class="text-center"><a class="btn btn-success" href="{{ path('admin_user_add') }}">Ajouter un utilisateur</a></p>
+                            <table id="userTable" class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Email</th>
+                                    <th>actif</th>
+                                    <th>role</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%  for user in allUsers %}
+                                    <tr>
+                                        <td>{{ user.id }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.firstname }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.actif }}</td>
+                                        <td>
+                                            {% set roles = user.getRoles() %}
+                                            {% for role in roles %}
+                                                {{ role }}
+                                            {% endfor %}
+
+                                        </td>
+                                        <td><a href="{{ path('admin_user_detail',{ 'id': user.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab-tab">
+                            <h2 class="text-center">Sorties</h2>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#userTable').DataTable();
+        } );
+    </script>
 {% endblock %}

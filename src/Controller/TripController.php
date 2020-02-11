@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Trip;
+use App\Form\CityType;
 use App\Form\TripLocationType;
 use App\Form\TripType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TripController extends AbstractController
 {
     /**
-     * @Route("/trip2", name="trip2_")
+     * @Route("/", name="home")
      */
     public function index()
     {
@@ -31,25 +32,60 @@ class TripController extends AbstractController
 
 
     /**
-     * @Route("/createtrip", name="createtrip_")
+     * @Route("/create", name="create")
      */
     public function createtrip(Request $request, EntityManagerInterface $entityManager)
     {
 
+                $user = $this->getUser();
+                $tripForm = $this->createForm(TripType::class);
+
+                $tripForm->handleRequest($request);
+
+
+                if ($tripForm->isSubmitted() && $tripForm->isValid() ) {
+
+
+                    $entityManager->persist($tripForm);
+
+                    $entityManager->flush();
+                    $this->addFlash(
+                        'success',
+                        'Sortie ajoutée !'
+                    );
+
+                    return $this->redirectToRoute("home");
+                }
+
+
+                return $this->render(
+                    'trip/create.html.twig',
+                    [
+                        'tripFormView' => $tripForm->createView(),
+                    ]
+                );
+
+
+
+/*
         $trip = $this->getUser();
         $tripForm = $this->createForm(TripType::class, $trip);
 
-        $trip_location = $this->getUser();
-        $trip_LocationForm = $this->createForm(TripLocationType::class, $trip_location);
-
+//        $trip_location = $this->getUser();
+//        $trip_LocationForm = $this->createForm(TripLocationType::class, $trip_location);
+//
+//        $city = $this->getUser();
+//        $cityForm = $this->createForm(CityType::class, $city);
 
         $tripForm->handleRequest($request);
-        $trip_LocationForm->handleRequest($request);
+//        $trip_LocationForm->handleRequest($request);
+//        $cityForm->handleRequest($request);
 
-        if ($tripForm->isSubmitted() && $tripForm->isValid() &&$trip_LocationForm->isSubmitted() && $trip_LocationForm->isValid()) {
+        if ($tripForm->isSubmitted() && $tripForm->isValid() ) {
 
             $entityManager->persist($trip);
-            $entityManager->persist($trip_location);
+//            $entityManager->persist($trip_location);
+//            $entityManager->persist($city);
             $entityManager->flush();
             $this->addFlash(
                 'success',
@@ -63,9 +99,12 @@ class TripController extends AbstractController
         return $this->render(
             'trip/create.html.twig',
             [
-                'tripFormView' => $tripForm->createView(),'trip_LocationFormView' => $trip_LocationForm->createView(),
+                'tripFormView' => $tripForm->createView(),
+//                'trip_LocationFormView' => $trip_LocationForm->createView(),
+//                'cityFormView' => $cityForm->createView(),
             ]
-        );
+        );*/
 
     }
+
 }

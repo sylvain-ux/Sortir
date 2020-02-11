@@ -8,33 +8,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/sortir.css') }}">
     <script src="https://kit.fontawesome.com/96225b8db3.js" crossorigin="anonymous"></script>
 
-    <script src="{{ asset('assets/js/holder.min.js') }}"></script>
-
-
-
-
-
-
-    <nav>
-        {% if app.user %} {#si je suis connecté#}
-            <a href="{{path('logout')  }}">Déconnexion</a><br>
-            <a href="{{path('profil')  }}">Mon profil</a>
-            <h5>Bienvenue {{ app.user.name }}</h5>
-
-        {% else %}
-            <a href="{{ path('login') }}">Connexion</a>
-
-        {% endif %}
-    </nav>
-
-
-
-
-
-
-
-
-
 
 
     {% block stylesheets %}{% endblock %}
@@ -59,7 +32,6 @@
         {% endfor %}
     {% endfor %}
 </div>
-
 
 
 <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>

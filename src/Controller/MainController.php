@@ -45,27 +45,45 @@ class MainController extends AbstractController
 
 
     /**
-     * @route("/profil", name="profil")
+     * @route("profil/{id}, name="profil")
      */
-    public function profil (EntityManagerInterface $entityManager)
+    public function profil (Request $request, EntityManagerInterface $entityManager, $id=0)
     {
-      // récupérer le user qui est conenecté
+      // récupérer le user qui est connecté
 
         $user = $this->getUser();
 
-        // créer un formulaire User
+//        $userRepository = $entityManager->getRepository(User::class);
+//        if ($id) {
+//            $user = $userRepository->find($id);
+//        } else {
+//            $user = new User();
+//        }
+
+        // créer un formulaire Usertype et y ajouter le User
+        $userProfil = $this->createForm(UserType::class,$user);
+        $userProfil->handleRequest($request);
+
+        if ($userProfil->isSubmitted() && $userProfil->isValid()) {
+
+            $userProfil->persist($user);
+            $userProfil->flush();
+
+//            $userId = $user->getId();
+//
+//            $this->addFlash('success', 'utilisateur ajouté !');
+
+//            return $this->redirectToRoute('admin_home');
+        }
 
 
-        // y ajouter le $user ds le formulaire
+        return $this->render('main/profil.html.twig', ['userFormView' => $userProfil->createView()]);
 
 
+// envoyer le formulaire dans le template
+// si le formulaire est soumis il persister et flusher
 
-        // envoyer le formulaire dans le template
-
-
-        // si le formulaire est soumis il persister et flusher
-
-        return $this->render('main/profil.html.twig', compact('user'));
+//        return $this->render('main/profil.html.twig', compact('user'));
     }
 
 

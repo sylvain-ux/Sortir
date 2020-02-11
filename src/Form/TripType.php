@@ -52,8 +52,9 @@ class TripType extends AbstractType
 //            ->add('state')
 //            ->add('location')
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-            ->add('send', SubmitType::class, ['label' => 'Publier la sortie'])
-            ->add('cancel', SubmitType::class, ['label' => 'Annuler']);
+//            ->add('send', SubmitType::class, ['label' => 'Publier la sortie'])
+//            ->add('cancel', SubmitType::class, ['label' => 'Annuler'])
+;
     }
 
     public function configureOptions(OptionsResolver $resolver)
