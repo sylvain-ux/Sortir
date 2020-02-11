@@ -10,7 +10,11 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
+
+<h1 class="mt-5">Connexion</h1>
+
     <form action="{{ path('login') }}" method="post">
+
         <div>
             <label for="email">Email </label>
             <input type="text" id="email" name="_username"/>

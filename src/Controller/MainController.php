@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,9 +46,9 @@ class MainController extends AbstractController
 
 
     /**
-     * @route("profil/{id}, name="profil")
+     * @route("profil", name="profil")
      */
-    public function profil (Request $request, EntityManagerInterface $entityManager, $id=0)
+    public function profil (Request $request, EntityManagerInterface $entityManager)
     {
       // récupérer le user qui est connecté
 
@@ -64,6 +65,7 @@ class MainController extends AbstractController
         $userProfil = $this->createForm(UserType::class,$user);
         $userProfil->handleRequest($request);
 
+        // traitement après soumission du form
         if ($userProfil->isSubmitted() && $userProfil->isValid()) {
 
             $userProfil->persist($user);
@@ -71,9 +73,9 @@ class MainController extends AbstractController
 
 //            $userId = $user->getId();
 //
-//            $this->addFlash('success', 'utilisateur ajouté !');
+            $this->addFlash('success', 'profil modifié !');
 
-//            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('home');
         }
 
 
@@ -85,14 +87,6 @@ class MainController extends AbstractController
 
 //        return $this->render('main/profil.html.twig', compact('user'));
     }
-
-
-
-
-
-
-
-
 
 
 
