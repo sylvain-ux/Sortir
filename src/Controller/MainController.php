@@ -7,9 +7,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
-
 class MainController extends AbstractController
 {
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function index()
+    {
+        return $this->render('main/index.html.twig', [
+            'controller_name' => 'MainController',
+        ]);
+    }
+
+
     /**
      * @Route("/login", name="login")
      */
@@ -26,15 +37,6 @@ class MainController extends AbstractController
             'error' => $error, // les erreurs de connexion
         ]);
 
-    }
-
-
-    /**
-     * @Route("/", name="home")
-     */
-    public function home()
-    {
-        return $this->render('main/home.html.twig');
     }
 
 
