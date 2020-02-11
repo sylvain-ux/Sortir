@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-
-    <meta name="msapplication-TileImage" content="{{ asset('assets/favicon/') }}/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque|Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/sortir.css') }}">
@@ -19,8 +16,24 @@
 
 </head>
 <body>
-{{ include('inc/navbar.html.twig') }}
+{{ include ('inc/navbar.html.twig') }}
+
+
+<div class="container">
+
 {% block body %}{% endblock %}
+
+</div>
+
+<div class="alerts-container">
+    {% for label, msgs in app.flashes %}
+        {% for msg in msgs %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
 
 
 <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>

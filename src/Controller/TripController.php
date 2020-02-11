@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Trip;
+use App\Form\TripLocationType;
 use App\Form\TripType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,10 +39,31 @@ class TripController extends AbstractController
         $trip = $this->getUser();
         $tripForm = $this->createForm(TripType::class, $trip);
 
+        $trip_location = $this->getUser();
+        $trip_LocationForm = $this->createForm(TripLocationType::class, $trip_location);
+
+
+        $tripForm->handleRequest($request);
+        $trip_LocationForm->handleRequest($request);
+
+        if ($tripForm->isSubmitted() && $tripForm->isValid() &&$trip_LocationForm->isSubmitted() && $trip_LocationForm->isValid()) {
+
+            $entityManager->persist($trip);
+            $entityManager->persist($trip_location);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Sortie ajoutée !'
+            );
+
+            return $this->redirectToRoute("home");
+        }
+
+
         return $this->render(
             'trip/create.html.twig',
             [
-                'tripFormView' => $tripForm->createView(),
+                'tripFormView' => $tripForm->createView(),'trip_LocationFormView' => $trip_LocationForm->createView(),
             ]
         );
 

@@ -46,7 +46,7 @@ class TripType extends AbstractType
                 ]
             )
 
-//            ->add('users')
+
 //            ->add('user')
 //            ->add('school')
 //            ->add('state')

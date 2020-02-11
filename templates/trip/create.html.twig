@@ -35,7 +35,10 @@
     {{ form_label(tripFormView.info) }}
     {{ form_widget(tripFormView.info) }}
     {{ form_errors(tripFormView.info) }}
-   
+
     <br>
     {{ form_end(tripFormView) }}
+
+    {{ form(trip_LocationFormView) }}
+
 {% endblock %}
