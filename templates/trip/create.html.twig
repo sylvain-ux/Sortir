@@ -39,6 +39,17 @@
     {{ form_widget(tripFormView.info) }}
     {{ form_errors(tripFormView.info) }}
     <br>
+    {{ form_label(tripFormView.school) }}
+    {{ form_widget(tripFormView.school) }}
+    {{ form_errors(tripFormView.school) }}
+    <br>
+
+    <br>
+    {{ form_label(tripFormView.location) }}
+    {{ form_widget(tripFormView.location) }}
+    {{ form_errors(tripFormView.location) }}
+    <a href="">Ajouter un nouveau lieu</a>
+    <br>
 {#    {{ form_label(cityFormView.name) }}#}
 {#    {{ form_widget(cityFormView.name) }}#}
 {#    {{ form_errors(cityFormView.name) }}#}
@@ -64,7 +75,6 @@
 {#    {{ form_errors(trip_LocationFormView.longitude) }}#}
 {#    <br>#}
 {#    {{ form_end(trip_LocationFormView) }}#}
-    {{ form_end(tripFormView) }}
 {#    {{ form_end(cityFormView) }}#}
-
+    {{ form_end(tripFormView) }}
 {% endblock %}
