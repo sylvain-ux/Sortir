@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +42,31 @@ class MainController extends AbstractController
 
     }
 
+
+
+    /**
+     * @route("/profil", name="profil")
+     */
+    public function profil (EntityManagerInterface $entityManager)
+    {
+      // récupérer le user qui est conenecté
+
+        $user = $this->getUser();
+
+        // créer un formulaire User
+
+
+        // y ajouter le $user ds le formulaire
+
+
+
+        // envoyer le formulaire dans le template
+
+
+        // si le formulaire est soumis il persister et flusher
+
+        return $this->render('main/profil.html.twig', compact('user'));
+    }
 
 
 

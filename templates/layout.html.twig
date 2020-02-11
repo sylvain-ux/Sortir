@@ -17,8 +17,9 @@
 
     <nav>
         {% if app.user %} {#si je suis connecté#}
-            <a href="{{path('logout')  }}">Déconnexion</a>
-            <h1>Bienvenue {{ app.user.name }}</h1>
+            <a href="{{path('logout')  }}">Déconnexion</a><br>
+            <a href="{{path('profil')  }}">Mon profil</a>
+            <h5>Bienvenue {{ app.user.name }}</h5>
 
         {% else %}
             <a href="{{ path('login') }}">Connexion</a>
