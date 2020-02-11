@@ -34,8 +34,19 @@
             <input type="hidden" name="_target_path" value="/account"/>
         #}
        <input type="hidden" name="_target_path" value="{{ url('home') }}"/>
+       <button type="submit">Connexion</button>
 
-        <button type="submit">Connexion</button>
+
+        {% if is granted('IS_AUTHENTICATED_REMEBERED') %}
+        <a href="{{ path('logout')}}">Deconnexion</a>
+        {% endif %}
+
+
+
+
+
+
+
     </form>
 
 {% endblock %}

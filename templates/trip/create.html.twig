@@ -4,9 +4,38 @@
 
 {% block body %}
 
-    <h1>Profil</h1>
+    <h1>Créer une sortie</h1>
 
-    {{ form (tripFormView) }}
-
-
+    {{ form_start(tripFormView) }}
+    <br>
+    {{ form_label(tripFormView.name) }}
+    {{ form_widget(tripFormView.name) }}
+    {{ form_errors(tripFormView.name) }}
+    <br>
+    {{ form_label(tripFormView.dateTimeStart) }}
+    {{ form_widget(tripFormView.dateTimeStart) }}
+    {{ form_errors(tripFormView.dateTimeStart) }}
+    <br>
+    {{ form_label(tripFormView.registDeadline) }}
+    {{ form_widget(tripFormView.registDeadline) }}
+    {{ form_errors(tripFormView.registDeadline) }}
+    <br>
+    {{ form_label(tripFormView.nbRegistMax) }}
+    {{ form_widget(tripFormView.nbRegistMax) }}
+    {{ form_errors(tripFormView.nbRegistMax) }}
+    <br>
+    {{ form_label(tripFormView.nbRegistMin) }}
+    {{ form_widget(tripFormView.nbRegistMin) }}
+    {{ form_errors(tripFormView.nbRegistMin) }}
+    <br>
+    {{ form_label(tripFormView.duration) }}
+    {{ form_widget(tripFormView.duration) }}
+    {{ form_errors(tripFormView.duration) }}
+    <br>
+    {{ form_label(tripFormView.info) }}
+    {{ form_widget(tripFormView.info) }}
+    {{ form_errors(tripFormView.info) }}
+   
+    <br>
+    {{ form_end(tripFormView) }}
 {% endblock %}
