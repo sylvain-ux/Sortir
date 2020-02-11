@@ -35,11 +35,11 @@
     <nav>
         {% if app.user %} {#si je suis connecté#}
             <a href="{{path('logout')  }}">Déconnexion</a>
-            <h1>Bienvenue {{ app.user.username }}</h1>
+            <h1>Bienvenue {{ app.user.name }}</h1>
 
         {% else %}
-            <a href="{{ path('main_login') }}">Connexion</a>
-            <a href="{{ path('app_register') }}">S'enregistrer</a>
+            <a href="{{ path('login') }}">Connexion</a>
+
         {% endif %}
     </nav>
 

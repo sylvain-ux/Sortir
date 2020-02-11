@@ -33,20 +33,34 @@
             is redirected to on success (more details below)
             <input type="hidden" name="_target_path" value="/account"/>
         #}
-       <input type="hidden" name="_target_path" value="{{ url('home') }}"/>
-       <button type="submit">Connexion</button>
+       <input type="hidden" name="_target_path" value="{{ path('home') }}"/>
 
 
-        {% if is granted('IS_AUTHENTICATED_REMEBERED') %}
-        <a href="{{ path('logout')}}">Deconnexion</a>
-        {% endif %}
+{#        <input type="hidden" name="_target_path" value="{{ url('home') }}"/>#}
 
 
-
-
-
-
-
+       <button type="submit">J'me connecte</button>
     </form>
+{#<nav>#}
+{#    <ul>#}
+{#        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+{#        <li>#}
+{#            <a href="{{ path('logout')}}">Deconnexion</a>#}
+{#        </li>#}
+{#        {% else %}#}
+{#        <li>#}
+{#            <a href="{{ path('login')}}">Se connecter</a>#}
+{#        </li>#}
+{#        {% endif %}#}
+{#    </ul>#}
+
+{#</nav>#}
+
+
+
+
+
+
+
 
 {% endblock %}
