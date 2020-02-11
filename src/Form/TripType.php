@@ -2,10 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\School;
 use App\Entity\Trip;
+use App\Entity\TripLocation;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -45,15 +49,17 @@ class TripType extends AbstractType
                     'attr' => array('placeholder' => '...'),
                 ]
             )
+            ->add('school', EntityType::class, ['class' => School::class, 'choice_label' => 'name'])
+            ->add('location', EntityType::class, ['class' => TripLocation::class, 'choice_label' => 'name'])
 
 
-//            ->add('user')
-//            ->add('school')
-//            ->add('state')
-//            ->add('location')
+//            ->add('user',HiddenType::class)
+//            ->add('state', HiddenType::class, ['data' => 1])
+
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-            ->add('send', SubmitType::class, ['label' => 'Publier la sortie'])
-            ->add('cancel', SubmitType::class, ['label' => 'Annuler']);
+//            ->add('send', SubmitType::class, ['label' => 'Publier la sortie'])
+//            ->add('cancel', SubmitType::class, ['label' => 'Annuler'])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
