@@ -1,20 +1,89 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
 
-{% block title %}Hello TripController!{% endblock %}
+{#{% block title %}Hello TripController!{% endblock %}#}
+
+{#{% block body %}#}
+{#<style>#}
+{#    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
+{#    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
+{#</style>#}
+
+{#<div class="example-wrapper">#}
+{#    <h1>Hello {{ controller_name }}! ✅</h1>#}
+
+{#    This friendly message is coming from:#}
+{#    <ul>#}
+{#        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Sortir/src/Controller/TripController.php'|file_link(0) }}">src/Controller/TripController.php</a></code></li>#}
+{#        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Sortir/templates/trip/index.html.twig'|file_link(0) }}">templates/trip/index.html.twig</a></code></li>#}
+{#    </ul>#}
+{#</div>#}
+{#{% endblock %}#}
+
+{% extends 'layout.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+    <div class="example-wrapper">
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Sortir/src/Controller/TripController.php'|file_link(0) }}">src/Controller/TripController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Sortir/templates/trip/index.html.twig'|file_link(0) }}">templates/trip/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="border border-dark p-5">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
+                            <h2 class="text-center">Liste des sorties</h2>
+                            <table id="userTable" class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nom de la sortie</th>
+                                    <th>Date de la sortie</th>
+                                    <th>Clôture</th>
+                                    <th>Inscrits/Places</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for trip in allTrips %}
+                                    <tr>
+                                        <td>{{ trip.id }}</td>
+                                        <td>{{ trip.name }}</td>
+                                        <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
+                                        <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
+                                        <td>{{ trip.nbRegistMax }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <p class="text-center"><a class="btn btn-success" href="{{ path('trip_create') }}">Créer une
+                                    sortie</a></p>
+
+                        </div>
+
+                        <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab-tab">
+                            <h2 class="text-center">Sorties</h2>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 {% endblock %}
