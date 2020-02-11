@@ -2149,7 +2149,7 @@
                 "dev-master": "4.4-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Symfony\\Bundle\\DebugBundle\\": ""
@@ -3463,7 +3463,7 @@
                 "dev-master": "4.4-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Symfony\\Bridge\\Monolog\\": ""
@@ -5143,7 +5143,7 @@
                 "dev-master": "4.4-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Symfony\\Bundle\\WebProfilerBundle\\": ""
