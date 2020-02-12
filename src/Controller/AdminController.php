@@ -5,14 +5,18 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\School;
 use App\Entity\State;
+use App\Entity\Trip;
 use App\Entity\TripLocation;
 use App\Entity\User;
 use App\Form\CityAddType;
 use App\Form\LocationAddType;
+use App\Form\LocationUpdateType;
 use App\Form\RegistrationFormType;
 use App\Form\SchoolAddType;
 use App\Form\SchoolUpdateType;
 use App\Form\StateAddType;
+use App\Form\TripAddType;
+use App\Form\TripUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +44,9 @@ class AdminController extends AbstractController
         $allLocations = $locationRepository->findAll();
         $cityRepository = $entityManager->getRepository(City::class);
         $allCities = $cityRepository->findAll();
-        return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities'));
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $tripRepository->findAll();
+        return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities','allTrips'));
     }
 
 
@@ -219,6 +225,34 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
     }
+    /**
+     * @Route("/location/update/{id}", name="location_update", requirements={"id" : "\d+"})
+     */
+    public function updateLocation(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $locationRepository = $entityManager->getRepository(TripLocation::class);
+        if ($id) {
+            $location = $locationRepository->find($id);
+        } else {
+            $location = new TripLocation();
+        }
+        $locationForm = $this->createForm(LocationUpdateType::class,$location);
+        $locationForm->handleRequest($request);
+
+        if ($locationForm->isSubmitted() && $locationForm->isValid()) {
+
+            $entityManager->persist($location);
+            $entityManager->flush();
+
+            $locationId = $location->getId();
+
+            $this->addFlash('success', 'Lieu modifié !');
+
+            return $this->redirectToRoute('admin_home');
+        }
+        return $this->render('admin/location/update.html.twig', ['locationFormView' => $locationForm->createView()]);
+    }
+
 
     /**
      * @Route("/city/add/{id}", name="city_add", requirements={"id" : "\d+"})
@@ -236,5 +270,50 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_home');
         }
         return $this->render('admin/city/add.html.twig', ['cityFormView' => $cityForm->createView()]);
+    }
+
+    /**
+     * @Route("/trip/add/{id}", name="trip_add", requirements={"id" : "\d+"})
+     */
+    public function addTrip(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $trip = new Trip();
+        $tripForm = $this->createForm(TripAddType::class, $trip);
+        $tripForm->handleRequest($request);
+        if ($tripForm->isSubmitted() && $tripForm->isValid()) {
+            $entityManager->persist($trip);
+            $entityManager->flush();
+            $cityId = $trip->getId();
+            $this->addFlash('success', 'Sortie ajoutée !');
+            return $this->redirectToRoute('admin_home');
+        }
+        return $this->render('admin/trip/add.html.twig', ['tripFormView' => $tripForm->createView()]);
+    }
+    /**
+     * @Route("/trip/update/{id}", name="trip_update", requirements={"id" : "\d+"})
+     */
+    public function updateTrip(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        if ($id) {
+            $trip = $tripRepository->find($id);
+        } else {
+            $trip = new Trip();
+        }
+        $tripForm = $this->createForm(TripUpdateType::class,$trip);
+        $tripForm->handleRequest($request);
+
+        if ($tripForm->isSubmitted() && $tripForm->isValid()) {
+
+            $entityManager->persist($trip);
+            $entityManager->flush();
+
+            $tripId = $trip->getId();
+
+            $this->addFlash('success', 'Sortie modifiée !');
+
+            return $this->redirectToRoute('admin_home');
+        }
+        return $this->render('admin/trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
 }
