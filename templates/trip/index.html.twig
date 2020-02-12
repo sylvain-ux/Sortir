@@ -65,9 +65,9 @@
                                         <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
                                         <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
 
-                                        <td>{{ trip.nbRegistMax }}{{ "/" }}{{ trip.nbRegistMax }}</td>
+                                        <td>{{ trip.nbRegistMin }}{{ "/" }}{{ trip.nbRegistMax }}</td>
 
-                                        <td>{{ trip.nbRegistMax }} <a class="btn btn-success" href="{{ path('trip_inscription') }}">S'inscrire</a></td>
+                                        <td> <a class="btn btn-success" href="{{ path('trip_inscription',{'trip':'trip'}) }}">S'inscrire</a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

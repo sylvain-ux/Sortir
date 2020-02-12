@@ -131,9 +131,15 @@ class TripController extends AbstractController
     /**
      * @Route("/inscriptionTrip", name="inscription")
      */
-    public function add()
+    public function add(Request $request, EntityManagerInterface $entityManager)
     {
-        return $this->render('main/index.html.twig');
+        //Je récupère l'Id de l'utilisateur courant
+        $currentUser = $this->getUser();
+
+        //Je récupère l'id de la sortie sur laquelle l'utilisateur vient de cliquer
+        $currentTrip = null;
+
+        return $this->render('main/home.html.twig');
     }
 
 
