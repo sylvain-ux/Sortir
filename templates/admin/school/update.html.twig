@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+{% form_theme schoolFormView 'bootstrap_4_layout.html.twig' %}
+{% block title %}
+    Modifier une école
+{% endblock %}
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="border border-dark p-5">
+                    <h2 class="text-center">Modifier une école</h2>
+                    {{ form(schoolFormView) }}
+                    <hr>
+                    <p class="text-right d-none">
+                        <a class="btn btn-sm btn-danger" onclick="confirmation()" href="{{ path('admin_school_delete',{ 'id': schoolFormView.vars.value.id }) }}" title="Supprimer"><i class="far fa-trash-alt"></i> </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        function confirmation(){
+            var result = confirm("Vous souhaitez vraiment supprimer cet utilisateur ?");
+            if(result){
+                // Delete logic goes here
+            }
+        }
+    </script>
+{% endblock %}
+
+

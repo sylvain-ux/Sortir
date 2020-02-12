@@ -14,6 +14,19 @@
                     <li class="nav-item">
                         <a class="nav-link" id="trip-tab" data-toggle="tab" href="#trips" role="tab" aria-controls="trips" aria-selected="false">Sorties</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="city-tab" data-toggle="tab" href="#cities" role="tab" aria-controls="trips" aria-selected="false">Villes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="location-tab" data-toggle="tab" href="#locations" role="tab" aria-controls="locations" aria-selected="false">Locations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="state-tab" data-toggle="tab" href="#states" role="tab" aria-controls="states" aria-selected="false">États</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="school-tab" data-toggle="tab" href="#schools" role="tab" aria-controls="schools" aria-selected="false">Écoles</a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -25,46 +38,14 @@
             <div class="col-12">
                 <div class="border border-dark p-5">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
-                            <h2 class="text-center">Utilisateurs</h2>
-                            <p class="text-center"><a class="btn btn-success" href="{{ path('admin_user_add') }}">Ajouter un utilisateur</a></p>
-                            <table id="userTable" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Email</th>
-                                    <th>actif</th>
-                                    <th>role</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {%  for user in allUsers %}
-                                    <tr>
-                                        <td>{{ user.id }}</td>
-                                        <td>{{ user.name }}</td>
-                                        <td>{{ user.firstname }}</td>
-                                        <td>{{ user.email }}</td>
-                                        <td>{{ user.actif }}</td>
-                                        <td>
-                                            {% set roles = user.getRoles() %}
-                                            {% for role in roles %}
-                                                {{ role }}
-                                            {% endfor %}
 
-                                        </td>
-                                        <td><a href="{{ path('admin_user_detail',{ 'id': user.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        {{ include('admin/inc/tab-user.html.twig') }}
+                        {{ include('admin/inc/tab-trip.html.twig') }}
+                        {{ include('admin/inc/tab-city.html.twig') }}
+                        {{ include('admin/inc/tab-location.html.twig') }}
+                        {{ include('admin/inc/tab-state.html.twig') }}
+                        {{ include('admin/inc/tab-school.html.twig') }}
 
-                        <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab-tab">
-                            <h2 class="text-center">Sorties</h2>
-                        </div>
                     </div>
 
                 </div>
