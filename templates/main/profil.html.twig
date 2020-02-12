@@ -14,10 +14,14 @@
         <div class="col-12 col-xl-6">
             <div class="form_container">
             {{ form (userFormView) }}
-                <button class="btn btn-secondary" type="submit">Annuler</button>
+              <a href="{{path('profil')  }}" > <button class="btn btn-secondary" type="submit">Annuler</button></a>
             </div>
         </div>
     </div>
 </div>
 
 {% endblock %}
+
+
+
+{#><a href="{{ path('idea_detail', {'id' : idee.id}) }}">{{ idee.title }}</a></p>#}
