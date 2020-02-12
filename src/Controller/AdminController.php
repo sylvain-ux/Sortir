@@ -19,10 +19,12 @@ use App\Form\TripAddType;
 use App\Form\TripUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 /**
  * @Route("/admin", name="admin_")
@@ -316,4 +318,33 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
+
+    /**
+     * @Route("/city/auto/{id}", name="city_auto", requirements={"id" : "\d+"})
+     */
+    public function updateCitiesByDept(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $dept = $id;
+        dump($dept);
+
+        $url = 'https://geo.api.gouv.fr/departements/44/communes?fields=nom,codesPostaux&format=json&geometry=centre';
+
+
+        $client = HttpClient::create();
+        $response = $client->request('GET', $url,[
+            'proxy' => '10.0.0.248:8080'
+        ]);
+
+        $statusCode = $response->getStatusCode();
+// $statusCode = 200
+        $contentType = $response->getHeaders()['content-type'][0];
+// $contentType = 'application/json'
+        $content = $response->getContent();
+// $content = '{"id":521583, "name":"symfony-docs", ...}'
+        $content = $response->toArray();
+// $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
+
+        //return $this->render('admin/city/add.html.twig', ['cityFormView' => $cityForm->createView()]);
+    }
+
 }
