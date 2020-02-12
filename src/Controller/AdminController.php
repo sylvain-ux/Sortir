@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\School;
 use App\Entity\State;
+use App\Entity\Trip;
 use App\Entity\TripLocation;
 use App\Entity\User;
 use App\Form\CityAddType;
@@ -13,6 +14,7 @@ use App\Form\RegistrationFormType;
 use App\Form\SchoolAddType;
 use App\Form\SchoolUpdateType;
 use App\Form\StateAddType;
+use App\Form\TripAddType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +42,9 @@ class AdminController extends AbstractController
         $allLocations = $locationRepository->findAll();
         $cityRepository = $entityManager->getRepository(City::class);
         $allCities = $cityRepository->findAll();
-        return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities'));
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $tripRepository->findAll();
+        return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities','allTrips'));
     }
 
 
@@ -236,5 +240,23 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_home');
         }
         return $this->render('admin/city/add.html.twig', ['cityFormView' => $cityForm->createView()]);
+    }
+
+    /**
+     * @Route("/trip/add/{id}", name="trip_add", requirements={"id" : "\d+"})
+     */
+    public function addTrip(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $trip = new Trip();
+        $tripForm = $this->createForm(TripAddType::class, $trip);
+        $tripForm->handleRequest($request);
+        if ($tripForm->isSubmitted() && $tripForm->isValid()) {
+            $entityManager->persist($trip);
+            $entityManager->flush();
+            $cityId = $trip->getId();
+            $this->addFlash('success', 'Sortie ajoutée !');
+            return $this->redirectToRoute('admin_home');
+        }
+        return $this->render('admin/trip/add.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
 }
