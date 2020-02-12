@@ -93,10 +93,12 @@ class AdminController extends AbstractController
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
 
-            $entityManager->persist($user);
-            $entityManager->flush();
 
-            $userId = $user->getId();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+
+                $userId = $user->getId();
 
             //send email
             $mailInterface->send();

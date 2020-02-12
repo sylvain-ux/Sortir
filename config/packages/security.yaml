@@ -10,6 +10,31 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      remember_me:
+        secret: '%kernel.secret%'
+        lifetime: 604800 # une semaine en seconde
+        path: /
+          # by default, the feature is enabled by checking a
+          # checkbox in the login form (see below), uncomment the
+          # following line to always enable it.
+        # always_remember_me: true
+        domain: null
+        #default value: null
+        secure: false
+        #default value: false
+        httponly: true
+        #default value: true
+        samesite: null
+        #default value: null
+        remember_me_parameter: _remember_me
+        #default value: _remember_me
+        always_remember_me: false
+        #default value: false
+        token_provider: null
+        #default value:null
+
+
+
       pattern: ^/
       provider: user_provider
       anonymous: ~
@@ -36,7 +61,6 @@ security:
 
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
-
 
   encoders:
     App\Entity\User:

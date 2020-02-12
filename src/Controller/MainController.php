@@ -2,7 +2,12 @@
 
 namespace App\Controller;
 
+
+use App\Entity\User;
+use App\Form\UserType;
+
 use App\Entity\Trip;
+use App\Form\UserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,6 +54,44 @@ class MainController extends AbstractController
         );
 
     }
+
+
+    /**
+     * @route("profil", name="profil")
+     */
+    public function profil (Request $request, EntityManagerInterface $entityManager)
+    {
+      // récupérer le user qui est connecté
+
+        $user = $this->getUser();
+
+
+        // créer un formulaire Usertype et y ajouter le User
+        $userProfil = $this->createForm(UserUpdateType::class,$user);
+        $userProfil->handleRequest($request);
+
+        // traitement après soumission du form
+        if ($userProfil->isSubmitted() && $userProfil->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'profil modifié !');
+
+            return $this->redirectToRoute('home');
+        }
+
+
+        return $this->render('main/profil.html.twig', ['userFormView' => $userProfil->createView()]);
+
+
+// envoyer le formulaire dans le template
+// si le formulaire est soumis il persister et flusher
+
+
+    }
+
 
 
 }

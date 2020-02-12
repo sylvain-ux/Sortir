@@ -1,0 +1,23 @@
+{% form_theme userFormView 'bootstrap_4_layout.html.twig' %}
+
+{% extends 'layout.html.twig' %}
+
+{% block title %}PROFIL{% endblock %}
+
+{% block body %}
+
+    <h1>Mon  profil</h1><br>
+
+<div class="container-fluid pt-5 mt-5">
+    <div class="row">
+        <div class="col-12 col-xl-6">
+            <div class="form_container">
+
+
+            {{ form (userFormView) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
