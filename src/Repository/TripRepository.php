@@ -19,6 +19,25 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
+
+
+    public function findUsersByTrips()
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = <<<DQL
+
+SELECT COUNT(t) FROM App\Entity\Trip t JOIN t.users u group by t.id
+DQL;
+        $query = $entityManager->createQuery($dql);
+
+        $result = $query->getResult();
+        return array_pop($result);
+
+    }
+
+
+
+
     // /**
     //  * @return Trip[] Returns an array of Trip objects
     //  */
