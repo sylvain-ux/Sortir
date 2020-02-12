@@ -21,23 +21,6 @@ class TripRepository extends ServiceEntityRepository
 
 
 
-    public function findUsersByTrips($id)
-    {
-        $entityManager = $this->getEntityManager();
-        $dql = <<<DQL
-
-SELECT t FROM App\Entity\Trip t JOIN t.users u where  t.id = :id
-DQL;
-
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-
-        $result = $query->getResult();
-        return array_pop($result);
-
-    }
-
-
 
 
     // /**

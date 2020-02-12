@@ -64,7 +64,9 @@
                                 </thead>
                                 <tbody>
                                 {% for trip in allTrips %}
-{#                                    {% for usersTrip in allUsersTrips %}#}
+
+                                    {% for usersTrip in allUsersTrips %}
+
                                         <tr>
                                             <td>{{ trip.id }}</td>
                                             <td>{{ trip.name }}</td>
@@ -80,7 +82,6 @@
 
 
                                         </tr>
-{#                                    {% endfor %}#}
                                 {% endfor %}
                                 </tbody>
                             </table>
