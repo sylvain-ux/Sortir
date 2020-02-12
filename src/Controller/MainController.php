@@ -52,8 +52,6 @@ class MainController extends AbstractController
     }
 
 
-
-
     /**
      * @route("profil", name="profil")
      */
@@ -77,11 +75,10 @@ class MainController extends AbstractController
         // traitement après soumission du form
         if ($userProfil->isSubmitted() && $userProfil->isValid()) {
 
-            $userProfil->persist($user);
-            $userProfil->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-//            $userId = $user->getId();
-//
             $this->addFlash('success', 'profil modifié !');
 
             return $this->redirectToRoute('home');
@@ -94,7 +91,7 @@ class MainController extends AbstractController
 // envoyer le formulaire dans le template
 // si le formulaire est soumis il persister et flusher
 
-//        return $this->render('main/profil.html.twig', compact('user'));
+
     }
 
 
