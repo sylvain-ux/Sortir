@@ -1,34 +1,20 @@
 <div class="tab-pane fade show " id="states" role="tabpanel" aria-labelledby="state-tab">
     <h2 class="text-center">Statuts</h2>
-    <p class="text-center"><a class="btn btn-success" href="{{ path('admin_user_add') }}">Ajouter une ville</a></p>
+    <p class="text-center"><a class="btn btn-success" href="{{ path('admin_state_add') }}">Ajouter une statut</a></p>
     <table id="userTable" class="table table-bordered">
         <thead>
         <tr>
             <th>#</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>actif</th>
-            <th>role</th>
+            <th>Libellé</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        {%  for user in allUsers %}
+        {%  for state in allStates %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.actif }}</td>
-                <td>
-                    {% set roles = user.getRoles() %}
-                    {% for role in roles %}
-                        {{ role }}
-                    {% endfor %}
-
-                </td>
-                <td><a href="{{ path('admin_user_update',{ 'id': user.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
+                <td>{{ state.id }}</td>
+                <td>{{ state.info }}</td>
+                <td></td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,34 +1,20 @@
 <div class="tab-pane fade show" id="cities" role="tabpanel" aria-labelledby="city-tab">
     <h2 class="text-center">Villes</h2>
-    <p class="text-center"><a class="btn btn-success" href="{{ path('admin_user_add') }}">Ajouter une ville</a></p>
+    <p class="text-center"><a class="btn btn-success" href="{{ path('admin_city_add') }}">Ajouter une ville</a></p>
     <table id="userTable" class="table table-bordered">
         <thead>
         <tr>
             <th>#</th>
             <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>actif</th>
-            <th>role</th>
-            <th>Actions</th>
+            <th>Code postal</th>
         </tr>
         </thead>
         <tbody>
-        {%  for user in allUsers %}
+        {%  for city in allCities %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.actif }}</td>
-                <td>
-                    {% set roles = user.getRoles() %}
-                    {% for role in roles %}
-                        {{ role }}
-                    {% endfor %}
-
-                </td>
-                <td><a href="{{ path('admin_user_update',{ 'id': user.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
+                <td>{{ city.id }}</td>
+                <td>{{ city.name }}</td>
+                <td>{{ city.zipcode }}</td>
             </tr>
         {% endfor %}
         </tbody>

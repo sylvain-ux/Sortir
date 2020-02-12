@@ -34,7 +34,7 @@ class Trip
     private $duration;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $registDeadline;
 

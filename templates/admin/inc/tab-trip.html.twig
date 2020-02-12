@@ -1,34 +1,36 @@
 <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab">
     <h2 class="text-center">Sorties</h2>
-    <p class="text-center"><a class="btn btn-success" href="{{ path('admin_user_add') }}">Ajouter un utilisateur</a></p>
+    <p class="text-center"><a class="btn btn-success" href="{{ path('admin_trip_add') }}">Ajouter une sortie</a></p>
     <table id="userTable" class="table table-bordered">
         <thead>
         <tr>
             <th>#</th>
             <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>actif</th>
-            <th>role</th>
-            <th>Actions</th>
+            <th>date</th>
+            <th>fin inscription</th>
+            <th>durée</th>
+            <th>nb max</th>
+            <th>nb min</th>
+            <th>organisateur</th>
+            <th>lieu</th>
+            <th>ville</th>
+            <th>actions</th>
         </tr>
         </thead>
         <tbody>
-        {%  for user in allUsers %}
+        {%  for trip in allTrips %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.actif }}</td>
-                <td>
-                    {% set roles = user.getRoles() %}
-                    {% for role in roles %}
-                        {{ role }}
-                    {% endfor %}
-
-                </td>
-                <td><a href="{{ path('admin_user_update',{ 'id': user.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
+                <td>{{ trip.id }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.name }}</td>
+                <td><a href="{{ path('admin_user_update',{ 'id': trip.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
             </tr>
         {% endfor %}
         </tbody>

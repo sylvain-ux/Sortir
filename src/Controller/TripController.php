@@ -133,7 +133,7 @@ class TripController extends AbstractController
      */
     public function add()
     {
-        return $this->render('trip/index.html.twig');
+        return $this->render('main/index.html.twig');
     }
 
 
