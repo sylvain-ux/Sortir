@@ -7,8 +7,10 @@
             <th>#</th>
             <th>Nom</th>
             <th>Adresse</th>
+            <th>Ville</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -17,9 +19,10 @@
                 <td>{{ location.id }}</td>
                 <td>{{ location.name }}</td>
                 <td>{{ location.street }}</td>
+                <td>{{ location.city.name }}</td>
                 <td>{{ location.latitude }}</td>
                 <td>{{ location.longitude }}</td>
-
+                <td><a href="{{ path('admin_location_update',{ 'id': location.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
             </tr>
         {% endfor %}
         </tbody>

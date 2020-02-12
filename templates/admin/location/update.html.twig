@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+{% form_theme locationFormView 'bootstrap_4_layout.html.twig' %}
+{% block title %}
+    Modifier un lieu
+{% endblock %}
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="border border-dark p-5">
+                    <h2 class="text-center">Modifier un lieu</h2>
+                    {{ form(locationFormView) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
+
+
