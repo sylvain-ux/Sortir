@@ -66,10 +66,7 @@ return array(
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'PackageVersions\\' => array($vendorDir . '/ocramius/package-versions/src/PackageVersions'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
-<<<<<<< HEAD
     'Egulias\\EmailValidator\\' => array($vendorDir . '/egulias/email-validator/EmailValidator'),
-=======
->>>>>>> 16c175b9cfcb88f6323ea8d66ea3074db83b5d5c
     'EasyCorp\\EasyLog\\' => array($vendorDir . '/easycorp/easy-log-handler/src'),
     'Doctrine\\Persistence\\' => array($vendorDir . '/doctrine/persistence/lib/Doctrine/Persistence'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib/Doctrine/ORM'),
