@@ -28,13 +28,9 @@ class MainController extends AbstractController
 
 
 
-        $userTripRepository = $entityManager->getRepository(Trip::class);
-        $allUsersTrips = $userTripRepository->findUsersByTrips();
 
-//        dump($allUsersTrips);
-//        die();
-
-        return $this->render('trip/index.html.twig', compact('allTrips','allUsersTrips'));
+//        return $this->render('trip/index.html.twig', compact('allTrips'), compact('total'));
+        return $this->render('trip/index.html.twig', compact('allTrips'));
 
 
     }
