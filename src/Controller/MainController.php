@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\UserType;
 
 use App\Entity\Trip;
+use App\Form\UserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,15 +62,9 @@ class MainController extends AbstractController
 
         $user = $this->getUser();
 
-//        $userRepository = $entityManager->getRepository(User::class);
-//        if ($id) {
-//            $user = $userRepository->find($id);
-//        } else {
-//            $user = new User();
-//        }
 
         // créer un formulaire Usertype et y ajouter le User
-        $userProfil = $this->createForm(UserType::class,$user);
+        $userProfil = $this->createForm(UserUpdateType::class,$user);
         $userProfil->handleRequest($request);
 
         // traitement après soumission du form
