@@ -128,4 +128,13 @@ class TripController extends AbstractController
     }
 
 
+    /**
+     * @Route("/inscriptionTrip", name="inscription")
+     */
+    public function add()
+    {
+        return $this->render('trip/index.html.twig');
+    }
+
+
 }

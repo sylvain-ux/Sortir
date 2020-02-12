@@ -23,10 +23,6 @@ class State
      */
     private $info;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $reason;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Trip", mappedBy="state", orphanRemoval=true)
@@ -55,17 +51,7 @@ class State
         return $this;
     }
 
-    public function getReason(): ?string
-    {
-        return $this->reason;
-    }
 
-    public function setReason(?string $reason): self
-    {
-        $this->reason = $reason;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Trip[]
