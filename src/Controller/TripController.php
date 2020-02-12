@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Trip;
 use App\Entity\TripLocation;
+use App\Entity\User;
 use App\Form\CityType;
 use App\Form\TripLocationType;
 use App\Form\TripType;
@@ -129,17 +130,31 @@ class TripController extends AbstractController
 
 
     /**
-     * @Route("/inscriptionTrip", name="inscription")
+     * @Route("/inscription/{id}", name="inscription", requirements={"id" : "\d+"})
      */
-    public function add(Request $request, EntityManagerInterface $entityManager)
+    public function add(Request $request, EntityManagerInterface $entityManager,$id=0)
     {
-        //Je récupère l'Id de l'utilisateur courant
+        //Je récupère l'utilisateur courant
         $currentUser = $this->getUser();
 
-        //Je récupère l'id de la sortie sur laquelle l'utilisateur vient de cliquer
-        $currentTrip = null;
+        $tripRepository = $entityManager->getRepository(Trip::class);
 
-        return $this->render('main/home.html.twig');
+        //Je récupère la sortie actuelle avec le paramètre de l'Id de la sortie récupérée sur la page de la liste des sorties
+        $currentTrip = $tripRepository->find($id);
+
+        //J'ajoute à la sortie actuelle l'utilisateur courant
+        $currentTrip->addUser($currentUser);
+
+        //Je l'ajoute en BDD
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($currentTrip);
+        $entityManager->flush();
+
+
+        //Message de success
+        $this->addFlash('success', 'utilisateur inscrit !');
+
+        return $this->redirectToRoute('home');
     }
 
 

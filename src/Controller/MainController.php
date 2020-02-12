@@ -27,9 +27,6 @@ class MainController extends AbstractController
         $allTrips = $tripRepository->findAll();
 
 
-
-
-//        return $this->render('trip/index.html.twig', compact('allTrips'), compact('total'));
         return $this->render('trip/index.html.twig', compact('allTrips'));
 
 

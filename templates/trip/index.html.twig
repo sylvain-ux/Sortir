@@ -47,7 +47,6 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
                             <h2 class="text-center">Liste des sorties</h2>
-                            {{ dump(allTrips[0].users) }}
                             <table id="userTable" class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -64,7 +63,7 @@
                                 </thead>
                                 <tbody>
                                 {% for trip in allTrips %}
-                                    
+
                                         <tr>
                                             <td>{{ trip.id }}</td>
                                             <td>{{ trip.name }}</td>
@@ -74,7 +73,7 @@
                                             <td> {{ "blabla" }}</td>
                                             <td>✅</td>
                                             <td>{{ "blabla" }}</td>
-                                            <td><a class="btn btn-success" href="{{ path('trip_inscription') }}">S'inscrire</a>
+                                            <td><a class="btn btn-success" href="{{ path('trip_inscription', {'id':trip.id}) }}">S'inscrire</a>
                                             </td>
 
 
