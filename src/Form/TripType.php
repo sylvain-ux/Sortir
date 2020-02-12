@@ -49,7 +49,13 @@ class TripType extends AbstractType
                     'attr' => array('placeholder' => '...'),
                 ]
             )
-            ->add('school', EntityType::class, ['class' => School::class, 'choice_label' => 'name'])
+            ->add('school', EntityType::class,
+                [
+                    'class' => School::class,
+                    'choice_label' => 'name',
+                    'label' => 'Ville organisatrice',
+                    'disabled' => true
+                ])
             ->add('location', EntityType::class, ['class' => TripLocation::class, 'choice_label' => 'name'])
 
 

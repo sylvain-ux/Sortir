@@ -72,7 +72,7 @@ class Trip
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="trips")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $state;
 
@@ -81,6 +81,11 @@ class Trip
      * @ORM\JoinColumn(nullable=false)
      */
     private $location;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $reason;
 
     public function __construct()
     {
@@ -250,6 +255,18 @@ class Trip
     public function setLocation(?TripLocation $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getReason(): ?string
+    {
+        return $this->reason;
+    }
+
+    public function setReason(?string $reason): self
+    {
+        $this->reason = $reason;
 
         return $this;
     }
