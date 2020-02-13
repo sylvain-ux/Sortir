@@ -9,12 +9,13 @@
 
 
 <div class="container-fluid pt-5 mt-5">
-    <h1>Mon  profil</h1><br>
+    <h1>Mon  profil</h1>
     <div class="row">
         <div class="col-12 col-xl-6">
             <div class="form_container">
             {{ form (userFormView) }}
               <a href="{{path('home')  }}" > <button class="btn btn-secondary" type="submit">Annuler</button></a>
+                <a href="{{path('password')  }}" > <button class="btn btn-info" type="submit">Changer votre mot de passe</button></a>
             </div>
         </div>
     </div>
