@@ -63,6 +63,7 @@
                                 </thead>
                                 <tbody>
                                 {% for trip in allTrips %}
+
                                         <tr>
                                             <td>{{ trip.id }}</td>
                                             <td>{{ trip.name }}</td>
@@ -72,8 +73,7 @@
                                             <td> {{ trip.state }}</td>
                                             <td>✅</td>
                                             <td>{{ "blabla" }}</td>
-                                            <td><a class="btn btn-success"
-                                                   href="{{ path('trip_inscription') }}">S'inscrire</a>
+                                            <td><a class="btn btn-success" href="{{ path('trip_inscription', {'id':trip.id}) }}">S'inscrire</a>
                                             </td>
 
 

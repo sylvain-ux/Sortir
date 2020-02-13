@@ -39,7 +39,7 @@ security:
       provider: user_provider
       anonymous: ~
       form-login:
-        default_target_path: home
+        default_target_path: profil
         login_path: login
         check_path: login
       #        csrf_token_generator: security.csrf.token_manager
