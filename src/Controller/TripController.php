@@ -10,6 +10,8 @@ use App\Entity\User;
 use App\Form\CityType;
 use App\Form\TripLocationType;
 use App\Form\TripType;
+use App\Form\TripUpdateType;
+use App\Form\TripUserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -204,5 +206,34 @@ class TripController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($state);
         $entityManager->flush();
+    }
+
+
+    /**
+     * @Route("/update/{id}", name="update", requirements={"id" : "\d+"})
+     */
+    public function updateTrip(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        if ($id) {
+            $trip = $tripRepository->find($id);
+        } else {
+            $trip = new Trip();
+        }
+        $tripForm = $this->createForm(TripUserUpdateType::class,$trip);
+        $tripForm->handleRequest($request);
+
+        if ($tripForm->isSubmitted() && $tripForm->isValid()) {
+
+            $entityManager->persist($trip);
+            $entityManager->flush();
+
+            $tripId = $trip->getId();
+
+            $this->addFlash('success', 'Sortie modifiée !');
+
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
 }
