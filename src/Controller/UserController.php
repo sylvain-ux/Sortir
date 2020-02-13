@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ResetPassword;
 use App\Form\ChangePasswordType;
 use App\Form\UserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -78,13 +79,14 @@ class UserController extends AbstractController
     /**
      * @route ("/password", name="password")
      */
-    public function resetPassword (Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function passwordChange (Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-//        $resetPassword = $this->getOldPassword();
-       $user = $this->getUser();
-       $mdpForm = $this->createForm(ChangePasswordType::class, $user);
-       $mdpForm ->handleRequest($request);
+        //$em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $resetPassword = new ResetPassword();
+        $mdpForm = $this->createForm(ChangePasswordType::class, $resetPassword);
 
+        $mdpForm->handleRequest($request);
         if ($mdpForm->isSubmitted() && $mdpForm->isValid()){
 
                 $user->setPassword(
@@ -97,15 +99,54 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre mot de passe a  bien été changé !');
-            return $this->redirectToRoute('login');
+            $this->addFlash('success','Votre mot de passe a  bien été changé !');
+            return $this->redirectToRoute('profil');
 
         }
 
 
-
         return $this->render('user/password.html.twig', ['mdpFormView' => $mdpForm->createView()]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//       $user = $this->getUser();
+//       $mdpForm = $this->createForm(ChangePasswordType::class, $user);
+//       $mdpForm ->handleRequest($request);
+//
+//        if ($mdpForm->isSubmitted() && $mdpForm->isValid()){
+//
+//                $user->setPassword(
+//                    $passwordEncoder->encodePassword(
+//                        $user,
+//                        $mdpForm->get('newPassword')->getData()
+//                    ));
+//
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($user);
+//            $entityManager->flush();
+//
+//            $this->addFlash('success', 'Votre mot de passe a  bien été changé !');
+//            return $this->redirectToRoute('login');
+//
+//        }
+//
+//
+//
+//        return $this->render('user/password.html.twig', ['mdpFormView' => $mdpForm->createView()]);
+//
 
 
 

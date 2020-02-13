@@ -16,9 +16,6 @@ class ResetPassword
     protected $oldPassword;
 
 
-    /**
-     * @Assert\Length(min = 6, minMessage = "Your password must be at least {{ limit }} characters long")
-     */
 
     protected $newPassword;
 
