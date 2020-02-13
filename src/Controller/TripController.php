@@ -236,4 +236,30 @@ class TripController extends AbstractController
         }
         return $this->render('trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
+
+
+    /**
+     * Function whose change the status to close for a trip which is complete.
+     * @Route("/statusclosed/{id}", name="statusclosed", requirements={"nbInscrit":"\d+", "nbMaxInscrit":"\d+", "id":"\d+"})
+     */
+    public function StatusClosed(EntityManagerInterface $entityManager, $nbInscrit=0, $nbMaxInscrit=0, $id=0)
+    {
+        //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
+        $stateRepository = $entityManager->getRepository(State::class);
+        $stateClosed = $stateRepository->find('3');
+
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $currentTrip = $tripRepository->find($id);
+
+
+        //Si le nb d'inscrit est egal au nb max d'inscrit Alors je fais un setState sur le trip current et ensuite persist et flush
+        if($nbInscrit == $nbMaxInscrit){
+            $currentTrip->setState($stateClosed);
+        }
+
+        $entityManager->persist($currentTrip);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
+    }
 }

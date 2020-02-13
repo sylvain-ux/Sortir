@@ -64,7 +64,7 @@
                                 <tbody>
                                 {% for trip in allTrips %}
                                     {# Si le nombre d'inscrit est égal au nombre maximum d'inscription, status = cloturée #}
-                                    {{  trip.StatusClosed(trip.users|length, trip.nbRegistMax) }}
+                                    <a href="{{ path('trip_statusclosed',{'nbInscrit':trip.users|length, 'nbMaxInscrit':trip.nbRegistMax, 'id':trip.id}) }}"></a>
 
 
                                     <tr>

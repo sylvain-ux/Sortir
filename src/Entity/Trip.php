@@ -365,11 +365,5 @@ class Trip
     }
 
 
-    /**
-     * Function whose change the status to close for a trip which is complete.
-     */
-    public function StatusClosed(int $nbInscrit, int $nbMaxInscrit)
-    {
 
-    }
 }
