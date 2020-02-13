@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TripRepository")
@@ -26,6 +28,7 @@ class Trip
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("+2 day", message="La sortie doit être programmée au moins dans 2 jours")
      */
     private $dateTimeStart;
 
@@ -36,11 +39,13 @@ class Trip
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\LessThan(propertyPath="dateTimeStart", message="La date doit être inférieure à la date de la sortie")
      */
     private $registDeadline;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\LessThanOrEqual(propertyPath="nbRegistMax", message="le nombre mini. doit être inférieur ou égal au nombre maxi.")
      */
     private $nbRegistMin;
 

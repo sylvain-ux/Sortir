@@ -28,7 +28,7 @@ class UserUpdateType extends AbstractType
             ->add('email',EmailType::class)
             ->add('school',EntityType::class,[
                 'class' => School::class,
-                'choice_label' => 'name',
+                'choice_label' => 'name','disabled' => true
             ])
             ->add('save', SubmitType::class, ['label' => 'Modifier']);
 

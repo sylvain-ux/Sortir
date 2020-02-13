@@ -27,46 +27,28 @@ class MainController extends AbstractController
         $allTrips = $tripRepository->findAll();
 
 
+
         return $this->render('trip/index.html.twig', compact('allTrips'));
 
 
     }
 
 
-    /**
-     * @Route("/login", name="login")
-     */
-    public function login(Request $request, AuthenticationUtils $authenticationUtils)
-    {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError(); // Est-ce qu'il y a eu des erreurs ?
 
-        // last name entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render(
-            'main/login.html.twig',
-            [
-                'last_username' => $lastUsername, // dernier username connecté
-                'error' => $error, // les erreurs de connexion
-            ]
-        );
 
-    }
 
 
     /**
      * @route("profil", name="profil")
      */
-    public function profil (Request $request, EntityManagerInterface $entityManager)
+    public function profil(Request $request, EntityManagerInterface $entityManager)
     {
-      // récupérer le user qui est connecté
-
-        $user = $this->getUser();
+        // récupérer le user qui est connecté
 
 
         // créer un formulaire Usertype et y ajouter le User
-        $userProfil = $this->createForm(UserUpdateType::class,$user);
+        $userProfil = $this->createForm(UserUpdateType::class, $user);
         $userProfil->handleRequest($request);
 
         // traitement après soumission du form

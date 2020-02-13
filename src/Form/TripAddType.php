@@ -45,6 +45,7 @@ class TripAddType extends AbstractType
             ->add('location',EntityType::class,[
                 'class' => TripLocation::class,
                 'choice_label' => 'name',
+                'attr' => ['class' => 'select2'],
             ])
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
         ;

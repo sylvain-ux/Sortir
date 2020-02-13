@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+{% endblock %}
 {% block title %}Admin - Tableau de bord{% endblock %}
 
 {% block body %}
@@ -38,7 +40,6 @@
             <div class="col-12">
                 <div class="border border-dark p-5">
                     <div class="tab-content" id="myTabContent">
-
                         {{ include('admin/inc/tab-user.html.twig') }}
                         {{ include('admin/inc/tab-trip.html.twig') }}
                         {{ include('admin/inc/tab-city.html.twig') }}
@@ -57,9 +58,11 @@
 
 {% block javascripts %}
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('assets/js/select2.full.min.js') }}"></script>
     <script>
         $(document).ready( function () {
-            $('#userTable').DataTable();
-        } );
+            $('.table').DataTable();
+            $('#trip_add_location').select2();
+        });
     </script>
 {% endblock %}
