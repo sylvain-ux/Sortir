@@ -54,14 +54,12 @@ class UserController extends AbstractController
 
         $user = $this->getUser();
 
-
         // créer un formulaire Usertype et y ajouter le User
         $userProfil = $this->createForm(UserUpdateType::class,$user);
         $userProfil->handleRequest($request);
 
         // traitement après soumission du form
         if ($userProfil->isSubmitted() && $userProfil->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -99,7 +97,7 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre mot de passe a  bien été changé !');
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('login');
 
         }
 
