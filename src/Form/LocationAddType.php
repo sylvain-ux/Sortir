@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\TripLocation;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,16 +22,17 @@ class LocationAddType extends AbstractType
             ])
             ->add('name')
             ->add('street')
-            ->add('longitude')
-            ->add('latitude')
+            ->add('longitude',HiddenType::class)
+            ->add('latitude',HiddenType::class)
+/*            ->add('city',TextType::class)*/
             ->add('city', EntityType::class, array(
                 'choice_label' => function ($city) {
 
                     return $city->getName() . ' ' . $city->getZipCode();
                 },
-/*                'choice_attr' => function($city) {
-                    return ['class' => 'city_'.mb_strtolower(trim($city->getName()))];
-                },*/
+                'choice_attr' => function($city) {
+                    return ['class' => 'zip_'.$city->getZipCode()];
+                },
                 'class' => 'App\Entity\City',
                 'attr' => ['class' => 'select2'],
             ))

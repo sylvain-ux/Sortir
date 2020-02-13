@@ -254,7 +254,18 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/location/update.html.twig', ['locationFormView' => $locationForm->createView()]);
     }
+    /**
+     * @Route("/location/delete/{id}", name="location_delete", requirements={"id" : "\d+"})
+     */
+    public function deleteLocation(Request $request, EntityManagerInterface $entityManager, $id = 0){
+        $locRepository = $entityManager->getRepository(TripLocation::class);
+        $locToDelete = $locRepository->find($id);
+        $entityManager->remove($locToDelete);
+        $entityManager->flush();
+        $this->addFlash('danger','Lieu supprimé !');
 
+        return $this->redirectToRoute('admin_home');
+    }
 
     /**
      * @Route("/city/add/{id}", name="city_add", requirements={"id" : "\d+"})
@@ -322,7 +333,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/city/auto/{id}", name="city_auto", requirements={"id" : "\d+"})
      */
-    public function updateCitiesByDept(Request $request, EntityManagerInterface $entityManager, $id = 0)
+/*    public function updateCitiesByDept(Request $request, EntityManagerInterface $entityManager, $id = 0)
     {
         $dept = $id;
         dump($dept);
@@ -345,6 +356,6 @@ class AdminController extends AbstractController
 // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
 
         //return $this->render('admin/city/add.html.twig', ['cityFormView' => $cityForm->createView()]);
-    }
+    }*/
 
 }

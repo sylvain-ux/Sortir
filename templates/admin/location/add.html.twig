@@ -13,15 +13,7 @@
                 <div class="border border-dark p-5">
                     <h2 class="text-center">Ajouter un lieu</h2>
                     {{ form(locationFormView) }}
-                    <hr>
-                    <label>street_number</label>
-                    <input id="street_number" name="street_number" disabled>
-                    <label>route</label>
-                    <input id="route" name="route" disabled>
-                    <label>locality</label>
-                    <input id="locality" name="locality" disabled>
-                    <label>country</label>
-                    <input id="country" name="country" disabled>
+
                 </div>
             </div>
         </div>
@@ -30,6 +22,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/select2.full.min.js') }}"></script>
+
     <script>
         $(document).ready( function () {
             $('.select2').select2();
@@ -38,7 +31,6 @@
 
     <!-- Include Google Maps JS API -->
     <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCc4FIU239oleSDmVnMUvl2c7rUyLFYSW0"></script>
-
     <!-- Custom JS code to bind to Autocomplete API -->
     <!-- find it here: https://github.com/lewagon/google-place-autocomplete/blob/gh-pages/autocomplete.js -->
     <!-- We'll detail this file in the article -->
