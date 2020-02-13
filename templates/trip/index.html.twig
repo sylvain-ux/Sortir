@@ -70,7 +70,7 @@
                                             <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
                                             <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
                                             <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
-                                            <td> {{ trip.state }}</td>
+{#                                            <td> {{ trip.state }}</td>#}
                                             <td>✅</td>
                                             <td>{{ "blabla" }}</td>
                                             <td><a class="btn btn-success" href="{{ path('trip_inscription', {'id':trip.id}) }}">S'inscrire</a>
