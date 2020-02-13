@@ -23,9 +23,9 @@
             <tr>
                 <td>{{ trip.id }}</td>
                 <td>{{ trip.name }}</td>
-                <td>{{ trip.dateTimeStart|date("m/d/Y") }}</td>
-                <td>{{ trip.registDeadline|date("m/d/Y") }}</td>
-                <td>{{ trip.duration }} (mn)</td>
+                <td>{{ trip.dateTimeStart|date("D d M y - H:i") }}</td>
+                <td>{{ trip.registDeadline|date("D d M y - H:i") }}</td>
+                <td>{{ trip.duration }} mn</td>
                 <td>{{ trip.nbRegistMax }}</td>
                 <td>{{ trip.nbRegistMin }}</td>
                 <td>{{ trip.user.name }}</td>

@@ -64,23 +64,20 @@
                                 <tbody>
                                 {% for trip in allTrips %}
 
-                                    {% for usersTrip in allUsersTrips %}
                                         <tr>
                                             <td>{{ trip.id }}</td>
                                             <td>{{ trip.name }}</td>
                                             <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
                                             <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
-                                            <td>{{ usersTrip }}{{ "/" }}{{ trip.nbRegistMax }}</td>
+                                            <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
                                             <td> {{ "blabla" }}</td>
                                             <td>✅</td>
                                             <td>{{ "blabla" }}</td>
-                                            <td><a class="btn btn-success"
-                                                   href="{{ path('trip_inscription') }}">S'inscrire</a>
+                                            <td><a class="btn btn-success" href="{{ path('trip_inscription', {'id':trip.id}) }}">S'inscrire</a>
                                             </td>
 
 
                                         </tr>
-                                    {% endfor %}
                                 {% endfor %}
                                 </tbody>
                             </table>

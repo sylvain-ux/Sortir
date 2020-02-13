@@ -24,6 +24,22 @@ class RegistrationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+/*            $old = $passwordEncoder->encodePassword(
+                $user,
+                $form->get('currentPassword')->getData()
+            );
+
+            if($old === $user->getPassword()){
+
+                $new = $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('password')->getData()
+                );
+                $user->setPassword($new);
+
+            }*/
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
