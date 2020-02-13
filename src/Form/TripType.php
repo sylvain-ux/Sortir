@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\School;
+use App\Entity\State;
 use App\Entity\Trip;
 use App\Entity\TripLocation;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -60,7 +61,15 @@ class TripType extends AbstractType
 
 
 //            ->add('user',HiddenType::class)
-//            ->add('state', HiddenType::class, ['data' => 1])
+
+            ->add('state', EntityType::class,
+                [
+                    'class' => State::class,
+                    'choice_label' => 'info',
+                    'attr' => array('style'=>'display:none;'),
+                    'label'=> false
+                ])
+
 
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
 //            ->add('send', SubmitType::class, ['label' => 'Publier la sortie'])

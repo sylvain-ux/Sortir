@@ -5,7 +5,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TripRepository")
@@ -274,6 +276,94 @@ class Trip
 
         return $this;
     }
+
+
+    /**
+     * Function whose check if the current user is already subscribed in the trip and check if this user is not the organizer
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isSubscribed(UserInterface $user)
+    {
+        foreach ($this->getUsers() as $us){
+            // Si l'utilisateur connecté est déjà inscrit pour la sortie et qu'il n'est pas l'organisateur de celle-ci, il peut se désister
+            if($us->getId() == $user->getId() && $this->getUser()->getId() != $user->getId()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Function whose check if the current user is not yet subscribed to the trip so he can subscribed for tit.
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isNotSubscribed(UserInterface $user)
+    {
+        foreach ($this->getUsers() as $us){
+            if($us->getId() != $user->getId()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * function check the status of the trip : in progress to see the details or closed
+     * @param int $stateId
+     * @return bool
+     */
+    public function tripInProgressOrClosed(int $stateId)
+    {
+        if($stateId == 4 or $stateId == 3){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * function whose offer the possibility to modify the trip choices
+     * @param int $stateId
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function tripCreation(int $stateId, UserInterface $user)
+    {
+        if($stateId == 1 && $this->getUser()->getId() == $user->getId()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * function to make a trip passed
+     * @param int $stateId
+     * @return bool
+     */
+    public function tripPast(int $stateId)
+    {
+        if($stateId == 5){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * function to open the status of a trip
+     * @param int $stateId
+     * @return bool
+     */
+    public function tripOpen(int $stateId)
+    {
+        if($stateId == 2){
+            return true;
+        }
+        return false;
+    }
+
 
 
 }
