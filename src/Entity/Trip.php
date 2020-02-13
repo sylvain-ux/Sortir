@@ -287,7 +287,7 @@ class Trip
     {
         foreach ($this->getUsers() as $us){
             // Si l'utilisateur connecté est déjà inscrit pour la sortie et qu'il n'est pas l'organisateur de celle-ci, il peut se désister
-            if($us->getId() == $user->getId() && $this->getUser()->getId() != $user->getId()){
+            if($us->getId() == $user->getId() and $this->getUser()->getId() != $user->getId()){
                 return true;
             }
         }
@@ -300,8 +300,11 @@ class Trip
      * @param UserInterface $user
      * @return bool
      */
-    public function isNotSubscribed(UserInterface $user)
+    public function isNotSubscribed(UserInterface $user,$nbInscrit=0, $nbMaxInscrit=0)
     {
+        if($nbInscrit == $nbMaxInscrit){
+            return false;
+        }
         foreach ($this->getUsers() as $us){
             if($us->getId() != $user->getId()){
                 return true;
@@ -332,7 +335,7 @@ class Trip
      */
     public function tripCreation(int $stateId, UserInterface $user)
     {
-        if($stateId == 1 && $this->getUser()->getId() == $user->getId()){
+        if($stateId == 1 and $this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;
@@ -356,9 +359,9 @@ class Trip
      * @param int $stateId
      * @return bool
      */
-    public function tripOpen(int $stateId)
+    public function tripOpen(int $stateId,  UserInterface $user)
     {
-        if($stateId == 2){
+        if($stateId == 2 and $this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;

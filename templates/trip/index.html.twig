@@ -63,8 +63,7 @@
                                 </thead>
                                 <tbody>
                                 {% for trip in allTrips %}
-                                    {# Si le nombre d'inscrit est égal au nombre maximum d'inscription, status = cloturée #}
-                                    <a href="{{ path('trip_statusclosed',{'nbInscrit':trip.users|length, 'nbMaxInscrit':trip.nbRegistMax, 'id':trip.id}) }}"></a>
+
 
 
                                     <tr>
@@ -89,10 +88,11 @@
                                             {% if trip.isSubscribed(app.user) %}
                                                 <a class="btn btn-secondary"
                                                    href="{{ path('trip_unsubscribe', {'id':trip.id}) }}">Se désister</a>
-                                                {# Sinon si l'utilisateur n'est pas inscrit, il peut s'inscrire #}
-                                            {% elseif trip.isNotSubscribed(app.user) %}
+                                                {# Sinon si l'utilisateur n'est pas inscrit, il peut s'inscrire. On vérifie aussi si le nombre d'inscrit est inférieur au nombre maximum. Sinon l'état passera à cloturer #}
+                                            {% elseif trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
                                                 <a class="btn btn-primary"
-                                                   href="{{ path('trip_inscription', {'id':trip.id}) }}">S'inscrire</a>
+                                                   href="{{ path('trip_inscription', {'id':trip.id }) }}">S'inscrire</a>
+                                                {# faire le traitement du changement de status à cloturée dans la fonction trip_inscription#}
                                             {% endif %}
 
                                             {# Si la sortie est en cours, l'utilisateur peut afficher le détail #}
@@ -118,7 +118,7 @@
                                             {% endif %}
 
                                             {# La date de début et de cloture de la sortie sont supérieures à la date d'aujourd'hui alors la sortie est ouverte (status Ouvert) #}
-                                            {% if trip.tripOpen(trip.state.id) %}
+                                            {% if trip.tripOpen(trip.state.id, app.user) %}
                                                 <a class="btn btn-info"
                                                    href="{{ path('home', {'id':trip.id}) }}">Détail</a>
                                                 <a class="btn btn-danger"
