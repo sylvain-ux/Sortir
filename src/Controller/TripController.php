@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\City;
+use App\Entity\State;
 use App\Entity\Trip;
 use App\Entity\TripLocation;
 use App\Entity\User;
@@ -43,37 +44,30 @@ class TripController extends AbstractController
         $trip = new Trip();
         $trip->setUser($user);
         $school = $user->getSchool();
-//        $city = new City();
-//        $location = new TripLocation();
-        //$location->setCity($city);
+
 
         $tripForm = $this->createForm(TripType::class, $trip);
 
-//        $trip_location = $this->getUser();
-//        $trip_LocationForm = $this->createForm(TripLocationType::class, $location);
-//
-//        $city = $this->getUser();
-//        $cityForm = $this->createForm(CityType::class, $city);
 
         $tripForm->handleRequest($request);
-//        $trip_LocationForm->handleRequest($request);
-//        $cityForm->handleRequest($request);
+
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
             $trip->setSchool($school);
 
-//            $trip->setLocation($location);
-//            dump($trip);
-//            die();
             $entityManager->persist($trip);
-            //$entityManager->persist($trip_location);
-//            $entityManager->persist($city);
+
             $entityManager->flush();
             $this->addFlash(
                 'success',
                 'Sortie ajoutée !'
             );
 
+            //Ajout d'un status par défaut pour la sortie sélectionée
+   //         $this->addStateToTrip($entityManager, $trip->getId());
+
+            //Ajout de l'organisateur à la sortie nouvellement créée
+            $this->addUserToTrip($entityManager, $trip->getId());
             return $this->redirectToRoute("home");
         }
 
@@ -130,9 +124,10 @@ class TripController extends AbstractController
 
 
     /**
+     * Fonction permettant d'ajouter un utilisateur sur la sortie sélectionnée par l'utilisateur
      * @Route("/inscription/{id}", name="inscription", requirements={"id" : "\d+"})
      */
-    public function add(Request $request, EntityManagerInterface $entityManager,$id=0)
+    public function addUserToTrip(EntityManagerInterface $entityManager,$id=0)
     {
         //Je récupère l'utilisateur courant
         $currentUser = $this->getUser();
@@ -152,10 +147,62 @@ class TripController extends AbstractController
 
 
         //Message de success
-        $this->addFlash('success', 'utilisateur inscrit !');
+        $this->addFlash('success', 'Vous êtes inscrit sur la sortie');
 
         return $this->redirectToRoute('home');
     }
 
 
+    /**
+     * @Route("/unsubscribe/{id}", name="unsubscribe", requirements={"id":"\d+"})
+     */
+    public function remove(EntityManagerInterface $entityManager, $id=0)
+    {
+        //Je récupère l'utilisateur courant
+        $currentUser = $this->getUser();
+
+        $tripRepository = $entityManager->getRepository(Trip::class);
+
+        //Je récupère la sortie actuelle
+        $currentTrip = $tripRepository->find($id);
+
+        //je retire l'utilisateur courant de la sortie actuelle
+        $currentTrip->removeUser($currentUser);
+
+        //MaJ BDD
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($currentTrip);
+        $entityManager->flush();
+
+        //Message de success
+        $this->addFlash('success', 'Vous avez désinscrit sur la sortie');
+
+        return $this->redirectToRoute('home');
+
+    }
+
+    /**
+     * fonction permettant d'ajouter un status par défaut sur la sortie nouvellement créée
+     */
+    private function addStateToTrip(EntityManagerInterface $entityManager, $id=0)
+    {
+        //Je crée un status vide
+        $state = new State();
+
+
+
+        $tripRepository = $entityManager->getRepository(Trip::class);
+
+        //Je récupère la sortie actuelle
+        $currentTrip = $tripRepository->find($id);
+
+        //J'injecte le status par défaut dans la sortie actuelle
+        $currentTrip->setStatus($state);
+
+
+        //MaJ BDD
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($state);
+        $entityManager->flush();
+    }
 }
