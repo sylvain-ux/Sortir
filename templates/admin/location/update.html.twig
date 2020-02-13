@@ -13,7 +13,9 @@
                 <div class="border border-dark p-5">
                     <h2 class="text-center">Modifier un lieu</h2>
                     {{ form(locationFormView) }}
-
+                    <p class="text-right">
+                        <a class="btn btn-sm btn-danger" onclick="confirmation()" href="{{ path('admin_location_delete',{ 'id': locationFormView.vars.value.id }) }}" title="Supprimer"><i class="far fa-trash-alt"></i> </a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -25,6 +27,14 @@
         $(document).ready( function () {
             $('.select2').select2();
         });
+    </script>
+    <script>
+        function confirmation(){
+            var result = confirm("Vous souhaitez vraiment supprimer cet utilisateur ?");
+            if(result){
+                // Delete logic goes here
+            }
+        }
     </script>
 {% endblock %}
 
