@@ -80,6 +80,7 @@ class UserController extends AbstractController
      */
     public function resetPassword (Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+//        $resetPassword = $this->getOldPassword();
        $user = $this->getUser();
        $mdpForm = $this->createForm(ChangePasswordType::class, $user);
        $mdpForm ->handleRequest($request);
