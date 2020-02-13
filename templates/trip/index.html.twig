@@ -64,20 +64,47 @@
                                 <tbody>
                                 {% for trip in allTrips %}
 
-                                        <tr>
-                                            <td>{{ trip.id }}</td>
-                                            <td>{{ trip.name }}</td>
-                                            <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
-                                            <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
-                                            <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
-                                            <td> {{ "blabla" }}</td>
-                                            <td>✅</td>
-                                            <td>{{ "blabla" }}</td>
-                                            <td><a class="btn btn-success" href="{{ path('trip_inscription', {'id':trip.id}) }}">S'inscrire</a>
-                                            </td>
+
+                                    <tr>
+                                        <td>{{ trip.id }}</td>
+                                        <td>{{ trip.name }}</td>
+                                        <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
+                                        <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
+                                        <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
+                                        <td> {{ trip.state.info }}</td>
+                                        <td>
+                                            {% for u in trip.users %}
+                                                {% if u.id == app.user.id %}
+                                                    ✅
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </td>
+                                        <td>{{ trip.user.name }}</td>
+                                        <td>
+
+                                            {# Si l'utilisateur est inscrit, il peut se désister #}
+                                            {% if trip.isSubscribed(app.user) %}
+                                                <a class="btn btn-success"
+                                                   href="{{ path('trip_unsubscribe', {'id':trip.id}) }}">Se désister</a>
+                                                {# Sinon si l'utilisateur n'est pas inscrit, il peut s'inscrire #}
+                                            {% elseif trip.isNotSubscribed(app.user) %}
+                                                <a class="btn btn-success"
+                                                   href="{{ path('trip_inscription', {'id':trip.id}) }}">S'inscrire</a>
+                                            {% endif %}
+
+                                            {# Si la sortie est en cours, l'utilisateur peut afficher le détail #}
+
+                                            {# Si je suis organisateur et que je crée ou j'ai créée une sortie, je peux la modifier ou la publier (sortie en mémo, uniquement visible pour l'organisteur) #}
+
+                                            {# Si la sortie a passée la date d'inscription (sortie cloturée) et que la date de début est supérieur à la date actuelle, on peut juste afficher le détail sortie#}
+
+                                            {# Si la date de fin d'activité est inférieure à la date actuelle, la sortie est affichée en passée (état = passée), pas de détails à afficher #}
+
+                                        </td>
 
 
-                                        </tr>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
