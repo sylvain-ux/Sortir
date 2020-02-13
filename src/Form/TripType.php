@@ -60,7 +60,7 @@ class TripType extends AbstractType
 
 
 //            ->add('user',HiddenType::class)
-//            ->add('state', HiddenType::class, ['data' => 1])
+            ->add('state', HiddenType::class, ['data' => 1])
 
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
 //            ->add('send', SubmitType::class, ['label' => 'Publier la sortie'])

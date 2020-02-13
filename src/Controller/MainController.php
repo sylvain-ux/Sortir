@@ -26,13 +26,8 @@ class MainController extends AbstractController
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
 
-
-
-
-//        return $this->render('trip/index.html.twig', compact('allTrips'), compact('total'));
         return $this->render('trip/index.html.twig', compact('allTrips'));
-
-
+        
     }
 
 
@@ -61,15 +56,15 @@ class MainController extends AbstractController
     /**
      * @route("profil", name="profil")
      */
-    public function profil (Request $request, EntityManagerInterface $entityManager)
+    public function profil(Request $request, EntityManagerInterface $entityManager)
     {
-      // récupérer le user qui est connecté
+        // récupérer le user qui est connecté
 
         $user = $this->getUser();
 
 
         // créer un formulaire Usertype et y ajouter le User
-        $userProfil = $this->createForm(UserUpdateType::class,$user);
+        $userProfil = $this->createForm(UserUpdateType::class, $user);
         $userProfil->handleRequest($request);
 
         // traitement après soumission du form
@@ -93,7 +88,6 @@ class MainController extends AbstractController
 
 
     }
-
 
 
 }
