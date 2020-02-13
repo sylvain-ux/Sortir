@@ -19,10 +19,13 @@ class LocationUpdateType extends AbstractType
             ->add('street')
             ->add('longitude')
             ->add('latitude')
-            ->add('city',EntityType::class,[
-                'class' => City::class,
-                'choice_label' => 'name',
-            ])
+            ->add('city', EntityType::class, array(
+                'choice_label' => function ($city) {
+                    return $city->getName() . ' ' . $city->getZipCode();
+                },
+                'class' => 'App\Entity\City',
+                'attr' => ['class' => 'select2'],
+            ))
             ->add('save', SubmitType::class, ['label' => 'Modifier']);
         ;
     }
