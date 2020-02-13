@@ -1,0 +1,4 @@
+.alerts-container{position:fixed;bottom:50px;right:15px;max-width:40%;}
+.alerts-container .alert{border-radius:0;}
+.alerts-container .alert .alert-danger{background:rgba(248,215,218,0.7)!important}
+.alerts-container .alert .alert-success{background:rgba(212,237,218,0.7)!important}

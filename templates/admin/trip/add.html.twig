@@ -19,6 +19,20 @@
             </div>
         </div>
     </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-center"><a class="btn btn-lg btn-outline-primary" href="{{ path('admin_location_add') }}">Ajouter un nouveau lieu</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('assets/js/select2.full.min.js') }}"></script>

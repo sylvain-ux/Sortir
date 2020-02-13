@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque|Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/sortir.css') }}">
     <script src="https://kit.fontawesome.com/96225b8db3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
 
 
 
@@ -23,7 +24,7 @@
 
 </div>
 
-<div class="alerts-container">
+<div class="alerts-container wow fadeInRight">
     {% for label, msgs in app.flashes %}
         {% for msg in msgs %}
             <div class="alert alert-{{ label }}" role="alert">
@@ -36,6 +37,13 @@
 
 <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-{% block javascripts %}{% endblock %}
+<script src="{{ asset('assets/js/wow.min.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+<script>
+    $(document).ready(function() {
+        new WOW().init();
+    });
+</script>
 </body>
 </html>
