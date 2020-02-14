@@ -12,29 +12,38 @@
             <div class="card">
                 <div class="card-body">
                     {{ form(locationFormView) }}
-
                 </div>
             </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div id="map"></div>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('assets/js/select2.full.min.js') }}"></script>
 
-    <script>
-        $(document).ready( function () {
-            $('.select2').select2();
-        });
-    </script>
 
     <!-- Include Google Maps JS API -->
-    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCc4FIU239oleSDmVnMUvl2c7rUyLFYSW0"></script>
+    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&key=AIzaSyCc4FIU239oleSDmVnMUvl2c7rUyLFYSW0&callback=initMap"></script>
     <!-- Custom JS code to bind to Autocomplete API -->
     <!-- find it here: https://github.com/lewagon/google-place-autocomplete/blob/gh-pages/autocomplete.js -->
     <!-- We'll detail this file in the article -->
     <script type="text/javascript" src="{{ asset('assets/js/autocomplete.js') }}"></script>
+
+
+    <script>
+
+        initMap(47.22683,-1.620615);
+
+
+
+
+    </script>
+
+
+
 
 {% endblock %}
 

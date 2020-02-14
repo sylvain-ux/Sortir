@@ -239,11 +239,23 @@ class AdminController extends AbstractController
         $locationForm = $this->createForm(LocationAddType::class, $location);
         $locationForm->handleRequest($request);
         if ($locationForm->isSubmitted() && $locationForm->isValid()) {
-            $entityManager->persist($location);
-            $entityManager->flush();
-            $locationId = $location->getId();
-            $this->addFlash('success', 'Lieu ajouté !');
-            return $this->redirectToRoute('admin_home');
+            //check if city in db
+            $city = $locationForm->get('city')->getData();
+            $checkRepository = $entityManager->getRepository(City::class);
+            $cityExists = $checkRepository->findOneByName($city);
+            if(!$cityExists){
+                $locationForm = $this->createForm(LocationAddType::class, $location);
+                $this->addFlash('danger', 'Cette ville ne semble pas être dans la limite');
+                return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
+            }else {
+                $location->setCity($cityExists);
+                $entityManager->persist($location);
+                $entityManager->flush();
+                $locationId = $location->getId();
+                $this->addFlash('success', 'Lieu ajouté !');
+
+                return $this->redirectToRoute('admin_home');
+            }
         }
         return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
     }
