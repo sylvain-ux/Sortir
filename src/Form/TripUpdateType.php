@@ -21,33 +21,46 @@ class TripUpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class)
-            ->add('dateTimeStart',DateTimeType::class)
-            ->add('duration',NumberType::class)
-            ->add('registDeadline',DateTimeType::class)
-            ->add('nbRegistMin',NumberType::class)
-            ->add('nbRegistMax',NumberType::class)
-            ->add('info',TextareaType::class)
-            ->add('user',EntityType::class,[
-                'class' => User::class,
-                'choice_label' => 'name',
-            ])
-            ->add('state',EntityType::class,[
-                'class' => State::class,
-                'choice_label' => 'info',
-            ])
-            ->add('location',EntityType::class,[
-                'class' => TripLocation::class,
-                'choice_label' => 'name',
-            ])
+            ->add('name', TextType::class)
+            ->add('dateTimeStart', DateTimeType::class)
+            ->add('duration', NumberType::class)
+            ->add('registDeadline', DateTimeType::class)
+            ->add('nbRegistMin', NumberType::class)
+            ->add('nbRegistMax', NumberType::class)
+            ->add('info', TextareaType::class)
+            ->add(
+                'user',
+                EntityType::class,
+                [
+                    'class' => User::class,
+                    'choice_label' => 'name',
+                ]
+            )
+            ->add(
+                'state',
+                EntityType::class,
+                [
+                    'class' => State::class,
+                    'choice_label' => 'info',
+                ]
+            )
+            ->add(
+                'location',
+                EntityType::class,
+                [
+                    'class' => TripLocation::class,
+                    'choice_label' => 'name',
+                ]
+            )
             ->add('save', SubmitType::class, ['label' => 'Modifier']);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Trip::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Trip::class,
+            ]
+        );
     }
 }

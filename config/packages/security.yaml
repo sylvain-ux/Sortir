@@ -39,14 +39,14 @@ security:
       provider: user_provider
       anonymous: ~
       form-login:
-        default_target_path: profil
-        login_path: login
-        check_path: login
+        default_target_path: user_profil
+        login_path: user_login
+        check_path: user_login
       #        csrf_token_generator: security.csrf.token_manager
       logout_on_user_change: true
       logout:
         path: logout
-        target: login
+        target: user_login
 
 
       # activate different ways to authenticate
@@ -68,4 +68,7 @@ security:
 
   access_control:
    - { path: ^/admin, roles: ROLE_ADMIN }
+
+#  parameters:
+#    avatar_directory: '%kernel.project_dir%/public/images/avatar'
 
