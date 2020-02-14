@@ -8,6 +8,7 @@ use App\Form\ChangePasswordType;
 use App\Form\UserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -68,6 +69,23 @@ class UserController extends AbstractController
 
         // traitement après soumission du form
         if ($userProfil->isSubmitted() && $userProfil->isValid()) {
+
+
+            $avatarFile = $userProfil->get('avatar')->getData();
+
+//            dump($avatarFile);
+//            die();
+
+            if ($avatarFile) {
+               $newFilename = 'avatar'.$user->getId().'.'.$avatarFile->guessExtension();
+
+                $avatarFile->move(
+                    $this->getParameter('avatar_directory'),
+                    $newFilename
+                );
+
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -75,6 +93,7 @@ class UserController extends AbstractController
             $this->addFlash('success', 'profil modifié !');
 
             return $this->redirectToRoute('home');
+
         }
 
 
