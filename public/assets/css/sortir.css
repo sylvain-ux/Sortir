@@ -7,32 +7,21 @@ table{
     border-collapse: separate;
 }
 body{
-    background-color: #E0E5EC;
+    background-color: white;
 }
 .container{
     display: flex;
-    background: #E0E5EC;
+    background: white;
 }
 
 .fa-check {
     color: green;
 }
 
-.neumorphism-0{
-    margin: 2px;
-    border-radius: 5px;
-    background: #E0E5EC;
-
-    box-shadow: -2px -2px 8px rgba(255,255,255,1),
-    -2px -2px 12px rgba(255,255,255,0.5),
-    inset 2px 2px 4px rgba(255,255,255,0.1),
-    2px 2px 8px rgba(0,0,0,0.15);
-}
-
 .neumorphism-1{
     margin: 10px;
     border-radius: 5px;
-    background: #E0E5EC;
+    background: #fcfeff;
 
     box-shadow: -2px -2px 8px rgba(255,255,255,1),
                 -2px -2px 12px rgba(255,255,255,0.5),
@@ -52,7 +41,7 @@ body{
 }
 .neumorphism-2{
     border-radius: 5px;
-    background: #ebebeb;
+    background: #fcfeff;
     box-shadow: inset 3px 3px 5px rgba(163,177,198, 0.6), inset -3px -3px 5px    rgba(255,255,255, 0.5);
 }
 
