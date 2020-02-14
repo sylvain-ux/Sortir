@@ -384,4 +384,35 @@ class Trip
         return true;
     }
 
+
+    /**TODO inclure des asserts permettant de demander une confirmation à l'utilisateur avant d'annuler sa sortie
+     * Fonction permettant de controler si la date de début de la sortie +  sa durée sont supérieure à la date d'aujourd'hui.
+     * L'organisateur uniquement pourra alors annuler la sortie
+     * @return bool
+     * @throws \Exception
+     */
+    public function isNotCanceled(UserInterface $user)
+    {
+        //Nous récupérons la date de début et la durée de la sortie actuelle
+        $dateTrip = $this->getDateTimeStart();
+        $duration = $this->getDuration();
+
+        //Récupération de la date d'aujourd'hui
+        $now = new \DateTime();
+
+        //Création d'un interval avec la durée de la sortie
+        $interval = new \DateInterval('PT'.$duration.'M');
+
+        //Clonage de la date de début de sortie
+        $dateTripClone = clone $dateTrip;
+        //Addition de la date de la sortie avec sa durée
+        $dateTripClone->add($interval);
+
+        //Vérification si la date d'aujourd'hui est inférieure à la date de la sortie + sa durée
+        if ($now < $dateTripClone and $this->getUser()->getId() == $user->getId()){
+            return true;
+        }
+
+        return false;
+    }
 }
