@@ -75,16 +75,17 @@
                                         <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
                                         <td> {{ trip.state.info }}</td>
                                         <td>
+                                            {% if app.user.id is defined %}
                                             {% for u in trip.users %}
                                                 {% if u.id == app.user.id %}
                                                     ✅
                                                 {% endif %}
                                             {% endfor %}
+                                            {% endif %}
 
                                         </td>
-                                        <td>{{ trip.user.name }}</td>
-                                        <td>
-
+                                        <td><a href="{{ path('user_detail', {'id' : trip.user.id}) }}">{{ trip.user.name }}</a></td>
+                                         <td>
                                             {# Si l'utilisateur est inscrit, il peut se désister #}
                                             {% if trip.isSubscribed(app.user) %}
                                                 <a class="btn btn-secondary"
