@@ -70,19 +70,29 @@ class UserController extends AbstractController
         // traitement après soumission du form
         if ($userProfil->isSubmitted() && $userProfil->isValid()) {
 
-
+        // je récupère la valeur du champs avatar
             $avatarFile = $userProfil->get('avatar')->getData();
 
-//            dump($avatarFile);
-//            die();
 
             if ($avatarFile) {
-               $newFilename = 'avatar'.$user->getId().'.'.$avatarFile->guessExtension();
+                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
 
-                $avatarFile->move(
-                    $this->getParameter('avatar_directory'),
-                    $newFilename
-                );
+              //  $newFilename = 'avatar'.$user->getId().'.'.$avatarFile->guessExtension();
+
+                try{
+                    $avatarFile->move(
+                        sprintf($this->getParameter('avatar_directory'),$user->getId()),
+                        $newFilename
+                    );
+                }catch (FileException $e) {
+
+                }
+                  $user->setAvatar($newFilename);
+
+
+
 
             }
 
