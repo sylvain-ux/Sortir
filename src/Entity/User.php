@@ -52,32 +52,32 @@ class User implements UserInterface
     private $password;
 
 
-    /**
-     *
-     * !! nouvelle propriété de user qui ne correspond à aucune colonne
-     * !! Cette propriété est indispensable pour le changement de mot de passe
-     *
-     * @SecurityAssert\UserPassword(
-     *     message = "Wrong value for your current password"
-     * )
-     */
-     protected $oldPassword;
-
-    /**
-     * @return mixed
-     */
-    public function getOldPassword()
-    {
-        return $this->oldPassword;
-    }
-
-    /**
-     * @param mixed $oldPassword
-     */
-    public function setOldPassword($oldPassword): void
-    {
-        $this->oldPassword = $oldPassword;
-    }
+//    /**
+//     *
+//     * !! nouvelle propriété de user qui ne correspond à aucune colonne
+//     * !! Cette propriété est indispensable pour le changement de mot de passe
+//     *
+//     * @SecurityAssert\UserPassword(
+//     *     message = "Wrong value for your current password"
+//     * )
+//     */
+//     protected $oldPassword;
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getOldPassword()
+//    {
+//        return $this->oldPassword;
+//    }
+//
+//    /**
+//     * @param mixed $oldPassword
+//     */
+//    public function setOldPassword($oldPassword): void
+//    {
+//        $this->oldPassword = $oldPassword;
+//    }
 
 
 

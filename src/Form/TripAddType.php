@@ -21,6 +21,17 @@ class TripAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'location',
+                EntityType::class,
+                [
+                    'class'        => TripLocation::class,
+                    'choice_label' => 'name',
+                    'attr'         => ['class' => 'select2'],
+                    'help_html'     => true,
+                    'help' => 'Vous pouvez créer un nouveau lieu s\'il n\'existe pas, <a href="" data-toggle="modal" data-target="#locationModal" class="btn btn-sm btn-primary">cliquez ici</a>',
+                ]
+            )
             ->add('name')
             ->add('dateTimeStart', DateTimeType::class,
                     ['label' => 'Date de la sortie','widget' => 'single_text','data' => new \DateTime("now"),'html5' => true ]
@@ -72,15 +83,7 @@ class TripAddType extends AbstractType
                     'choice_label' => 'info',
                 ]
             )
-            ->add(
-                'location',
-                EntityType::class,
-                [
-                    'class'        => TripLocation::class,
-                    'choice_label' => 'name',
-                    'attr'         => ['class' => 'select2'],
-                ]
-            )
+
             ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
     }
 

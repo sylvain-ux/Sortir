@@ -64,7 +64,10 @@ class TripController extends AbstractController
             );
 
             //Ajout d'un status par défaut pour la sortie sélectionée
+
             //         $this->addStateToTrip($entityManager, $trip->getId());
+
+            $this->addStateToTrip($entityManager, $trip->getId());
 
             //Ajout de l'organisateur à la sortie nouvellement créée
             $this->addUserToTrip($entityManager, $trip->getId());
@@ -123,11 +126,16 @@ class TripController extends AbstractController
 
 
     /**
-     * Fonction permettant d'ajouter un utilisateur sur la sortie sélectionnée par l'utilisateur
-     * @Route("/inscription/{id}", name="inscription", requirements={"id" : "\d+"})
+     * Fonction permettant d'ajouter un utilisateur sur la sortie sélectionnée par l'utilisateur et de passer la sortie au status cloturée si le nombre d'inscrit maximum est atteint
+     * @Route("/inscription/{id}", name="inscription", requirements={"id":"\d+"})
      */
     public function addUserToTrip(EntityManagerInterface $entityManager, $id = 0)
     {
+
+        //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
+        $stateRepository = $entityManager->getRepository(State::class);
+        $stateClosed = $stateRepository->find('3');
+
         //Je récupère l'utilisateur courant
         $currentUser = $this->getUser();
 
@@ -136,8 +144,18 @@ class TripController extends AbstractController
         //Je récupère la sortie actuelle avec le paramètre de l'Id de la sortie récupérée sur la page de la liste des sorties
         $currentTrip = $tripRepository->find($id);
 
+
+
         //J'ajoute à la sortie actuelle l'utilisateur courant
         $currentTrip->addUser($currentUser);
+
+        $nbInscrit = count($currentTrip->getUsers());
+        $nbMaxInscrit = $currentTrip->getNbRegistMax();
+
+        //Si le nb d'inscrit est egal au nb max d'inscrit Alors je fais un setState sur le trip current et ensuite persist et flush
+        if($nbInscrit == $nbMaxInscrit){
+            $currentTrip->setState($stateClosed);
+        }
 
         //Je l'ajoute en BDD
         $entityManager = $this->getDoctrine()->getManager();
@@ -152,10 +170,16 @@ class TripController extends AbstractController
 
 
     /**
+     * Fonction permettant de supprimer un utilisateur qui veut se désister d'une sortie et de passer le status de la sortie de "Cloturée" à "Ouverte"
      * @Route("/unsubscribe/{id}", name="unsubscribe", requirements={"id":"\d+"})
      */
     public function remove(EntityManagerInterface $entityManager, $id = 0)
     {
+        //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
+        $stateRepository = $entityManager->getRepository(State::class);
+        $stateClosed = $stateRepository->find('2');
+
+
         //Je récupère l'utilisateur courant
         $currentUser = $this->getUser();
         $tripRepository = $entityManager->getRepository(Trip::class);
@@ -165,6 +189,10 @@ class TripController extends AbstractController
 
         //je retire l'utilisateur courant de la sortie actuelle
         $currentTrip->removeUser($currentUser);
+
+        //Je modifie le status de la sortie pour la passer à "Ouverte"
+        $currentTrip->setState($stateClosed);
+
 
         //MaJ BDD
         $entityManager = $this->getDoctrine()->getManager();
@@ -183,8 +211,15 @@ class TripController extends AbstractController
      */
     private function addStateToTrip(EntityManagerInterface $entityManager, $id = 0)
     {
+
         //Je crée un status vide
         $state = new State();
+
+        //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
+        $stateRepository = $entityManager->getRepository(State::class);
+        $stateInProgress = $stateRepository->find('1');
+
+
 
         $tripRepository = $entityManager->getRepository(Trip::class);
 
@@ -192,11 +227,11 @@ class TripController extends AbstractController
         $currentTrip = $tripRepository->find($id);
 
         //J'injecte le status par défaut dans la sortie actuelle
-        $currentTrip->setStatus($state);
+        $currentTrip->setState($stateInProgress);
 
         //MaJ BDD
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($state);
+        $entityManager->persist($currentTrip);
         $entityManager->flush();
     }
 

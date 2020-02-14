@@ -3159,7 +3159,7 @@
                 "dev-master": "4.4-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Symfony\\Component\\HttpClient\\": ""
@@ -3213,7 +3213,7 @@
                 "dev-master": "2.0-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Symfony\\Contracts\\HttpClient\\": ""
