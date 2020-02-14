@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Form\SearchType;
 use App\Form\UserType;
 
 use App\Entity\Trip;
@@ -21,12 +22,15 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(EntityManagerInterface $entityManager)
+    public function index(EntityManagerInterface $entityManager,Request $request)
     {
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
 
-        return $this->render('trip/index.html.twig', compact('allTrips'));
+        $searchForm = $this->createForm(SearchType::class);
+        $searchForm->handleRequest($request);
+
+        return $this->render('trip/index.html.twig',compact('allTrips'));
 
     }
 
@@ -63,6 +67,23 @@ class MainController extends AbstractController
 
 
     }
+
+    //
+//    /**
+//     * @Route("/search2", name="search2")
+//     */
+//    public function search(Request $request, EntityManagerInterface $entityManager)
+//    {
+//        $searchForm = $this->createForm(SearchType::class);
+//        $searchForm->handleRequest($request);
+//
+//        return $this->render(
+//            'trip/index.html.twig',
+//            [
+//                'searchFormView' => $searchForm->createView(),
+//            ]
+//        );
+//    }
 
 
 }

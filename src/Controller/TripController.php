@@ -8,6 +8,7 @@ use App\Entity\Trip;
 use App\Entity\TripLocation;
 use App\Entity\User;
 use App\Form\CityType;
+use App\Form\SearchType;
 use App\Form\TripCancelType;
 use App\Form\TripDetailType;
 use App\Form\TripLocationType;
@@ -29,6 +30,7 @@ class TripController extends AbstractController
      */
     public function index()
     {
+
         return $this->render(
             'trip/index.html.twig',
             [
@@ -193,10 +195,9 @@ class TripController extends AbstractController
         $currentTrip->removeUser($currentUser);
 
         //Je modifie le status de la sortie pour la passer à "Ouverte" si le status de la sortie est "cloturée"
-        if($stateClosed->getId() != '3'){
+        if ($stateClosed->getId() != '3') {
             $currentTrip->setState($stateOpen);
         }
-
 
 
         //MaJ BDD
@@ -323,7 +324,10 @@ class TripController extends AbstractController
 
         $allUsers = $trip->getUsers();
 
-        return $this->render('trip/detail.html.twig', ['tripFormView' => $tripForm->createView(),'allUsers' => $allUsers]);
+        return $this->render(
+            'trip/detail.html.twig',
+            ['tripFormView' => $tripForm->createView(), 'allUsers' => $allUsers]
+        );
     }
 
 
@@ -367,7 +371,5 @@ class TripController extends AbstractController
 
         return $this->render('trip/cancel.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
-
-
 
 }
