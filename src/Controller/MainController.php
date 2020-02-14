@@ -26,18 +26,9 @@ class MainController extends AbstractController
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
 
-
-
         return $this->render('trip/index.html.twig', compact('allTrips'));
 
-
     }
-
-
-
-
-
-
 
     /**
      * @route("profil", name="profil")
@@ -72,7 +63,6 @@ class MainController extends AbstractController
 
 
     }
-
 
 
 }
