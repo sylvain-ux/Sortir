@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,6 +31,13 @@ class UserUpdateType extends AbstractType
                 'class' => School::class,
                 'choice_label' => 'name','disabled' => true
             ])
+            ->add('avatar', FileType::class, [
+                'label'=>'Téléchargez votre photo.png',
+                'mapped'=>false,
+                'required'=>false,
+                'attr'=>['class'=>""]
+            ])
+
             ->add('save', SubmitType::class, ['label' => 'Modifier']);
 
 

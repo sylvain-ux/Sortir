@@ -69,3 +69,6 @@ security:
   access_control:
    - { path: ^/admin, roles: ROLE_ADMIN }
 
+#  parameters:
+#    avatar_directory: '%kernel.project_dir%/public/images/avatar'
+

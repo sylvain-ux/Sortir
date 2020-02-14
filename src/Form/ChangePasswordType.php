@@ -20,7 +20,7 @@ class ChangePasswordType extends AbstractType
 
 
             ->add('oldPassword', PasswordType::class, [
-               'required'=> true, 
+               'required'=> true,
                 ])
 
 
