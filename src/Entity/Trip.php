@@ -306,7 +306,7 @@ class Trip
             return false;
         }
         foreach ($this->getUsers() as $us){
-            if($us->getId() != $user->getId()){
+            if($us->getId() != $user->getId() and $this->getUser()->getId() != $user->getId()){
                 return true;
             }
         }
@@ -368,5 +368,17 @@ class Trip
     }
 
 
+    /**
+     * Check if the trip is not in progress to show all the optionals buttons
+     * @param int $stateId
+     * @return bool
+     */
+    public function isNotInProgress(int $stateId,  UserInterface $user)
+    {
+        if($stateId == 1 and $this->getUser()->getId() != $user->getId()){
+            return false;
+        }
+        return true;
+    }
 
 }

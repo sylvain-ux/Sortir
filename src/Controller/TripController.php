@@ -178,7 +178,8 @@ class TripController extends AbstractController
     {
         //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
         $stateRepository = $entityManager->getRepository(State::class);
-        $stateClosed = $stateRepository->find('2');
+        $stateOpen = $stateRepository->find('2');
+        $stateClosed = $stateRepository->find('3');
 
 
         //Je récupère l'utilisateur courant
@@ -192,8 +193,11 @@ class TripController extends AbstractController
         //je retire l'utilisateur courant de la sortie actuelle
         $currentTrip->removeUser($currentUser);
 
-        //Je modifie le status de la sortie pour la passer à "Ouverte"
-        $currentTrip->setState($stateClosed);
+        //Je modifie le status de la sortie pour la passer à "Ouverte" si le status de la sortie est "cloturée"
+        if($stateClosed->getId() != '3'){
+            $currentTrip->setState($stateOpen);
+        }
+
 
 
         //MaJ BDD
