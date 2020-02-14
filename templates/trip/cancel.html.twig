@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+{% form_theme tripFormView 'bootstrap_4_layout.html.twig' %}
+{% block title %} Créer une sortie {% endblock %}
+
+{% block body %}
+
+    <h1>Détail de la sortie</h1>
+
+    {{ form_start(tripFormView) }}
+    <br>
+    {{ form_label(tripFormView.name) }}
+    {{ form_widget(tripFormView.name) }}
+    {{ form_errors(tripFormView.name) }}
+    <br>
+    {{ form_label(tripFormView.dateTimeStart) }}
+    {{ form_widget(tripFormView.dateTimeStart) }}
+    {{ form_errors(tripFormView.dateTimeStart) }}
+    <br>
+    {{ form_label(tripFormView.school) }}
+    {{ form_widget(tripFormView.school) }}
+    {{ form_errors(tripFormView.school) }}
+    <br>
+    {{ form_label(tripFormView.location) }}
+    {{ form_widget(tripFormView.location) }}
+    {{ form_errors(tripFormView.location) }}
+    <br>
+    <br>
+    {{ form_label(tripFormView.reason) }}
+    {{ form_widget(tripFormView.reason) }}
+    {{ form_errors(tripFormView.reason) }}
+    {{ form_end(tripFormView) }}
+    <br>
+    <a class="btn btn-secondary" href="{{ path('home') }}">Retour</a>
+    <br>
+    <br>
+{% endblock %}

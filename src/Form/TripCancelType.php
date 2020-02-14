@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TripDetailType extends AbstractType
+class TripCancelType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,28 +27,6 @@ class TripDetailType extends AbstractType
                 'dateTimeStart',
                 DateTimeType::class,
                 ['widget' => 'single_text', 'label' => 'Date et heure de la sortie :', 'disabled' => true,]
-            )
-            ->add(
-                'registDeadline',
-                DateType::class,
-                ['widget' => 'single_text', 'label' => 'Date limite d\'inscription :', 'disabled' => true,]
-            )
-            ->add('nbRegistMax', TextType::class, ['label' => 'Nombre de places maximum :', 'disabled' => true,])
-            ->add('nbRegistMin', TextType::class, ['label' => 'Nombre de places minimum :', 'disabled' => true,])
-            ->add(
-                'duration',
-                IntegerType::class,
-                ['label' => 'Durée :', 'disabled' => true,]
-            )
-            ->add(
-                'info',
-                TextareaType::class,
-                [
-                    'label' => 'Description et infos :',
-                    'required' => false,
-                    'attr' => array('placeholder' => '...'),
-                    'disabled' => true,
-                ]
             )
             ->add(
                 'school',
@@ -64,7 +42,18 @@ class TripDetailType extends AbstractType
                 'location',
                 EntityType::class,
                 ['class' => TripLocation::class, 'choice_label' => 'name', 'disabled' => true,]
-            );
+            )
+            ->add(
+                'reason',
+                TextareaType::class,
+                [
+                    'label' => 'Motif d\'annulation :',
+                    'required' => false,
+                    'attr' => array('placeholder' => '...'),
+                ]
+            )
+            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

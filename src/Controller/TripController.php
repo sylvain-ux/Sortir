@@ -8,6 +8,7 @@ use App\Entity\Trip;
 use App\Entity\TripLocation;
 use App\Entity\User;
 use App\Form\CityType;
+use App\Form\TripCancelType;
 use App\Form\TripDetailType;
 use App\Form\TripLocationType;
 use App\Form\TripType;
@@ -324,6 +325,49 @@ class TripController extends AbstractController
 
         return $this->render('trip/detail.html.twig', ['tripFormView' => $tripForm->createView(),'allUsers' => $allUsers]);
     }
+
+
+    /**
+     * @Route("/cancel/{id}", name="cancel", requirements={"id" : "\d+"})
+     */
+    public function cancelTrip(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        if ($id) {
+            $trip = $tripRepository->find($id);
+        } else {
+            $trip = new Trip();
+        }
+        $tripForm = $this->createForm(TripCancelType::class, $trip);
+
+        $tripForm->handleRequest($request);
+
+
+        if ($tripForm->isSubmitted() && $tripForm->isValid()) {
+
+
+            //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
+            $stateRepository = $entityManager->getRepository(State::class);
+            $stateInProgress = $stateRepository->find('6');
+
+            //J'injecte le status par défaut dans la sortie actuelle
+            $trip->setState($stateInProgress);
+
+            //MaJ BDD
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($trip);
+            $entityManager->flush();
+
+            //Message de success
+            $this->addFlash('success', 'Vous avez annulé la sortie');
+
+
+            return $this->redirectToRoute("home");
+        }
+
+        return $this->render('trip/cancel.html.twig', ['tripFormView' => $tripForm->createView()]);
+    }
+
 
 
 }
