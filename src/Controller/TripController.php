@@ -145,7 +145,6 @@ class TripController extends AbstractController
         $currentTrip = $tripRepository->find($id);
 
 
-
         //J'ajoute à la sortie actuelle l'utilisateur courant
         $currentTrip->addUser($currentUser);
 
@@ -153,7 +152,7 @@ class TripController extends AbstractController
         $nbMaxInscrit = $currentTrip->getNbRegistMax();
 
         //Si le nb d'inscrit est egal au nb max d'inscrit Alors je fais un setState sur le trip current et ensuite persist et flush
-        if($nbInscrit == $nbMaxInscrit){
+        if ($nbInscrit == $nbMaxInscrit) {
             $currentTrip->setState($stateClosed);
         }
 
@@ -220,7 +219,6 @@ class TripController extends AbstractController
         $stateInProgress = $stateRepository->find('1');
 
 
-
         $tripRepository = $entityManager->getRepository(Trip::class);
 
         //Je récupère la sortie actuelle
@@ -252,48 +250,56 @@ class TripController extends AbstractController
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
 
-            $entityManager->persist($trip);
-            $entityManager->flush();
+            if ($tripForm->getClickedButton() === $tripForm->get('drop')) {
 
-            $tripId = $trip->getId();
+                $entityManager = $this->getDoctrine()->getManager();
+                //Suppression de la sortie associée à son id
+                $entityManager->remove($trip);
+                //Enregistrement des modifications dans la BDD
+                $entityManager->flush();
 
-            $this->addFlash('success', 'Sortie modifiée !');
+                //Message de success
+                $this->addFlash('success', 'Vous avez supprimé la sortie');
 
-            return $this->redirectToRoute('home');
+                return $this->redirectToRoute('home');
+            }
+
+            if ($tripForm->getClickedButton() === $tripForm->get('published')) {
+
+                //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
+                $stateRepository = $entityManager->getRepository(State::class);
+                $stateInProgress = $stateRepository->find('2');
+
+                //J'injecte le status par défaut dans la sortie actuelle
+                $trip->setState($stateInProgress);
+
+                //MaJ BDD
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($trip);
+                $entityManager->flush();
+
+
+                //Message de success
+                $this->addFlash('success', 'Vous avez publié la sortie');
+
+                return $this->redirectToRoute('home');
+            }
+
+            if ($tripForm->getClickedButton() === $tripForm->get('save')) {
+
+
+                $entityManager->persist($trip);
+                $entityManager->flush();
+
+                $tripId = $trip->getId();
+
+                $this->addFlash('success', 'Sortie modifiée !');
+
+                return $this->redirectToRoute('home');
+            }
         }
 
         return $this->render('trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
-    }
-
-
-    /**
-     * @Route("/removeTrip/{id}", name="removeTrip", requirements={"id":"\d+"})
-     */
-    public function removeTrip(EntityManagerInterface $entityManager, $id = 0)
-    {
-        $tripRepository = $entityManager->getRepository(Trip::class);
-        $allTrips = $tripRepository->findAll();
-
-
-        //Je récupère la sortie actuelle
-        $currentTrip = $tripRepository->find($id);
-
-        dump($currentTrip);
-        die();
-
-        //je supprime la sortie
-        $currentTrip->removeTrip($currentTrip);
-
-        //MaJ BDD
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($currentTrip);
-        $entityManager->flush();
-
-        //Message de success
-        $this->addFlash('success', 'Vous avez supprimé sur la sortie');
-        return $this->redirectToRoute('home');
-
-
     }
 
 }

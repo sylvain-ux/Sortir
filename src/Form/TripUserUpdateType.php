@@ -22,25 +22,33 @@ class TripUserUpdateType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('dateTimeStart',DateTimeType::class)
-            ->add('duration',NumberType::class)
-            ->add('registDeadline',DateTimeType::class)
-            ->add('nbRegistMin',NumberType::class)
-            ->add('nbRegistMax',NumberType::class)
-            ->add('info',TextareaType::class)
-            ->add('location',EntityType::class,[
-                'class' => TripLocation::class,
-                'choice_label' => 'name',
-                'attr' => ['class' => 'select2'],
-            ])
+            ->add('dateTimeStart', DateTimeType::class)
+            ->add('duration', NumberType::class)
+            ->add('registDeadline', DateTimeType::class)
+            ->add('nbRegistMin', NumberType::class)
+            ->add('nbRegistMax', NumberType::class)
+            ->add('info', TextareaType::class)
+            ->add(
+                'location',
+                EntityType::class,
+                [
+                    'class' => TripLocation::class,
+                    'choice_label' => 'name',
+                    'attr' => ['class' => 'select2'],
+                ]
+            )
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-        ;
+            ->add('published', SubmitType::class, ['label' => 'Publier la sortie'])
+            ->add('drop', SubmitType::class, ['label' => 'Supprimer']);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Trip::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Trip::class,
+            ]
+        );
     }
 }
