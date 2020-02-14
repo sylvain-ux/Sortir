@@ -17,25 +17,35 @@ class LocationAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('name')
             ->add('search',TextType::class,[
                 'mapped' => false,
+                'required' => false,
+                'attr' => ['class' => 'search',],
             ])
-            ->add('name')
-            ->add('street')
-            ->add('longitude',HiddenType::class)
-            ->add('latitude',HiddenType::class)
-/*            ->add('city',TextType::class)*/
-            ->add('city', EntityType::class, array(
-                'choice_label' => function ($city) {
+            ->add('street',TextType::class,
+                ['attr' => ['class' => 'search_street'],]
+            )
+            ->add('longitude',HiddenType::class,
+            [
+            'attr' => ['class' => 'search_lng'],
+                ]
+            )
+            ->add('latitude',HiddenType::class,
+                [
+                    'attr' => ['class' => 'search_lat'],
+                ]
+            )
+            ->add('city',TextType::class,['mapped' => false,
+                  'attr' => ['class' => 'search_city'],
+                ])
+            ->add('zip_code',HiddenType::class,
+                [
+                    'mapped' => false,
+                    'attr' => ['class' => 'search_zip'],
+                ]
+            )
 
-                    return $city->getName() . ' ' . $city->getZipCode();
-                },
-                'choice_attr' => function($city) {
-                    return ['class' => 'zip_'.$city->getZipCode()];
-                },
-                'class' => 'App\Entity\City',
-                'attr' => ['class' => 'select2'],
-            ))
             ->add('save', SubmitType::class, ['label' => 'Ajouter']);
         ;
     }

@@ -3,7 +3,21 @@ function initializeAutocomplete(id) {
     if (element) {
         var autocomplete = new google.maps.places.Autocomplete(element, { types: ['geocode'] });
         google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+
     }
+}
+
+// Initialize and add the map
+function initMap(lat,lng) {
+    var uluru = {lat: lat, lng: lng};
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), {
+            zoom: 12,
+            center: uluru
+        });
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({position: uluru, map: map});
 }
 
 function onPlaceChanged() {
@@ -11,10 +25,8 @@ function onPlaceChanged() {
 
      let latitude = place.geometry.location.lat();
      let longitude = place.geometry.location.lng();
-    $('#location_add_longitude').val(longitude);
-    $('#location_add_latitude').val(latitude);
-
-console.log(place);
+    $('.search_lng').val(longitude);
+    $('.search_lat').val(latitude);
 
     for (var i in place.address_components) {
         var component = place.address_components[i];
@@ -42,11 +54,21 @@ console.log(place);
     }
 
 
-    $("#location_add_city").val(city);
-    $("#location_add_street").val(route);
+    $(".search_city").val(city);
+    $(".search_street").val(route);
+    $(".search_zip").val(zipcode);
+
+
+   // $('#location_add_search').blur(function() {
+        var lng = $('#location_add_longitude').val();
+        var lat = $('#location_add_latitude').val();
+        initMap(parseFloat(lat),parseFloat(lng));
+    //});
+
 
 }
 
 google.maps.event.addDomListener(window, 'load', function() {
     initializeAutocomplete('location_add_search');
+    initializeAutocomplete('trip_add_search');
 });

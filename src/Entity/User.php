@@ -106,10 +106,6 @@ class User implements UserInterface
         $this->avatar = $avatar;
     }
 
-
-
-
-
     /**
      * @ORM\Column(type="boolean")
      */
