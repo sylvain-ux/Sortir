@@ -1,0 +1,52 @@
+{% extends 'admin/admin-layout.html.twig' %}
+{% block title %}
+Liste des utilisateurs
+{% endblock %}
+{% block titre_page %}Utilisateurs{% endblock %}
+{% block breadcrumb %}Utilisateurs{% endblock %}
+{% block body %}
+ <div class="container-fluid">
+  <div class="card">
+   <div class="card-body">
+
+<div class="table-responsive">
+  <table id="userTable" class="table table-bordered  table-hover">
+   <thead class="thead-light">
+   <tr>
+    <th>#</th>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Email</th>
+    <th>actif</th>
+    <th>role</th>
+    <th>Actions</th>
+   </tr>
+   </thead>
+   <tbody>
+   {%  for user in allUsers %}
+    <tr>
+     <td>{{ user.id }}</td>
+     <td>{{ user.name }}</td>
+     <td>{{ user.firstname }}</td>
+     <td>{{ user.email }}</td>
+     <td>{{ user.actif }}</td>
+     <td>
+      {% set roles = user.getRoles() %}
+      {% for role in roles %}
+       {{ role }}
+      {% endfor %}
+
+     </td>
+     <td><a href="{{ path('admin_user_update',{ 'id': user.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
+    </tr>
+   {% endfor %}
+   </tbody>
+  </table>
+   </div>
+   </div>
+  </div>
+ </div>
+{% endblock %}
+
+
+

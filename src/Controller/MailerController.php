@@ -1,34 +1,47 @@
 <?php
 
+// src/Controller/MailerController.php
 namespace App\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MailerController extends AbstractController
 {
     /**
-     * @Route("/email", name="send_email")
+     * @Route("/email/send")
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function sendEmail(MailerInterface $mailer)
     {
         $email = (new Email())
-            ->from('hello@example.com')
+            ->from('contact@guillaume-bex.fr')
             ->to('guillaume.bex44@gmail.com')
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')
             //->replyTo('fabien@example.com')
             //->priority(Email::PRIORITY_HIGH)
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->subject('youhou')
+            ->text('mail envoyé')
+            ->html('<p>trop <strong>cool</strong></p>');
 
-        /** @var Symfony\Component\Mailer\SentMessage $sentEmail */
         $sentEmail = $mailer->send($email);
+        return $this->render('main/index.html.twig');
         // $messageId = $sentEmail->getMessageId();
 
-        return $this->render('admin/index.html.twig');
+
+/*        $to      = 'guillaume.bex44@gmail.com';
+        $subject = 'le sujet';
+        $message = 'Bonjour !';
+        $headers = 'From: contact@guillaume-bex.fr' . "\r\n" .
+                   'Reply-To: contact@guillaume-bex.fr' . "\r\n" .
+                   'X-Mailer: PHP/' . phpversion();
+
+        mail($to, $subject, $message, $headers);*/
+
+        return $this->render('mailer/index.html.twig');
+
     }
 }
