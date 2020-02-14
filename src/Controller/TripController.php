@@ -68,8 +68,10 @@ class TripController extends AbstractController
             //Ajout d'un status par défaut pour la sortie sélectionée
             $this->addStateToTrip($entityManager, $trip->getId());
 
-            //Ajout de l'organisateur à la sortie nouvellement créée
-            $this->addUserToTrip($entityManager, $trip->getId());
+//            //Ajout de l'organisateur à la sortie nouvellement créée
+//            $this->addUserToTrip($entityManager, $trip->getId());
+
+
             return $this->redirectToRoute("home");
         }
 

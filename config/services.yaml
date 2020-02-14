@@ -25,3 +25,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # dans la classe UpdateStateCommand, le constructeur fait un lien entre le logger (au moment de sa déclaration) et le channel qui nous
+    # servira de lien avec le services.yaml
+    App\Command\UpdateStateCommand:
+        tags:
+            - { name: monolog.logger, channel: updatestate }

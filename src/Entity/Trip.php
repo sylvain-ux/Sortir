@@ -287,7 +287,7 @@ class Trip
     {
         foreach ($this->getUsers() as $us){
             // Si l'utilisateur connecté est déjà inscrit pour la sortie et qu'il n'est pas l'organisateur de celle-ci, il peut se désister
-            if($us->getId() == $user->getId() and $this->getUser()->getId() != $user->getId()){
+            if($us->getId() == $user->getId()){         // and $this->getUser()->getId() != $user->getId()){
                 return true;
             }
         }
@@ -296,7 +296,7 @@ class Trip
 
 
     /**
-     * Function whose check if the current user is not yet subscribed to the trip so he can subscribed for tit.
+     * Function whose check if the current user is not yet subscribed to the trip so he can subscribed for it.
      * @param UserInterface $user
      * @return bool
      */
@@ -304,6 +304,9 @@ class Trip
     {
         if($nbInscrit == $nbMaxInscrit){
             return false;
+        }
+        if($nbInscrit == 0){
+            return true;
         }
         foreach ($this->getUsers() as $us){
             if($us->getId() != $user->getId() and $this->getUser()->getId() != $user->getId()){
