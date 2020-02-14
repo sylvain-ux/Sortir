@@ -1,16 +1,18 @@
-{% extends 'layout.html.twig' %}
+{% extends 'admin/admin-layout.html.twig' %}
 {% form_theme userFormView 'bootstrap_4_layout.html.twig' %}
 {% block title %}
-    Créer un utilisateur
+    Ajouter un utilisateur
 {% endblock %}
-
+{% block titre_page %}Ajouter un utilisateur{% endblock %}
+{% block breadcrumb %}Ajouter un utilisateur{% endblock %}
 {% block body %}
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <div class="border border-dark p-5">
-                    <h2 class="text-center">Ajouter un utilisateur</h2>
-                    {{ form(userFormView) }}
+            <div class="col-12 col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        {{ form(userFormView) }}
+                    </div>
                 </div>
             </div>
         </div>
