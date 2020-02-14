@@ -103,7 +103,7 @@
                                                 {# Si la sortie a passée la date d'inscription (sortie cloturée) on peut juste afficher le détail sortie#}
                                                 {% if trip.tripInProgressOrClosed(trip.state.id) %}
                                                     <a class="btn btn-info"
-                                                       href="{{ path('home', {'id':trip.id}) }}">Détail</a>
+                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
                                                 {% endif %}
 
 
@@ -124,7 +124,7 @@
                                                 {# La date de début et de cloture de la sortie sont supérieures à la date d'aujourd'hui alors la sortie est ouverte (status Ouvert) #}
                                                 {% if trip.tripOpen(trip.state.id, app.user) %}
                                                     <a class="btn btn-info"
-                                                       href="{{ path('home', {'id':trip.id}) }}">Détail</a>
+                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
                                                     <a class="btn btn-danger"
                                                        href="{{ path('home', {'id':trip.id}) }}">Annuler</a>
                                                 {% endif %}

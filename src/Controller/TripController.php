@@ -8,6 +8,7 @@ use App\Entity\Trip;
 use App\Entity\TripLocation;
 use App\Entity\User;
 use App\Form\CityType;
+use App\Form\TripDetailType;
 use App\Form\TripLocationType;
 use App\Form\TripType;
 use App\Form\TripUpdateType;
@@ -210,7 +211,7 @@ class TripController extends AbstractController
     }
 
     /**
-     * fonction permettant d'ajouter un status par défaut sur la sortie nouvellement créée
+     * fonction 1 : permettant d'ajouter un status par défaut sur la sortie nouvellement créée
      */
     private function addStateToTrip(EntityManagerInterface $entityManager, $id = 0)
     {
@@ -305,5 +306,24 @@ class TripController extends AbstractController
 
         return $this->render('trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
+
+    /**
+     * @Route("/detail/{id}", name="detail", requirements={"id" : "\d+"})
+     */
+    public function detailTrip(Request $request, EntityManagerInterface $entityManager, $id = 0)
+    {
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        if ($id) {
+            $trip = $tripRepository->find($id);
+        } else {
+            $trip = new Trip();
+        }
+        $tripForm = $this->createForm(TripDetailType::class, $trip);
+
+        $allUsers = $trip->getUsers();
+
+        return $this->render('trip/detail.html.twig', ['tripFormView' => $tripForm->createView(),'allUsers' => $allUsers]);
+    }
+
 
 }

@@ -217,15 +217,6 @@ class Trip
         return $this;
     }
 
-//    public function removeTrip(int $trip): self
-//    {
-//        if ($this->id == $trip ) {
-//            $this->removeTrip($trip);
-//        }
-//
-//        return $this;
-//    }
-
     public function getUser(): ?User
     {
         return $this->user;
