@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,12 @@ class TripAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
+            ->add('name')
+            ->add('search',TextType::class,[
+                'mapped' => false,
+                'attr' => ['class' => 'search'],
+            ])
+/*            ->add(
                 'location',
                 EntityType::class,
                 [
@@ -29,10 +35,10 @@ class TripAddType extends AbstractType
                     'choice_label' => 'name',
                     'attr'         => ['class' => 'select2'],
                     'help_html'     => true,
-                    'help' => 'Vous pouvez créer un nouveau lieu s\'il n\'existe pas, <a href="" data-toggle="modal" data-target="#locationModal" class="btn btn-sm btn-primary">cliquez ici</a>',
                 ]
-            )
-            ->add('name')
+            )*/
+
+            ->add('city',TextType::class,['mapped' => false])
             ->add('dateTimeStart', DateTimeType::class,
                     ['label' => 'Date de la sortie','widget' => 'single_text','data' => new \DateTime("now"),'html5' => true ]
             )
@@ -55,8 +61,6 @@ class TripAddType extends AbstractType
                 ]
             )
             ->add('info', TextareaType::class)
-            /*            ->add('reason',TextareaType::class)*/
-            //->add('users')
             ->add(
                 'user',
                 EntityType::class,array(
