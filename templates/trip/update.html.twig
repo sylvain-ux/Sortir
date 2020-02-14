@@ -11,7 +11,9 @@
                     <h2 class="text-center">Modifier une sortie</h2>
                     {{ form(tripFormView) }}
                     <a class="btn btn-info" href="{{ path('home') }}">Publier</a>
-                    <a class="btn btn-danger" href="{{ path('home') }}">Supprimer</a>
+{#                    {% for trip in allTrip %}#}
+                        <a class="btn btn-danger" href="{{ path('trip_removeTrip') }}">Supprimer</a>
+{#                    {% endfor %}#}
                     <a class="btn btn-secondary" href="{{ path('home') }}">Annuler</a>
                 </div>
 

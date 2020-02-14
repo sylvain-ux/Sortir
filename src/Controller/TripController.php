@@ -47,9 +47,7 @@ class TripController extends AbstractController
         $trip->setUser($user);
         $school = $user->getSchool();
 
-
         $tripForm = $this->createForm(TripType::class, $trip);
-
 
         $tripForm->handleRequest($request);
 
@@ -66,10 +64,11 @@ class TripController extends AbstractController
             );
 
             //Ajout d'un status par défaut pour la sortie sélectionée
-   //         $this->addStateToTrip($entityManager, $trip->getId());
+            //         $this->addStateToTrip($entityManager, $trip->getId());
 
             //Ajout de l'organisateur à la sortie nouvellement créée
             $this->addUserToTrip($entityManager, $trip->getId());
+
             return $this->redirectToRoute("home");
         }
 
@@ -92,13 +91,11 @@ class TripController extends AbstractController
     public function createLocation(Request $request, EntityManagerInterface $entityManager)
     {
 
-
         $location = new TripLocation();
 
         $trip_LocationForm = $this->createForm(TripLocationType::class, $location);
 
         $trip_LocationForm->handleRequest($request);
-
 
         if ($trip_LocationForm->isSubmitted() && $trip_LocationForm->isValid()) {
 
@@ -129,7 +126,7 @@ class TripController extends AbstractController
      * Fonction permettant d'ajouter un utilisateur sur la sortie sélectionnée par l'utilisateur
      * @Route("/inscription/{id}", name="inscription", requirements={"id" : "\d+"})
      */
-    public function addUserToTrip(EntityManagerInterface $entityManager,$id=0)
+    public function addUserToTrip(EntityManagerInterface $entityManager, $id = 0)
     {
         //Je récupère l'utilisateur courant
         $currentUser = $this->getUser();
@@ -147,7 +144,6 @@ class TripController extends AbstractController
         $entityManager->persist($currentTrip);
         $entityManager->flush();
 
-
         //Message de success
         $this->addFlash('success', 'Vous êtes inscrit sur la sortie');
 
@@ -158,11 +154,10 @@ class TripController extends AbstractController
     /**
      * @Route("/unsubscribe/{id}", name="unsubscribe", requirements={"id":"\d+"})
      */
-    public function remove(EntityManagerInterface $entityManager, $id=0)
+    public function remove(EntityManagerInterface $entityManager, $id = 0)
     {
         //Je récupère l'utilisateur courant
         $currentUser = $this->getUser();
-
         $tripRepository = $entityManager->getRepository(Trip::class);
 
         //Je récupère la sortie actuelle
@@ -186,12 +181,10 @@ class TripController extends AbstractController
     /**
      * fonction permettant d'ajouter un status par défaut sur la sortie nouvellement créée
      */
-    private function addStateToTrip(EntityManagerInterface $entityManager, $id=0)
+    private function addStateToTrip(EntityManagerInterface $entityManager, $id = 0)
     {
         //Je crée un status vide
         $state = new State();
-
-
 
         $tripRepository = $entityManager->getRepository(Trip::class);
 
@@ -200,7 +193,6 @@ class TripController extends AbstractController
 
         //J'injecte le status par défaut dans la sortie actuelle
         $currentTrip->setStatus($state);
-
 
         //MaJ BDD
         $entityManager = $this->getDoctrine()->getManager();
@@ -220,7 +212,7 @@ class TripController extends AbstractController
         } else {
             $trip = new Trip();
         }
-        $tripForm = $this->createForm(TripUserUpdateType::class,$trip);
+        $tripForm = $this->createForm(TripUserUpdateType::class, $trip);
         $tripForm->handleRequest($request);
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
@@ -234,6 +226,39 @@ class TripController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
+
         return $this->render('trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
+
+
+    /**
+     * @Route("/removeTrip/{id}", name="removeTrip", requirements={"id":"\d+"})
+     */
+    public function removeTrip(EntityManagerInterface $entityManager, $id = 0)
+    {
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $tripRepository->findAll();
+
+
+        //Je récupère la sortie actuelle
+        $currentTrip = $tripRepository->find($id);
+
+        dump($currentTrip);
+        die();
+
+        //je supprime la sortie
+        $currentTrip->removeTrip($currentTrip);
+
+        //MaJ BDD
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($currentTrip);
+        $entityManager->flush();
+
+        //Message de success
+        $this->addFlash('success', 'Vous avez supprimé sur la sortie');
+        return $this->redirectToRoute('home');
+
+
+    }
+
 }

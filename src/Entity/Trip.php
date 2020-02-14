@@ -217,6 +217,16 @@ class Trip
         return $this;
     }
 
+    public function removeTrip(int $trip): self
+    {
+        if ($this->contains($trip)) {
+            $this->removeElement($trip);
+            $trip->removeTrip($this);
+        }
+
+        return $this;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
