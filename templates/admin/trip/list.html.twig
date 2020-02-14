@@ -1,0 +1,55 @@
+{% extends 'admin/admin-layout.html.twig' %}
+{% block title %}
+Liste des sorties
+{% endblock %}
+{% block titre_page %}Sorties{% endblock %}
+{% block breadcrumb %}Sorties{% endblock %}
+{% block body %}
+ <div class="container-fluid">
+  <div class="card">
+   <div class="card-body">
+
+<div class="table-responsive">
+ <table id="tripTable" class="table table-bordered  table-hover">
+  <thead class="thead-light">
+  <tr>
+   <th>#</th>
+   <th>Nom</th>
+   <th>date</th>
+   <th>fin inscription</th>
+   <th>durée</th>
+   <th>nb max</th>
+   <th>nb min</th>
+   <th>organisateur</th>
+   <th>lieu</th>
+   <th>ville</th>
+   <th>actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  {%  for trip in allTrips %}
+
+   <tr>
+    <td>{{ trip.id }}</td>
+    <td>{{ trip.name }}</td>
+    <td>{{ trip.dateTimeStart|date("D d M y - H:i") }}</td>
+    <td>{{ trip.registDeadline|date("D d M y - H:i") }}</td>
+    <td>{{ trip.duration }} mn</td>
+    <td>{{ trip.nbRegistMax }}</td>
+    <td>{{ trip.nbRegistMin }}</td>
+    <td>{{ trip.user.name }}</td>
+    <td>{{ trip.location.street }}</td>
+    <td>{{ trip.location.name }}</td>
+    <td><a href="{{ path('admin_trip_update',{ 'id': trip.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+   </div>
+   </div>
+  </div>
+ </div>
+{% endblock %}
+
+
+

@@ -51,6 +51,16 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities','allTrips'));
     }
 
+    /**
+     * @Route("/user/list", name="user_list")
+     */
+    public function listUser(EntityManagerInterface $entityManager)
+    {
+        $userRepository = $entityManager->getRepository(User::class);
+        $allUsers = $userRepository->findAll();
+
+        return $this->render('admin/user/list.html.twig',compact('allUsers'));
+    }
 
     /**
      * @Route("/user/add/{id}", name="user_add", requirements={"id" : "\d+"})
@@ -211,6 +221,16 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/location/list", name="location_list")
+     */
+    public function listLocation(EntityManagerInterface $entityManager)
+    {
+        $userRepository = $entityManager->getRepository(TripLocation::class);
+        $allLocations = $userRepository->findAll();
+
+        return $this->render('admin/location/list.html.twig',compact('allLocations'));
+    }
+    /**
      * @Route("/location/add/{id}", name="location_add", requirements={"id" : "\d+"})
      */
     public function addLocation(Request $request, EntityManagerInterface $entityManager, $id = 0)
@@ -283,6 +303,17 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_home');
         }
         return $this->render('admin/city/add.html.twig', ['cityFormView' => $cityForm->createView()]);
+    }
+
+    /**
+     * @Route("/trip/list", name="trip_list")
+     */
+    public function listTrip(EntityManagerInterface $entityManager)
+    {
+        $userRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $userRepository->findAll();
+
+        return $this->render('admin/trip/list.html.twig',compact('allTrips'));
     }
 
     /**
