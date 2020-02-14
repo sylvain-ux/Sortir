@@ -80,10 +80,12 @@
                                                     ✅
                                                 {% endif %}
                                             {% endfor %}
+                                            {% endif %}
 
 
                                         </td>
-                                        <td>{{ trip.user.name }}</td>
+
+                                        <td><a href="{{ path('user_detail', {'id' : trip.user.id}) }}">{{ trip.user.name }}</a></td>
                                         <td>
                                             {# Si la sortie n'est pas en mode création, on peut afficher tous les boutons optionnels #}
                                             {% if trip.isNotInProgress(trip.state.id, app.user) %}
@@ -105,6 +107,7 @@
                                                     <a class="btn btn-info"
                                                        href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
                                                 {% endif %}
+
 
 
 
