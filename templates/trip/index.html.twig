@@ -24,6 +24,11 @@
 {% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
+{#    {% for e in searchForm %}#}
+{#        {{ form(e.dateStart) }}#}
+
+{#    {% endfor %}#}
+
     <style>
         .example-wrapper {
             margin: 1em auto;
@@ -47,6 +52,8 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
                             <h2 class="text-center">Liste des sorties</h2>
+                            <input class="form-control mb-4" id="tableSearch" type="text"
+                                   placeholder="Type something to search list items">
                             <table id="userTable" class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -151,7 +158,6 @@
                                         sortie</a></p>
                             {% endif %}
                         </div>
-
                         <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab-tab">
                             <h2 class="text-center">Sorties</h2>
                         </div>
@@ -162,6 +168,10 @@
         </div>
     </div>
 
+{% endblock %}
 
+{% block javascripts %}
+
+<script scr="{{ asset('assets/js/search.js') }}"> </script>
 
 {% endblock %}
