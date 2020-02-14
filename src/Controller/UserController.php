@@ -107,7 +107,7 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success','Votre mot de passe a  bien été changé !');
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('user_profil');
 
         }
 
