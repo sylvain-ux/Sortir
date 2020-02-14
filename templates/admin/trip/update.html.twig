@@ -1,14 +1,16 @@
-{% extends 'layout.html.twig' %}
+{% extends 'admin/admin-layout.html.twig' %}
 {% form_theme tripFormView 'bootstrap_4_layout.html.twig' %}
 {% block title %}
     Modifier une sortie
 {% endblock %}
+{% block titre_page %}Modifier une sortie{% endblock %}
+{% block breadcrumb %}Modifier une sortie{% endblock %}
 {% block body %}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="border border-dark p-5">
-                    <h2 class="text-center">Modifier une sortie</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-5">
+            <div class="card">
+                <div class="card-body">
                     {{ form(tripFormView) }}
                 </div>
 

@@ -1,0 +1,87 @@
+<aside class="left-sidebar" data-sidebarbg="skin5">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{path('admin_home')}}" aria-expanded="false">
+                        <i class="mdi mdi-av-timer"></i>
+                        <span class="hide-menu">Tableau de bord</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="mdi mdi-account-multiple"></i>
+                        <span class="hide-menu">Utilisateurs</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{path('admin_user_list')}}" class="sidebar-link">
+                                <i class="mdi mdi-account-multiple"></i>
+                                <span class="hide-menu"> Liste </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ path('admin_user_add') }}" class="sidebar-link">
+                                <i class="mdi mdi-library-plus"></i>
+                                <span class="hide-menu"> Ajouter </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="mdi mdi-map-marker-radius"></i>
+                        <span class="hide-menu">Sorties</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{path('admin_trip_list')}}" class="sidebar-link">
+                                <i class="mdi mdi-map-marker-multiple"></i>
+                                <span class="hide-menu"> Liste </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ path('admin_trip_add') }}" class="sidebar-link">
+                                <i class="mdi mdi-library-plus"></i>
+                                <span class="hide-menu"> Ajouter </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="mdi mdi-home-map-marker"></i>
+                        <span class="hide-menu">Lieux</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{path('admin_location_list')}}" class="sidebar-link">
+                                <i class="mdi mdi-home-map-marker"></i>
+                                <span class="hide-menu"> Liste </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ path('admin_location_add') }}" class="sidebar-link">
+                                <i class="mdi mdi-library-plus"></i>
+                                <span class="hide-menu"> Ajouter </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <hr>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="{{ path('home') }}" aria-expanded="false">
+                        <i class="mdi mdi-home-outline"></i>
+                        <span class="hide-menu">Accueil Utilisateurs</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

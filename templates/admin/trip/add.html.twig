@@ -1,19 +1,16 @@
-{% extends 'layout.html.twig' %}
+{% extends 'admin/admin-layout.html.twig' %}
 {% form_theme tripFormView 'bootstrap_4_layout.html.twig' %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/select2-bootstrap4.min.css') }}">
-{% endblock %}
 {% block title %}
-    Créer une sortie
+    Ajouter une sortie
 {% endblock %}
-
+{% block titre_page %}Ajouter une sortie{% endblock %}
+{% block breadcrumb %}Ajouter une sortie{% endblock %}
 {% block body %}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="border border-dark p-5">
-                    <h2 class="text-center">Ajouter une sortie</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-5">
+            <div class="card">
+                <div class="card-body">
                     {{ form(tripFormView) }}
                 </div>
             </div>
@@ -34,15 +31,13 @@
     </div>
 
 {% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('assets/js/select2.full.min.js') }}"></script>
-    <script>
-        $(document).ready( function () {
-            $('.select2').select2({
-                theme: 'bootstrap4',
-            });
-        });
-    </script>
-{% endblock %}
+    {% block javascripts %}
+
+
+        <!-- Include Google Maps JS API -->
+        <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCc4FIU239oleSDmVnMUvl2c7rUyLFYSW0"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/autocomplete.js') }}"></script>
+
+    {% endblock %}
 
 

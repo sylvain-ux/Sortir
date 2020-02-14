@@ -82,30 +82,31 @@
                                         <td> {{ trip.state.info }}</td>
                                         <td>
                                             {% if app.user.id is defined %}
-                                            {% for u in trip.users %}
-                                                {% if u.id == app.user.id %}
-                                                    ✅
-                                                {% endif %}
-                                            {% endfor %}
+                                                {% for u in trip.users %}
+                                                    {% if u.id == app.user.id %}
+                                                        <a class="btn neumorphism-3"><i class="fas fa-check fa-1x"></i></a>
+                                                    {% endif %}
+                                                {% endfor %}
                                             {% endif %}
 
 
                                         </td>
 
-                                        <td><a href="{{ path('user_detail', {'id' : trip.user.id}) }}">{{ trip.user.name }}</a></td>
+                                        <td>
+                                            <a href="{{ path('user_detail', {'id' : trip.user.id}) }}">{{ trip.user.name }}</a>
+                                        </td>
                                         <td>
                                             {# Si la sortie n'est pas en mode création, on peut afficher tous les boutons optionnels #}
                                             {% if trip.isNotInProgress(trip.state.id, app.user) %}
 
                                                 {# Si l'utilisateur est inscrit, il peut se désister #}
                                                 {% if trip.isSubscribed(app.user) %}
-                                                    <a class="btn btn-secondary"
-                                                       href="{{ path('trip_unsubscribe', {'id':trip.id}) }}">Se
-                                                        désister</a>
+                                                    <a class="btn neumorphism-2"
+                                                       href="{{ path('trip_unsubscribe', {'id':trip.id}) }}"><span>Se désister</span></a>
                                                     {# Sinon si l'utilisateur n'est pas inscrit, il peut s'inscrire. On vérifie aussi si le nombre d'inscrit est inférieur au nombre maximum. Sinon l'état passera à cloturer #}
                                                 {% elseif trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
-                                                    <a class="btn btn-primary"
-                                                       href="{{ path('trip_inscription', {'id':trip.id }) }}">S'inscrire</a>
+                                                    <a class="btn neumorphism-1"
+                                                       href="{{ path('trip_inscription', {'id':trip.id }) }}"><span>S'inscrire</span></a>
                                                 {% endif %}
 
                                                 {# Si la sortie est en cours, l'utilisateur peut afficher le détail #}
@@ -135,8 +136,11 @@
                                                 {% if trip.tripOpen(trip.state.id, app.user) %}
                                                     <a class="btn btn-info"
                                                        href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-                                                    <a class="btn btn-danger"
-                                                       href="{{ path('trip_cancel', {'id':trip.id}) }}">Annuler</a>
+                                                    {# Si la date d'aujoud'hui est inférieure à la date de début de la sortie + sa durée, alors je peux annuler la sortie en tant qu'organisateur #}
+                                                    {% if trip.isNotCanceled(app.user) %}
+                                                        <a class="btn btn-danger"
+                                                           href="{{ path('trip_cancel', {'id':trip.id}) }}">Annuler</a>
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endif %}
 

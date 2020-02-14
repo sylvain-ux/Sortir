@@ -1,68 +1,117 @@
-{% extends 'layout.html.twig' %}
+{% extends '/admin/admin-layout.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
 {% endblock %}
-{% block title %}Admin - Tableau de bord{% endblock %}
-
+{% block title %}Tableau de bord{% endblock %}
+{% block breadcrumb %}Tableau de bord{% endblock %}
+{% block titre_page %}Tableau de bord{% endblock %}
 {% block body %}
-
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-12 p-5">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="user-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Utilisateurs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="trip-tab" data-toggle="tab" href="#trips" role="tab" aria-controls="trips" aria-selected="false">Sorties</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="city-tab" data-toggle="tab" href="#cities" role="tab" aria-controls="trips" aria-selected="false">Villes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="location-tab" data-toggle="tab" href="#locations" role="tab" aria-controls="locations" aria-selected="false">Lieux</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="state-tab" data-toggle="tab" href="#states" role="tab" aria-controls="states" aria-selected="false">États</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="school-tab" data-toggle="tab" href="#schools" role="tab" aria-controls="schools" aria-selected="false">Écoles</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="border border-dark p-5">
-                    <div class="tab-content" id="myTabContent">
-                        {{ include('admin/inc/tab-user.html.twig') }}
-                        {{ include('admin/inc/tab-trip.html.twig') }}
-                        {{ include('admin/inc/tab-city.html.twig') }}
-                        {{ include('admin/inc/tab-location.html.twig') }}
-                        {{ include('admin/inc/tab-state.html.twig') }}
-                        {{ include('admin/inc/tab-school.html.twig') }}
-
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex no-block align-items-center">
+                                    <div>
+                                        <i class="mdi mdi-account-multiple display-5 text-info"></i>
+                                        <p class="font-16 m-b-5">Utilisateurs</p>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <h1 class="font-light text-right">{{allUsers|length}}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 py-5">
+                                <div class="btn-group" role="group" aria-label="">
+                                <a href="{{ path('admin_user_list') }}" class="btn btn-sm btn-outline-info">Tous les utilisateurs</a>
+                                <a href="{{ path('admin_user_add') }}" class="btn btn-sm btn-outline-info">Ajouter un nouvel utilisateur</a>
+                                <a href="" class="btn btn-sm btn-outline-info disabled" disabled>Importer des utilisateurs</a>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="progress">
+                                    {% set userPercent = allUsers|length %}
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: {{userPercent}}%; height: 6px;" aria-valuenow="{{userPercent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
 
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex no-block align-items-center">
+                                    <div>
+                                        <i class="mdi mdi-map-marker-radius display-5  text-success"></i>
+                                        <p class="font-16 m-b-5">Sorties</p>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <p class="h1 font-light text-right">{{allTrips|length}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 py-5">
+                                <div class="btn-group" role="group" aria-label="">
+                                    <a href="{{ path('admin_trip_list') }}" class="btn btn-sm btn-outline-success">Toutes les sorties</a>
+                                    <a href="{{ path('admin_trip_add') }}" class="btn btn-sm btn-outline-success">Ajouter une nouvelle sortie</a>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="progress">
+                                    {% set tripPercent = allTrips|length %}
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{tripPercent}}%; height: 6px;" aria-valuenow="{{tripPercent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex no-block align-items-center">
+                                    <div>
+                                        <i class="mdi mdi-home-map-marker display-5  text-purple"></i>
+                                        <p class="font-16 m-b-5">Lieux</p>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <p class="h1 font-light text-right">{{allLocations|length}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 py-5">
+                                <div class="btn-group" role="group" aria-label="">
+                                    <a href="{{ path('admin_trip_list') }}" class="btn btn-sm btn-outline-purple">Tous les lieux</a>
+                                    <a href="{{ path('admin_trip_add') }}" class="btn btn-sm btn-outline-purple">Ajouter un nouveau lieu</a>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="progress">
+                                    {% set locPercent = allLocations|length %}
+                                    <div class="progress-bar bg-purple" role="progressbar" style="width: {{locPercent}}%; height: 6px;" aria-valuenow="{{locPercent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 {% endblock %}
 
 
-{% block javascripts %}
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('assets/js/select2.full.min.js') }}"></script>
-    <script>
-        $(document).ready( function () {
-            $('.table').DataTable();
-            $('#trip_add_location').select2();
-        });
-    </script>
-{% endblock %}
+        {% block javascripts %}
+
+        {% endblock %}

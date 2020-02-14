@@ -1,14 +1,16 @@
-{% extends 'layout.html.twig' %}
+{% extends 'admin/admin-layout.html.twig' %}
 {% form_theme userFormView 'bootstrap_4_layout.html.twig' %}
 {% block title %}
     Modifier un utilisateur
 {% endblock %}
+{% block titre_page %}Modifier un utilisateur{% endblock %}
+{% block breadcrumb %}Modifier un utilisateur{% endblock %}
 {% block body %}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="border border-dark p-5">
-                    <h2 class="text-center">Modifier un utilisateur</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-5">
+            <div class="card">
+                <div class="card-body">
                     {{ form(userFormView) }}
                     <hr>
                     <p class="text-right">
@@ -18,16 +20,17 @@
             </div>
         </div>
     </div>
-{% endblock %}
-{% block javascripts %}
-    <script>
-        function confirmation(){
-            var result = confirm("Vous souhaitez vraiment supprimer cet utilisateur ?");
-            if(result){
-                // Delete logic goes here
+</div>
+    {% endblock %}
+    {% block javascripts %}
+        <script>
+            function confirmation(){
+                var result = confirm("Vous souhaitez vraiment supprimer cet utilisateur ?");
+                if(result){
+                    // Delete logic goes here
+                }
             }
-        }
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}
 
 

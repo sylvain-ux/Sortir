@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
@@ -79,7 +80,31 @@ class User implements UserInterface
 //        $this->oldPassword = $oldPassword;
 //    }
 
+    /**
+     * @Assert\Image(
+     *     maxWidth = 1000,
+     *     maxHeight = 1000,
+     * )
+     * @ORM\Column(type="string", length=1024)
+     */
 
+    private $avatar;
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar): void
+    {
+        $this->avatar = $avatar;
+    }
 
     /**
      * @ORM\Column(type="boolean")
@@ -193,6 +218,8 @@ class User implements UserInterface
 
         return $this;
     }
+
+
 
     /**
      * @return Collection|Trip[]
