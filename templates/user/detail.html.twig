@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Profil Organisateur{% endblock %}
+
+{% block body %}
+
+
+    <div class="container-fluid pt-5 mt-5">
+        <h1>Profil organisateur</h1>
+    <dl>
+        <dt>Prénom</dt>
+        <dd>{{organizer.firstname }}</dd>
+
+        <dt>Nom</dt>
+        <dd>{{organizer.name }}</dd>
+
+        <dt>Téléphone</dt>
+        <dd>{{organizer.phone }}</dd>
+
+        <dt>Email</dt>
+        <dd>{{organizer.email }}</dd>
+
+        <dt>Ecole de rattachement</dt>
+        <dd>{{organizer.school.name}}</dd>
+    </dl>
+
+    <a class="btn btn-primary" href="{{path('home')  }}" >Retour</a>
+
+
+
+{% endblock %}

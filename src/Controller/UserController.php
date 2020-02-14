@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ResetPassword;
+use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\UserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,10 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+
+
+/**
+ * @Route("/user", name="user_")
+ */
+
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user_")
+     * @Route("/", name="index")
      */
     public function index()
     {
@@ -100,73 +107,58 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success','Votre mot de passe a  bien été changé !');
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('user_profil');
 
         }
 
 
         return $this->render('user/password.html.twig', ['mdpFormView' => $mdpForm->createView()]);
+    }
 
 
+    /**
+     * @route("/detail/{id}", name="detail", requirements={"id": "\d+"})
+     */
 
+    public function detail($id, EntityManagerInterface $entityManager)
 
+    {
 
+        $userRepo = $entityManager->getRepository(User::class);
+        $organizer = $userRepo->find($id);
 
-
-
-
-
-
-
-
-
-
-
-//       $user = $this->getUser();
-//       $mdpForm = $this->createForm(ChangePasswordType::class, $user);
-//       $mdpForm ->handleRequest($request);
-//
-//        if ($mdpForm->isSubmitted() && $mdpForm->isValid()){
-//
-//                $user->setPassword(
-//                    $passwordEncoder->encodePassword(
-//                        $user,
-//                        $mdpForm->get('newPassword')->getData()
-//                    ));
-//
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->persist($user);
-//            $entityManager->flush();
-//
-//            $this->addFlash('success', 'Votre mot de passe a  bien été changé !');
-//            return $this->redirectToRoute('login');
-//
-//        }
-//
-//
-//
-//        return $this->render('user/password.html.twig', ['mdpFormView' => $mdpForm->createView()]);
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return $this->render('user/detail.html.twig', compact('organizer'));
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

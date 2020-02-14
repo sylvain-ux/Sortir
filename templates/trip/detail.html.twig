@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>Créer une sortie</h1>
+    <h1>Détail de la sortie</h1>
 
     {{ form_start(tripFormView) }}
     <br>
@@ -41,12 +41,35 @@
     {{ form_widget(tripFormView.school) }}
     {{ form_errors(tripFormView.school) }}
     <br>
-
-    <br>
     {{ form_label(tripFormView.location) }}
     {{ form_widget(tripFormView.location) }}
     {{ form_errors(tripFormView.location) }}
-    <a href="createLocation">Ajouter un nouveau lieu</a>
     <br>
     {{ form_end(tripFormView) }}
+
+
+<h2>Liste des participants inscrits :</h2>
+<table id="userTable" class="table table-bordered">
+    <thead>
+    <tr>
+
+        <th>Nom</th>
+        <th>Prenom</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for u in allUsers %}
+
+    <tr>
+
+       <td>{{ u.name }}</td>
+        <td>{{ u.firstName }}</td>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+    <a class="btn btn-secondary" href="{{ path('home') }}">Retour</a>
+
+
 {% endblock %}
