@@ -8,6 +8,7 @@ use App\Form\ChangePasswordType;
 use App\Form\UserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -68,6 +69,33 @@ class UserController extends AbstractController
 
         // traitement après soumission du form
         if ($userProfil->isSubmitted() && $userProfil->isValid()) {
+
+        // je récupère la valeur du champs avatar
+            $avatarFile = $userProfil->get('avatar')->getData();
+
+
+            if ($avatarFile) {
+                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
+
+              //  $newFilename = 'avatar'.$user->getId().'.'.$avatarFile->guessExtension();
+
+                try{
+                    $avatarFile->move(
+                        sprintf($this->getParameter('avatar_directory'),$user->getId()),
+                        $newFilename
+                    );
+                }catch (FileException $e) {
+
+                }
+                  $user->setAvatar($newFilename);
+
+
+
+
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -75,6 +103,7 @@ class UserController extends AbstractController
             $this->addFlash('success', 'profil modifié !');
 
             return $this->redirectToRoute('home');
+
         }
 
 
