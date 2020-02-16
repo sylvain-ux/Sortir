@@ -84,6 +84,15 @@ class AdminController extends AbstractController
 
             $userId = $user->getId();
 
+            //send email sendEmail(MailerInterface $mailer, $from, $to, $object, $body)
+            $response = $this->forward('App\Controller\MailerController::sendEmail', [
+                'from'  => 'info@sortir.com',
+                'to' => $userForm->get('email')->getData(),
+                'object' => 'compte créé',
+                'body' => '
+<p>votre compte vient d\'etre créé !</p>',
+//<p>votre mot de passe est <strong>'.$userForm->get('plainPassword')->getData().'</strong></p>',
+            ]);
             $this->addFlash('success', 'utilisateur ajouté !');
 
             return $this->redirectToRoute('admin_home');

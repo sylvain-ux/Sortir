@@ -14,34 +14,22 @@ class MailerController extends AbstractController
      * @Route("/email/send")
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function sendEmail(MailerInterface $mailer)
+    public function sendEmail(MailerInterface $mailer, $from, $to, $object, $body)
     {
         $email = (new Email())
-            ->from('contact@guillaume-bex.fr')
-            ->to('guillaume.bex44@gmail.com')
+            ->from($from)
+            ->to($to)
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')
             //->replyTo('fabien@example.com')
             //->priority(Email::PRIORITY_HIGH)
-            ->subject('youhou')
-            ->text('mail envoyé')
-            ->html('<p>trop <strong>cool</strong></p>');
+            ->subject($object)
+            ->text($body)
+            ->html('<p>'.$body.'</p>');
 
         $sentEmail = $mailer->send($email);
-        return $this->render('main/index.html.twig');
+        return true;
         // $messageId = $sentEmail->getMessageId();
-
-
-/*        $to      = 'guillaume.bex44@gmail.com';
-        $subject = 'le sujet';
-        $message = 'Bonjour !';
-        $headers = 'From: contact@guillaume-bex.fr' . "\r\n" .
-                   'Reply-To: contact@guillaume-bex.fr' . "\r\n" .
-                   'X-Mailer: PHP/' . phpversion();
-
-        mail($to, $subject, $message, $headers);*/
-
-        return $this->render('mailer/index.html.twig');
 
     }
 }
