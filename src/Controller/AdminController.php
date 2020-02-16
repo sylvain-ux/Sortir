@@ -250,21 +250,31 @@ class AdminController extends AbstractController
         if ($locationForm->isSubmitted() && $locationForm->isValid()) {
             //check if city in db
             $city = $locationForm->get('city')->getData();
+            $zip_code = $locationForm->get('zip_code')->getData();
             $checkRepository = $entityManager->getRepository(City::class);
             $cityExists = $checkRepository->findOneByName($city);
             if(!$cityExists){
-                $locationForm = $this->createForm(LocationAddType::class, $location);
-                $this->addFlash('danger', 'Cette ville ne semble pas être dans la limite');
-                return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
+                $newCity = new City();
+                $newCity->setName($city);
+                $newCity->setZipCode($zip_code);
+                //insert new city in db
+                $entityManager->persist($newCity);
+                $entityManager->flush();
+                //$cityId = $newCity->setId();
+                $location->setCity($newCity);
+                //$locationForm = $this->createForm(LocationAddType::class, $location);
+                //$this->addFlash('danger', 'Cette ville ne semble pas être dans la limite');
+                //return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
             }else {
                 $location->setCity($cityExists);
+            }
                 $entityManager->persist($location);
                 $entityManager->flush();
                 $locationId = $location->getId();
                 $this->addFlash('success', 'Lieu ajouté !');
 
-                return $this->redirectToRoute('admin_home');
-            }
+                return $this->redirectToRoute('admin_location_list');
+            
         }
         return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
     }
