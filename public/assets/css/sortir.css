@@ -1,9 +1,19 @@
+/*colors*/
+.bleu-eni{color:#134a80}
+.bg_bleu_eni{background-color: #134a80}
+
+
+/*navbar*/
+.navbar-brand img{max-width:100px}
+.navbar-main{}
+
 .alerts-container{position:fixed;bottom:50px;right:15px;max-width:40%;}
 .alerts-container .alert{border-radius:0;}
 .alerts-container .alert .alert-danger{background:rgba(248,215,218,0.7)!important}
 .alerts-container .alert .alert-success{background:rgba(212,237,218,0.7)!important}
 
 
+<<<<<<< HEAD
 /*table{*/
 /*    border-collapse: separate;*/
 /*}*/
@@ -14,6 +24,15 @@
 /*    display: flex;*/
 /*    background: #E0E5EC;*/
 /*}*/
+=======
+/*home*/
+section.main{
+    padding:50px 0;
+    min-height:80vh;
+    background-color: #dae0e5;
+    /*background:url(bg/nantes.jpg) no-repeat center center / cover;*/
+}
+>>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
 
 
 /*.fa-check {*/
@@ -21,6 +40,7 @@
 /*}*/
 
 
+<<<<<<< HEAD
 /*.neumorphism-0{*/
 /*    margin: 2px;*/
 /*    border-radius: 5px;*/
@@ -37,6 +57,8 @@
 /*    border-radius: 5px;*/
 /*    background: #E0E5EC;*/
 
+=======
+>>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
 /*.neumorphism-1{*/
 /*    margin: 10px;*/
 /*    border-radius: 5px;*/
@@ -106,4 +128,9 @@
 
 /*map*/
 #map{position: relative;height:400px;width:100%}
-
+#mapLoc{position:relative;height:70vh;width:100%}
+#map .mapboxgl-marker, .mapboxgl-marker {
+    height: 60px;
+    width: 20px;
+    background: url(marker.png) no-repeat;
+}
