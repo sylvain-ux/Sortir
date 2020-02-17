@@ -10,7 +10,9 @@
     <h1>Mon  profil</h1>
     <div class="row">
         <div class="col-12 col-xl-6">
-            <img src="{{ asset('assets/images/avatars/') }}avatar{{ app.user.id }}.jpeg">
+            {% if app.user.avatar is not null %}
+            <img  class="img-fluid" src="{{ asset('users/' ~ app.user.id ~ '/avatar/' ~ app.user.avatar) }}">
+            {% endif %}
             <div class="form_container">
             {{ form (userFormView) }}
                 <a class="btn btn-secondary" href="{{path('home')  }}" >Annuler</a>
