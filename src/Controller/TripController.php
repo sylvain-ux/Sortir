@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\City;
+use App\Entity\School;
 use App\Entity\State;
 use App\Entity\Trip;
 use App\Entity\TripLocation;
@@ -39,6 +40,34 @@ class TripController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/map", name="map")
+     */
+    public function map(EntityManagerInterface $entityManager)
+    {
+        $schoolRepository = $entityManager->getRepository(School::class);
+        $allSchools = $schoolRepository->findAll();
+        $stateRepository = $entityManager->getRepository(State::class);
+        $allStates = $stateRepository->findAll();
+        $locationRepository = $entityManager->getRepository(TripLocation::class);
+        $allLocations = $locationRepository->findAll();
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $tripRepository->findAll();
+        $data = '{';
+foreach ($allLocations as $location){
+$data .=
+'{
+    "type": "Feature","geometry": {"type": "Point","coordinates": ['.$location->getLongitude().','.$location->getLatitude().']},
+    "properties": {"title": "'.$location->getName().'","address": "'.$location->getStreet().'"},
+},';
+}
+$data .= '}';
+        //$data = htmlspecialchars_decode($data);
+        //$data = htmlspecialchars_decode($data);
+        $data = preg_replace('~[\r\n]+~', '', $data);
+
+        return $this->render('trip/map.html.twig',compact('allSchools','allStates','allLocations','allTrips','data'));
+    }
 
     /**
      * @Route("/create", name="create")

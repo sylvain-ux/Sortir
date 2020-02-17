@@ -18,11 +18,9 @@
 {{ include ('inc/navbar.html.twig') }}
 
 
-<div class="container">
-
+<section class="container-fluid main">
 {% block body %}{% endblock %}
-
-</div>
+</section>
 
 <div class="alerts-container wow fadeInRight">
     {% for label, msgs in app.flashes %}
