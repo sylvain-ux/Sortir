@@ -52,59 +52,60 @@ class User implements UserInterface
      */
     private $password;
 
-
-//    /**
-//     *
-//     * !! nouvelle propriété de user qui ne correspond à aucune colonne
-//     * !! Cette propriété est indispensable pour le changement de mot de passe
-//     *
-//     * @SecurityAssert\UserPassword(
-//     *     message = "Wrong value for your current password"
-//     * )
-//     */
-//     protected $oldPassword;
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getOldPassword()
-//    {
-//        return $this->oldPassword;
-//    }
-//
-//    /**
-//     * @param mixed $oldPassword
-//     */
-//    public function setOldPassword($oldPassword): void
-//    {
-//        $this->oldPassword = $oldPassword;
-//    }
-
     /**
      * @Assert\Image(
      *     maxWidth = 1000,
      *     maxHeight = 1000,
      * )
-     * @ORM\Column(type="string", length=1024)
+     *
      */
 
-    private $avatar;
+    private $avatarField;
 
     /**
      * @return mixed
      */
-    public function getAvatar()
+    public function getAvatarField()
     {
-        return $this->avatar;
+        return $this->avatarField;
     }
 
     /**
-     * @param mixed $avatar
+     * @param mixed $avatarField
      */
-    public function setAvatar($avatar): void
+    public function setAvatarField($avatarField): void
     {
-        $this->avatar = $avatar;
+        $this->avatarField = $avatarField;
     }
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatarName;
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarName()
+    {
+        return $this->avatarName;
+    }
+
+    /**
+     * @param mixed $avatarName
+     */
+    public function setAvatarName($avatarName): void
+    {
+        $this->avatarName = $avatarName;
+    }
+
+
+
+
+
+
+
+
 
     /**
      * @ORM\Column(type="boolean")
