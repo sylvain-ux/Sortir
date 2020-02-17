@@ -20,7 +20,53 @@ class TripRepository extends ServiceEntityRepository
     }
 
 
+    public function findBySchoolID($id)
+    {
+        $entityManager = $this->getEntityManager();
 
+        $dql = <<<DQL
+SELECT t FROM App\Entity\Trip t WHERE t.school = :id
+DQL;
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter(':id', $id);
+        $result = $query->getResult();
+
+        return array_pop($result);
+    }
+
+    // Recherche en fonction des dates :
+
+//    .
+//.
+
+
+
+     //Recherche pour afficher les sorties dont je suis l'organisatreur/trice :
+    public function findByMyTrip($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = <<<DQL
+ SELECT t FROM App\Entity\Trip t WHERE  t.users = :id
+ DQL;
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter(':id', $id);
+        $result = $query->getResult();
+
+        return array_pop($result);
+    }
+
+
+    public function findByPastTrip()
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = <<<DQL
+SELECT t FROM App\Entity\Trip t WHERE t.dateTimeStart < CURRENT_DATE
+DQL;
+        $query = $entityManager->createQuery($dql);
+        $result = $query->getResult();
+
+        return array_pop($result);
+    }
 
 
     // /**

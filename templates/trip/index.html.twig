@@ -93,10 +93,6 @@
                             {{ form_widget(searchFormView.TripPast) }}
                             {{ form_errors(searchFormView.TripPast) }}
                             <br>
-                            {{ form_label(searchFormView.TripPast) }}
-                            {{ form_widget(searchFormView.TripPast) }}
-                            {{ form_errors(searchFormView.TripPast) }}
-                            <br>
                             {{ form_end(searchFormView) }}
 
                             <table id="userTable" class="table table-bordered">
@@ -115,8 +111,6 @@
                                 </thead>
                                 <tbody>
                                 {% for trip in allTrips %}
-
-
 
                                     <tr>
                                         <td>{{ trip.id }}</td>
@@ -221,4 +215,15 @@
 
     <script scr="{{ asset('assets/js/search.js') }}"></script>
 
+    <script >// Filter table
+
+    $(document).ready(function(){
+    $("#tableSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#userTable tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+    });
+    });
+    </script>
 {% endblock %}
