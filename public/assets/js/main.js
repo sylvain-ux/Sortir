@@ -18,7 +18,24 @@ $(document).ready(function(){
         map.addControl(new mapboxgl.NavigationControl(), 'top-left');
         //map.scrollZoom.disable();
         map.on("load", function () {
+
+
             geojson.data.forEach(function (marker) {
+// create a HTML element for each feature
+                var el = document.createElement('div');
+                el.className = 'marker-' + marker.properties.markersymbol;
+// make a marker for each feature and add to the map
+                new mapboxgl.Marker(el)
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(new mapboxgl.Popup({
+//offset: 25,
+                        className: 'test',
+                    }) // add popups
+                        .setHTML('<h5>'+marker.properties.title+'</h5><p>'+marker.properties.address+'</p>'))
+                    .addTo(map);
+            });
+
+/*            geojson.data.forEach(function (marker) {
 
                 // create a HTML element for each feature
                 var el = document.createElement('div');
@@ -48,7 +65,7 @@ $(document).ready(function(){
                     .setPopup(myPopup)
                     .addTo(map);
 
-            });
+            });*/
             $( ".info_map .close" ).click(function() {
                 $('.info_map').hide();
             });
