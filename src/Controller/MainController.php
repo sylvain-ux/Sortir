@@ -13,8 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
 
 class MainController extends AbstractController
 {
@@ -30,10 +28,16 @@ class MainController extends AbstractController
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
 
-        return $this->render('trip/index.html.twig',compact('allTrips'));
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+
+
+        }
+
+
+
+        return $this->render('trip/index.html.twig',['allTrips' => $allTrips,'searchFormView' => $searchForm->createView()]);
 
     }
-
 
 
     //

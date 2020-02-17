@@ -24,10 +24,11 @@
 {% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
-{#    {% for e in searchForm %}#}
-{#        {{ form(e.dateStart) }}#}
+    {#    {% for e in searchForm %}#}
+    {#        {{ form(e.dateStart) }}#}
 
-{#    {% endfor %}#}
+    {#    {% endfor %}#}
+
 
     <style>
         .example-wrapper {
@@ -52,8 +53,47 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
                             <h2 class="text-center">Liste des sorties</h2>
+                            {# Partie Filtre : #}
+                            {# La barre de recherche#}
                             <input class="form-control mb-4" id="tableSearch" type="text"
-                                   placeholder="Type something to search list items">
+                                   placeholder="Search">
+                            {# Le formulaire de filtre #}
+                            {{ form_start(searchFormView) }}
+                            <br>
+                            {{ form_label(searchFormView.site) }}
+                            {{ form_widget(searchFormView.site) }}
+                            {{ form_errors(searchFormView.site) }}
+                            <br>
+                            {{ form_label(searchFormView.dateStart) }}
+                            {{ form_widget(searchFormView.dateStart) }}
+                            {{ form_errors(searchFormView.dateStart) }}
+                            <br>
+                            {{ form_label(searchFormView.dateEnd) }}
+                            {{ form_widget(searchFormView.dateEnd) }}
+                            {{ form_errors(searchFormView.dateEnd) }}
+                            <br>
+                            {{ form_label(searchFormView.TripOrganizer) }}
+                            {{ form_widget(searchFormView.TripOrganizer) }}
+                            {{ form_errors(searchFormView.TripOrganizer) }}
+                            <br>
+                            {{ form_label(searchFormView.TripRegistered) }}
+                            {{ form_widget(searchFormView.TripRegistered) }}
+                            {{ form_errors(searchFormView.TripRegistered) }}
+                            <br>
+                            {{ form_label(searchFormView.TripNotRegistered) }}
+                            {{ form_widget(searchFormView.TripNotRegistered) }}
+                            {{ form_errors(searchFormView.TripNotRegistered) }}
+                            <br>
+                            {{ form_label(searchFormView.TripPast) }}
+                            {{ form_widget(searchFormView.TripPast) }}
+                            {{ form_errors(searchFormView.TripPast) }}
+                            <br>
+                            {{ form_label(searchFormView.TripPast) }}
+                            {{ form_widget(searchFormView.TripPast) }}
+                            {{ form_errors(searchFormView.TripPast) }}
+                            <br>
+                            {{ form_end(searchFormView) }}
+
                             <table id="userTable" class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -172,6 +212,6 @@
 
 {% block javascripts %}
 
-<script scr="{{ asset('assets/js/search.js') }}"> </script>
+    <script scr="{{ asset('assets/js/search.js') }}"></script>
 
 {% endblock %}
