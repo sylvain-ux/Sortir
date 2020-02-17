@@ -94,8 +94,14 @@ class UserController extends AbstractController
 
 
 
-            }
+//            }elseif ($avatarFile === null)
+//            {
+//                $defaultAvatar->
+//                $user->setAvatar($defaultAvatar);
 
+
+
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

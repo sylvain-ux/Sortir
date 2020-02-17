@@ -10,9 +10,15 @@
     <h1>Mon  profil</h1>
     <div class="row">
         <div class="col-12 col-xl-6">
-            {% if app.user.avatar is not null %}
+            <div class="row">
+                <div class="col-12 col-xl-4">
+            {% if app.user.avatar is not empty %}
             <img  class="img-fluid" src="{{ asset('users/' ~ app.user.id ~ '/avatar/' ~ app.user.avatar) }}">
+                {% else %}
+                <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">
             {% endif %}
+                </div>
+            </div>
             <div class="form_container">
             {{ form (userFormView) }}
                 <a class="btn btn-secondary" href="{{path('home')  }}" >Annuler</a>
