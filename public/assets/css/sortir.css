@@ -10,8 +10,8 @@ body{
     background-color: white;
 }
 .container{
-    display: flex;
-    background: white;
+/*    display: flex;
+    background: white;*/
 }
 
 .fa-check {

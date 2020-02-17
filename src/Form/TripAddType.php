@@ -23,11 +23,11 @@ class TripAddType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('search',TextType::class,[
+/*            ->add('search',TextType::class,[
                 'mapped' => false,
                 'attr' => ['class' => 'search'],
-            ])
-/*            ->add(
+            ])*/
+            ->add(
                 'location',
                 EntityType::class,
                 [
@@ -35,10 +35,11 @@ class TripAddType extends AbstractType
                     'choice_label' => 'name',
                     'attr'         => ['class' => 'select2'],
                     'help_html'     => true,
+                    'help' => 'Ajouter un nouveau lieu, <a href="/sortir/public/admin/location/add">cliquez ici</a>',
                 ]
-            )*/
+            )
 
-            ->add('city',TextType::class,['mapped' => false])
+            //->add('city',TextType::class,['mapped' => false])
             ->add('dateTimeStart', DateTimeType::class,
                     ['label' => 'Date de la sortie','widget' => 'single_text','data' => new \DateTime("now"),'html5' => true ]
             )
