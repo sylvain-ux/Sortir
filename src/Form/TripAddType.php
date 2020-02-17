@@ -45,7 +45,7 @@ class TripAddType extends AbstractType
             )
             ->add('duration', NumberType::class,
                 [
-                    'label' => 'Durée','help' => 'en minutes','html5' => true, 'attr' => ['min' => 0],
+                    'label' => 'Durée','help' => 'en minutes','html5' => true, 'attr' => ['min' => 0, 'step'=>5],
                 ]
             )
             ->add('registDeadline', DateTimeType::class,
