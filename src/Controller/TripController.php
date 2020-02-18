@@ -80,7 +80,7 @@ class TripController extends AbstractController
         $allTrips = $tripRepository->findAll();
 
         foreach ($allTrips as $trip) {
-            dump($trip->getNbRegistMax());
+            dump($trip->getLocation()->getCity()->getZipCode());
         }
 
         return $this->render('trip/list.html.twig',compact('allTrips','allSchools'));
