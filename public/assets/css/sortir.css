@@ -110,6 +110,23 @@ section.main{
     float: left;
 }
 
+.grid-item .card{position: relative;min-height:250px}
+.grid-item .card .overlay{position: absolute;top:0;left:0;height: 100%;width:100%;  opacity: 1;    transition: all 0.5s;}
+.grid-item .card:hover .overlay {opacity: 0;}
+.grid-item .card:hover{text-decoration: none}
+.grid-item .card .content{z-index:-1;opacity:0}
+.grid-item .card:hover .content{z-index:10;opacity:1;transition: all 0.7s;}
+.grid-item .card .head,.grid-item .card .body {
+    margin-top:10%;
+    transition: all 0.7s;
+    padding:30px 15px;
+}
+.grid-item .card .head h2{font-size:17px;color:#000}
+.grid-item .card:hover .head {margin-top:2%}
+.grid-item .card:hover .body {margin-top:18%}
+.grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
+.grid-item .card:hover .head hr{width:22%;}
+/*
 .grid-item .card
 {
     position: relative;
@@ -162,4 +179,4 @@ section.main{
 }
 .grid-item .card:hover{text-decoration: none}
 
-.grid-item .card .content h2{font-size:18px}
+.grid-item .card .content h2{font-size:18px}*/
