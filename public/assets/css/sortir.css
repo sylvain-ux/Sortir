@@ -1,6 +1,7 @@
 /*colors*/
 .bleu-eni{color:#134a80}
 .bg_bleu_eni{background-color: #134a80}
+.bg_white{background:#fff}
 
 
 /*navbar*/
@@ -13,18 +14,7 @@
 .alerts-container .alert .alert-success{background:rgba(212,237,218,0.7)!important}
 
 
-<<<<<<< HEAD
-/*table{*/
-/*    border-collapse: separate;*/
-/*}*/
-/*body{*/
-/*    background-color: #E0E5EC;*/
-/*}*/
-/*.container{*/
-/*    display: flex;*/
-/*    background: #E0E5EC;*/
-/*}*/
-=======
+
 /*home*/
 section.main{
     padding:50px 0;
@@ -32,33 +22,13 @@ section.main{
     background-color: #dae0e5;
     /*background:url(bg/nantes.jpg) no-repeat center center / cover;*/
 }
->>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
+
 
 
 /*.fa-check {*/
 /*    color: green;*/
 /*}*/
 
-
-<<<<<<< HEAD
-/*.neumorphism-0{*/
-/*    margin: 2px;*/
-/*    border-radius: 5px;*/
-/*    background: #E0E5EC;*/
-
-/*    box-shadow: -2px -2px 8px rgba(255,255,255,1),*/
-/*    -2px -2px 12px rgba(255,255,255,0.5),*/
-/*    inset 2px 2px 4px rgba(255,255,255,0.1),*/
-/*    2px 2px 8px rgba(0,0,0,0.15);*/
-/*}*/
-
-/*.neumorphism-1{*/
-/*    margin: 10px;*/
-/*    border-radius: 5px;*/
-/*    background: #E0E5EC;*/
-
-=======
->>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
 /*.neumorphism-1{*/
 /*    margin: 10px;*/
 /*    border-radius: 5px;*/
@@ -134,3 +104,62 @@ section.main{
     width: 20px;
     background: url(marker.png) no-repeat;
 }
+
+/*grid*/
+.grid-item {
+    float: left;
+}
+
+.grid-item .card
+{
+    position: relative;
+    box-shadow: -6px -6px 10px rgba(255,255,255,0.5),
+    6px 6px 20px rgba(0,0,0,0.05);
+    min-height:200px;
+}
+
+.grid-item .card .imgBx
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card:hover .imgBx
+{
+    width: 20%;
+    height: 20%;
+    left: 0px;
+    right:0;
+    bottom:0;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card .imgBx img
+{
+    max-width: 100%;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card:hover .imgBx img
+{
+    max-width: 100%;
+}
+
+.grid-item .card .content img {
+    max-width: 80px;
+    position: absolute;
+    top: 0;
+    right: 200px;
+}
+.grid-item .card:hover{text-decoration: none}
+
+.grid-item .card .content h2{font-size:18px}

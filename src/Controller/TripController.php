@@ -80,7 +80,7 @@ class TripController extends AbstractController
         $allTrips = $tripRepository->findAll();
 
         foreach ($allTrips as $trip) {
-            dump($trip->getNbRegistMax());
+            dump($trip->getLocation()->getCity()->getZipCode());
         }
 
         return $this->render('trip/list.html.twig',compact('allTrips','allSchools'));
@@ -305,6 +305,8 @@ class TripController extends AbstractController
 
             if ($tripForm->getClickedButton() === $tripForm->get('drop')) {
 
+
+
                 $entityManager = $this->getDoctrine()->getManager();
                 //Suppression de la sortie associée à son id
                 $entityManager->remove($trip);
@@ -392,9 +394,7 @@ class TripController extends AbstractController
 
         $tripForm->handleRequest($request);
 
-
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
-
 
             //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
             $stateRepository = $entityManager->getRepository(State::class);
@@ -410,7 +410,6 @@ class TripController extends AbstractController
 
             //Message de success
             $this->addFlash('success', 'Vous avez annulé la sortie');
-
 
             return $this->redirectToRoute("home");
         }
