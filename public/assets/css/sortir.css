@@ -13,18 +13,7 @@
 .alerts-container .alert .alert-success{background:rgba(212,237,218,0.7)!important}
 
 
-<<<<<<< HEAD
-/*table{*/
-/*    border-collapse: separate;*/
-/*}*/
-/*body{*/
-/*    background-color: #E0E5EC;*/
-/*}*/
-/*.container{*/
-/*    display: flex;*/
-/*    background: #E0E5EC;*/
-/*}*/
-=======
+
 /*home*/
 section.main{
     padding:50px 0;
@@ -32,33 +21,13 @@ section.main{
     background-color: #dae0e5;
     /*background:url(bg/nantes.jpg) no-repeat center center / cover;*/
 }
->>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
+
 
 
 /*.fa-check {*/
 /*    color: green;*/
 /*}*/
 
-
-<<<<<<< HEAD
-/*.neumorphism-0{*/
-/*    margin: 2px;*/
-/*    border-radius: 5px;*/
-/*    background: #E0E5EC;*/
-
-/*    box-shadow: -2px -2px 8px rgba(255,255,255,1),*/
-/*    -2px -2px 12px rgba(255,255,255,0.5),*/
-/*    inset 2px 2px 4px rgba(255,255,255,0.1),*/
-/*    2px 2px 8px rgba(0,0,0,0.15);*/
-/*}*/
-
-/*.neumorphism-1{*/
-/*    margin: 10px;*/
-/*    border-radius: 5px;*/
-/*    background: #E0E5EC;*/
-
-=======
->>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
 /*.neumorphism-1{*/
 /*    margin: 10px;*/
 /*    border-radius: 5px;*/
@@ -133,4 +102,11 @@ section.main{
     height: 60px;
     width: 20px;
     background: url(marker.png) no-repeat;
+}
+
+/*grid*/
+.grid-item {
+    float: left;
+    /*width: 33%;*/
+
 }
