@@ -10,8 +10,8 @@
             <div class="col-12 col-xl-6">
                 <div class="row">
                     <div class="col-12 col-xl-6">
-                    {% if organizer.avatar is not empty %}
-                        <img class="img-fluid" src="{{ asset('users/' ~ organizer.id ~ '/avatar/' ~ organizer.avatar) }}">
+                    {% if organizer.avatarName is not empty %}
+                        <img class="img-fluid" src="{{ asset('users/' ~ organizer.id ~ '/avatar/' ~ organizer.avatarName) }}">
                             {% else %}
                                 <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">
                     {% endif %}

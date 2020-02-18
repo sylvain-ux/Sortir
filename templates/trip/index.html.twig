@@ -54,6 +54,40 @@
                             <h2 class="text-center">Liste des sorties</h2>
                             <input class="form-control mb-4" id="tableSearch" type="text"
                                    placeholder="Type something to search list items">
+                            {{ form_start(searchFormView) }}
+                            <br>
+                            {{ form_label(searchFormView.site) }}
+                            {{ form_widget(searchFormView.site) }}
+                            {{ form_errors(searchFormView.site) }}
+                            <br>
+                            {{ form_label(searchFormView.dateStart) }}
+                            {{ form_widget(searchFormView.dateStart) }}
+                            {{ form_errors(searchFormView.dateStart) }}
+                            <br>
+                            {{ form_label(searchFormView.dateEnd) }}
+                            {{ form_widget(searchFormView.dateEnd) }}
+                            {{ form_errors(searchFormView.dateEnd) }}
+                            <br>
+                            {{ form_label(searchFormView.TripOrganizer) }}
+                            {{ form_widget(searchFormView.TripOrganizer) }}
+                            {{ form_errors(searchFormView.TripOrganizer) }}
+                            <br>
+                            {{ form_label(searchFormView.TripRegistered) }}
+                            {{ form_widget(searchFormView.TripRegistered) }}
+                            {{ form_errors(searchFormView.TripRegistered) }}
+                            <br>
+                            {{ form_label(searchFormView.TripNotRegistered) }}
+                            {{ form_widget(searchFormView.TripNotRegistered) }}
+                            {{ form_errors(searchFormView.TripNotRegistered) }}
+                            <br>
+                            {{ form_label(searchFormView.TripPast) }}
+                            {{ form_widget(searchFormView.TripPast) }}
+                            {{ form_errors(searchFormView.TripPast) }}
+                            <br>
+
+                            {{ form_end(searchFormView) }}
+
+
                             <table id="userTable" class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -98,7 +132,9 @@
                                         <td>
                                             {% if app.user is not null %}
 
+
                                                 {# Sortie: STATUT PASSEE #}
+
                                                 {% if trip.tripPast(trip.state.id) %}
                                                     <a class="btn btn-light" href="{{ path('home', {'id':trip.id}) }}">Récapitulatif</a>
                                                 {% endif %}
@@ -182,4 +218,19 @@
 
     <script scr="{{ asset('assets/js/search.js') }}"></script>
 
+    <script>
+
+
+        // Filter table
+
+        $(document).ready(function () {
+            $("#tableSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#userTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+    </script>
 {% endblock %}
