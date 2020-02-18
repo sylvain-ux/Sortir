@@ -76,21 +76,6 @@ class TripType extends AbstractType
 //            ->add('send', SubmitType::class, ['label' => 'Publier la sortie'])
 //            ->add('cancel', SubmitType::class, ['label' => 'Annuler'])
 
-            ->add('location', EntityType::class, ['class' => TripLocation::class, 'choice_label' => 'name'])
-            ->add(
-                'dateStart',
-                DateTimeType::class,
-                ['widget' => 'single_text', 'label' => 'Entre']
-            )
-            ->add(
-                'dateEnd',
-                DateTimeType::class,
-                ['widget' => 'single_text', 'label' => 'et']
-            )
-            ->add('TripOrganizer', CheckboxType::class, ['label' => "Sorties dont je suis l'organisatreur/trice"])
-            ->add('TripRegistered', CheckboxType::class, ['label' => "Sorties auxquelles je suis inscrit/e"])
-            ->add('TripNotRegistered', CheckboxType::class, ['label' => "Sorties auxquelles je ne suis pas inscrit/e"])
-            ->add('TripPast', CheckboxType::class, ['label' => "Sorties passées"]);
         ;
     }
 
