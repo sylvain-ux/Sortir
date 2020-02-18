@@ -4,24 +4,31 @@
 {% endblock %}
 {% block body %}
     <div class="container-fluid search_container p-3">
-        <div class="row">
-            <div class="col-12 ">
-                <div class="card p-3">
-                    {{ include('trip/inc/filters.html.twig') }}
+        <div class="container text-center">
+            <div class="logo_part py-4">
+            <a class="" href="{{path('home')}}">
+                <img src="{{ asset('img/eni-sortir-white.png') }}" alt="ENI -> sortir" class="img-fluid">
+                <span class="d-none">Sortir.com</span>
+            </a>
+            </div>
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="filter_container">
+                        {{ include('trip/inc/filters.html.twig') }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container">
         <div class="" >
             <div class="grid">
                 {% for trip in allTrips %}
                     {% if app.user.id == trip.user.id %}
-                    {% set organizer = "organizer" %}
+                        {% set organizer = "organizer" %}
                     {% else %}
                         {% set organizer = "" %}
-                     {% endif %}
+                    {% endif %}
                     {% if trip.isSubscribed(app.user) %}
                         {% set subscribed = "subscribed" %}
                     {% else %}
@@ -37,12 +44,17 @@
                     {% else %}
                         {% set cat = "default" %}
                     {% endif %}
+                    {%   set nb_item = "" %}
+                    {% if  loop.index == 1 %}
+                        {%   set nb_item = "first_elem" %}
+                    {% elseif  loop.index ==2  %}
+                        {%   set nb_item = "second_elem" %}
+                    {% elseif  loop.index ==3  %}
+                        {%   set nb_item = "third_elem" %}
+                    {% endif %}
 
 
-
-
-
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-4 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }}" >
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-4 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }} {{ nb_item }}" >
                         <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
                             <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
 
@@ -57,13 +69,13 @@
                                     <p class="new text-dark">{{ trip.getLocation().getName() }} ({{ trip.getLocation().getCity().getName() }}) </p>
                                 </div>
                                 <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
-                                 <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                                <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
                                 <p class="address d-none"><address class="d-none"><small>
-                                    {{ trip.getLocation().getName() }}<br>
-                                    {{ trip.getLocation().getStreet() }}<br>
-                                {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
+                                        {{ trip.getLocation().getName() }}<br>
+                                        {{ trip.getLocation().getStreet() }}<br>
+                                        {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
                                     </small></address></p>
-                              <p class="users d-none" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
+                                <p class="users d-none" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
                             </div>
                         </a>
                     </div>
@@ -76,7 +88,10 @@
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+
     <script>
+
         // external js: isotope.pkgd.js
         // init Isotope
         // store filter for each group
@@ -92,6 +107,10 @@
             });
             var $grid = $('.grid').isotope({
                 itemSelector: '.grid-item',
+                masonry: {
+//columnWidth: 360,
+//gutter: 15
+                },
                 //filter: filteredValue,
                 filter: function() {
                     var $this = $(this);
@@ -102,14 +121,18 @@
             });
             $('.select_filter').on( 'change', function(event) {
                 var $select = $( event.currentTarget );
-/*                filteredValue = getFiltersValue($select);
-                console.log(filteredValue);*/
+                /*                filteredValue = getFiltersValue($select);
+                                console.log(filteredValue);*/
                 // set filter for Isotope
 
                 buttonFilter = getFiltersValue($select);
                 //console.log($( this ));
                 $grid.isotope();
-
+                var elems = $grid.isotope('getFilteredItemElements');
+                $('.grid-item').removeClass('first_elem second_elem third_elem');
+                $(elems[0]).addClass('first_elem');
+                $(elems[1]).addClass('second_elem');
+                $(elems[2]).addClass('third_elem');
                 //$grid.isotope({ filter: filteredValue });
             });
 
@@ -151,68 +174,73 @@
                 }
                 return value;
             }
+
+            $('.grid').imagesLoaded( function() {
+                // images have loaded
+            });
+
         });
     </script>
 
 
- {#
-    <script>
-    // quick search regex
-    var qsRegex;
-    var buttonFilter;
+    {#
+       <script>
+       // quick search regex
+       var qsRegex;
+       var buttonFilter;
 
-    // init Isotope
-    var $grid = $('.grid').isotope({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        filter: function() {
-            var $this = $(this);
-            var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
-            var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
-            return searchResult && buttonResult;
-        }
-    });
+       // init Isotope
+       var $grid = $('.grid').isotope({
+           itemSelector: '.grid-item',
+           percentPosition: true,
+           filter: function() {
+               var $this = $(this);
+               var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
+               var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
+               return searchResult && buttonResult;
+           }
+       });
 
-    $('.select_filter').on( 'change', function() {
+       $('.select_filter').on( 'change', function() {
 
-        buttonFilter = $( this ).attr('data-filter');
-        console.log($( this ));
-        $grid.isotope();
-    });
+           buttonFilter = $( this ).attr('data-filter');
+           console.log($( this ));
+           $grid.isotope();
+       });
 
-    // use value of search field to filter
-    var $quicksearch = $('.quicksearch').keyup( debounce( function() {
-        qsRegex = new RegExp( $(this).val(), 'gi' );
-        console.log($(this).val());
-        $grid.isotope();
+       // use value of search field to filter
+       var $quicksearch = $('.quicksearch').keyup( debounce( function() {
+           qsRegex = new RegExp( $(this).val(), 'gi' );
+           console.log($(this).val());
+           $grid.isotope();
 
-    }) );
+       }) );
 
 
-    // debounce so filtering doesn't happen every millisecond
-    function debounce( fn, threshold ) {
-        var timeout;
-        threshold = threshold || 100;
-        return function debounced() {
-            clearTimeout( timeout );
-            var args = arguments;
-            var _this = this;
-            function delayed() {
-                fn.apply( _this, args );
-            }
-            timeout = setTimeout( delayed, threshold );
-        };
-    }
+       // debounce so filtering doesn't happen every millisecond
+       function debounce( fn, threshold ) {
+           var timeout;
+           threshold = threshold || 100;
+           return function debounced() {
+               clearTimeout( timeout );
+               var args = arguments;
+               var _this = this;
+               function delayed() {
+                   fn.apply( _this, args );
+               }
+               timeout = setTimeout( delayed, threshold );
+           };
+       }
 
-    // change is-checked class on buttons
-    $('.button-group').each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'button', function() {
-            $buttonGroup.find('.active').removeClass('active');
-            $( this ).addClass('active');
-        });
-    });
-</script>#}
+       // change is-checked class on buttons
+       $('.button-group').each( function( i, buttonGroup ) {
+           var $buttonGroup = $( buttonGroup );
+           $buttonGroup.on( 'click', 'button', function() {
+               $buttonGroup.find('.active').removeClass('active');
+               $( this ).addClass('active');
+           });
+       });
+   </script>#}
 
 {% endblock %}
 

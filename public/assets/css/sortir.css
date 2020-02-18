@@ -17,9 +17,9 @@
 
 /*home*/
 section.main{
-    padding:50px 0;
-    min-height:80vh;
+    padding:0;
     background-color: #dae0e5;
+    position:relative
     /*background:url(bg/nantes.jpg) no-repeat center center / cover;*/
 }
 
@@ -105,12 +105,20 @@ section.main{
     background: url(marker.png) no-repeat;
 }
 
+
+/*list of trips*/
+.search_container{min-height:70vh;background: url(cities/nantes.jpg) no-repeat center center / cover}
+.search_container > .container{margin-top:5vh}
+.filter_container{background:rgba(0,0,0,0.7);padding:40px 30px 30px 30px}
 /*grid*/
 .grid-item {
-    float: left;
+/*    float: left;*/
 }
+.grid-item.first_elem{margin-top:-180px;}
+.grid-item.second_elem{margin-top:-120px;}
+.grid-item.third_elem{margin-top:-60px;}
 
-.grid-item .card{position: relative;min-height:250px}
+.grid-item .card{position: relative;min-height:250px;border-radius:0;border:0;box-shadow:0 0 10px 0 rgba(0,0,0,0.2)}
 .grid-item .card .overlay{position: absolute;top:0;left:0;height: 100%;width:100%;  opacity: 1;    transition: all 0.5s;}
 .grid-item .card:hover .overlay {opacity: 0;}
 .grid-item .card:hover{text-decoration: none}
