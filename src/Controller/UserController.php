@@ -123,30 +123,6 @@ class UserController extends AbstractController
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * @route ("/password", name="password")
      */
