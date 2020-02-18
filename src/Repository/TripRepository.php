@@ -79,12 +79,11 @@ DQL;
     }
 
     //Recherche pour afficher les sorties auxquelles je suis inscrit/e :
-
     public function findByMyRegistration($id)
     {
         $entityManager = $this->getEntityManager();
         $dql = <<<DQL
-  SELECT t FROM App\Entity\Trip t, App\Entity\User u WHERE t.users = :id
+  SELECT t FROM App\Entity\Trip t JOIN t.users usersTrip WHERE usersTrip.id = :id
  DQL;
         $query = $entityManager->createQuery($dql);
         $query->setParameter(':id', $id);
@@ -94,6 +93,19 @@ DQL;
     }
 
     //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
+    public function findByMyNotRegistration($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = <<<DQL
+  SELECT t FROM App\Entity\Trip t JOIN t.users usersTrip WHERE usersTrip.id = :id
+ DQL;
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter(':id', $id);
+        $result = $query->getResult();
+
+        return $result;
+    }
+
 
     //Recherche pour afficher les sorties passées :
     public function findByPastTrip()

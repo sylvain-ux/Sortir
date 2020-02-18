@@ -74,14 +74,14 @@ class MainController extends AbstractController
                     $myId = $this->getUser();
                     $allTrips = $tripRepository->findByMyRegistration($myId);
                 }
-
-
+                //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
+                $myNotTrip = $searchForm->get('TripNotRegistered')->getData();
+                if ($myNotTrip != null) {
+                    //Mon id connecté
+                    $myId = $this->getUser();
+                    $allTrips = $tripRepository->findByMyRegistration($myId);
+                }
             }
-
-
-            //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
-
-
         }
 
 
