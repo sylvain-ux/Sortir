@@ -52,53 +52,55 @@ class UpdateStateCommand extends Command
 
         foreach ($alltrips as $t) {
             //Si la sortie est en cours, alors nous controlons les dates de début de sortie et les dates de clotures pour mettre à jour dans la BDD toutes les sorties en cours.
-            if ($stateInProgress == 4) {
+            if ($stateInProgress->getId() == 4) {
 
                 //Nous récupérons les dates de début de sorties ainsi que leurs durées.
                 $dateTrip = $t->getDateTimeStart();
                 $duration = $t->getDuration();
 
                 //Création d'un interval avec la durée de la sortie
-                $interval = new \DateInterval('PT'.$duration.'M');
+                try {
+                    $interval = new \DateInterval('PT'.$duration.'M');
 
-                //Clonage de la date de début de sortie
-                $dateTripClone = clone $dateTrip;
-                //Addition de la date de la sortie avec sa durée
-                $dateTripClone->add($interval);
 
-                //Si la date de début de sortie + sa durée est supérieure à la date d'aujourd'hui
-                if ($dateTripClone > $now) {
-                    $t->setState($statePassed);
+                    //Clonage de la date de début de sortie
+                    $dateTripClone = clone $dateTrip;
+                    //Addition de la date de la sortie avec sa durée
+                    $dateTripClone->add($interval);
 
-                    //MaJ BDD
-                    $this->em->persist($statePassed);
+                    //Si la date de début de sortie + sa durée est supérieure à la date d'aujourd'hui
+                    if ($dateTripClone < $now) {
+                        $t->setState($statePassed);
 
-                    //Ecriture dans un fichier log
-                    $this->log->info('L\'état de la sortie '.$t->getName().' est devenu: Passée');
+                        //MaJ BDD
+                        $this->em->persist($t);
+
+                        //Ecriture dans un fichier log
+                        $this->log->info('L\'état de la sortie '.$t->getName().' est devenu: Passée');
+                    } elseif ($now >= $t->getRegistDeadline()) {
+                        $t->setState($stateClosed);
+
+                        //MaJ BDD
+                        $this->em->persist($t);
+
+                        $this->log->info('L\'état de la sortie '.$t->getName().' est devenu: Cloturée');
+                    } //Si la date de la sortie est égale à la date d'aujourd'hui, le status devient "En cours"
+                    elseif ($t->getDateTimeStart() <= $now) {
+                        $t->setState($stateInProgress);
+
+                        //MaJ BDD
+                        $this->em->persist($t);
+
+                        $this->log->info('L\'état de la sortie '.$t->getName().' est devenu: En cours');
+                    }
+                } catch (\Exception $e) {
                 }
-
                 //Si la date de cloture de la sortie est passée, par rapport à la date d'aujourd'hui, le status devient "Cloturée"
-                if ($now === $t->getRegistDeadline()) {
-                    $t->setState($stateClosed);
 
-                    //MaJ BDD
-                    $this->em->persist($stateClosed);
-
-                    $this->log->info('L\'état de la sortie '.$t->getName().' est devenu: Cloturée');
-                }
-
-                //Si la date de la sortie est égale à la date d'aujourd'hui, le status devient "En cours"
-                if ($t->getDAteTimeStart() === $now) {
-                    $t->setState($stateInProgress);
-
-                    //MaJ BDD
-                    $this->em->persist($stateInProgress);
-
-                    $this->log->info('L\'état de la sortie '.$t->getName().' est devenu: En cours');
-                }
             }
             $this->em->flush();
         }
+
         return 0;
     }
 }
