@@ -97,37 +97,45 @@
                                         </td>
                                         <td>
                                             {% if app.user is not null %}
-                                                
+
+                                                {# Sortie: STATUT PASSEE #}
                                                 {% if trip.tripPast(trip.state.id) %}
                                                     <a class="btn btn-light" href="{{ path('home', {'id':trip.id}) }}">Récapitulatif</a>
                                                 {% endif %}
 
+                                                {# Sortie: STATUT EN CREATION / Organisateur connecté: OUI #}
                                                 {% if trip.tripCreation(trip.state.id) and trip.userOrOrganizer(app.user) %}
                                                     <a class="btn btn-warning"
                                                        href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
 
                                                 {% endif %}
 
+                                                {# Sortie: STATUT ANNULE / Organisateur connecté: OUI #}
                                                 {% if trip.isCanceled(trip.state.id) and trip.userOrOrganizer(app.user) %}
                                                     <a class="btn btn-warning"
                                                        href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
                                                 {% endif %}
 
+                                                {# Sortie: STATUT CLOTUREE #}
                                                 {% if trip.tripClosed(trip.state.id) %}
                                                     <a class="btn btn-info"
                                                        href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
 
                                                 {% endif %}
 
+                                                {# Sortie: STATUT EN COURS #}
                                                 {% if trip.isInProgress(trip.state.id) %}
                                                     <a class="btn btn-info"
                                                        href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
                                                 {% endif %}
 
+                                                {# Sortie: STATUT OUVERTE #}
                                                 {% if trip.tripOpen(trip.state.id) %}
+                                                    {# Utilisateur connecté: NON INSCRIT #}
                                                     {% if trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
                                                         <a class="btn neumorphism-1"
                                                            href="{{ path('trip_inscription', {'id':trip.id }) }}"><span>S'inscrire</span></a>
+                                                        {# Utilisateur connecté: INSCRIT #}
                                                     {% elseif trip.isSubscribed(app.user) %}
                                                         <a class="btn neumorphism-2"
                                                            href="{{ path('trip_unsubscribe', {'id':trip.id}) }}"><span>Se désister</span></a>
@@ -136,6 +144,7 @@
                                                        href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
                                                 {% endif %}
 
+                                                {# Sortie: STATUT OUVERTE / Organisateur connecté: OUI #}
                                                 {% if trip.tripOpen(trip.state.id) and trip.userOrOrganizer(app.user) %}
                                                     <a class="btn btn-danger"
                                                        href="{{ path('trip_cancel', {'id':trip.id}) }}">Annuler</a>
