@@ -287,7 +287,7 @@ class Trip
     {
         foreach ($this->getUsers() as $us){
             // Si l'utilisateur connecté est déjà inscrit pour la sortie et qu'il n'est pas l'organisateur de celle-ci, il peut se désister
-            if($us->getId() == $user->getId()){         // and $this->getUser()->getId() != $user->getId()){
+            if($us->getId() == $user->getId()){// and $this->getUser()->getId() != $user->getId()){
                 return true;
             }
         }
@@ -309,7 +309,7 @@ class Trip
             return true;
         }
         foreach ($this->getUsers() as $us){
-            if($us->getId() != $user->getId() and $this->getUser()->getId() != $user->getId()){
+            if($us->getId() != $user->getId()){// and $this->getUser()->getId() != $user->getId()){
                 return true;
             }
         }
@@ -324,7 +324,7 @@ class Trip
      */
     public function tripInProgressOrClosed(int $stateId)
     {
-        if($stateId == 4 or $stateId == 3){
+        if($stateId == 4 or $stateId == 3 or $stateId==2 ){
             return true;
         }
         return false;
@@ -336,9 +336,9 @@ class Trip
      * @param UserInterface $user
      * @return bool
      */
-    public function tripCreation(int $stateId, UserInterface $user)
+    public function tripCreation(int $stateId)//, UserInterface $user)
     {
-        if($stateId == 1 and $this->getUser()->getId() == $user->getId()){
+        if($stateId == 1){// and $this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;
@@ -358,13 +358,13 @@ class Trip
     }
 
     /**
-     * function to open the status of a trip
+     * function to open the status of a trip when you are the organizer
      * @param int $stateId
      * @return bool
      */
-    public function tripOpen(int $stateId,  UserInterface $user)
+    public function tripOpen(int $stateId)//,  UserInterface $user)
     {
-        if($stateId == 2 and $this->getUser()->getId() == $user->getId()){
+        if($stateId == 2){// and $this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;
@@ -376,12 +376,12 @@ class Trip
      * @param int $stateId
      * @return bool
      */
-    public function isNotInProgress(int $stateId,  UserInterface $user)
+    public function isInProgress(int $stateId)//,  UserInterface $user)
     {
-        if($stateId == 1 and $this->getUser()->getId() != $user->getId()){
-            return false;
+        if($stateId == 4){// and $this->getUser()->getId() != $user->getId()){
+            return true;
         }
-        return true;
+        return false;
     }
 
 
@@ -391,28 +391,55 @@ class Trip
      * @return bool
      * @throws \Exception
      */
-    public function isNotCanceled(UserInterface $user)
+    public function isCanceled(int $stateId)//,  UserInterface $user)
     {
-        //Nous récupérons la date de début et la durée de la sortie actuelle
-        $dateTrip = $this->getDateTimeStart();
-        $duration = $this->getDuration();
-
-        //Récupération de la date d'aujourd'hui
-        $now = new \DateTime();
-
-        //Création d'un interval avec la durée de la sortie
-        $interval = new \DateInterval('PT'.$duration.'M');
-
-        //Clonage de la date de début de sortie
-        $dateTripClone = clone $dateTrip;
-        //Addition de la date de la sortie avec sa durée
-        $dateTripClone->add($interval);
-
-        //Vérification si la date d'aujourd'hui est inférieure à la date de la sortie + sa durée
-        if ($now < $dateTripClone and $this->getUser()->getId() == $user->getId()){
+        if($stateId == 6){// and $this->getUser()->getId() == $user->getId()){
             return true;
         }
+        return false;
 
+//        //Nous récupérons la date de début et la durée de la sortie actuelle
+//        $dateTrip = $this->getDateTimeStart();
+//        $duration = $this->getDuration();
+//
+//        //Récupération de la date d'aujourd'hui
+//        $now = new \DateTime();
+//
+//        //Création d'un interval avec la durée de la sortie
+//        $interval = new \DateInterval('PT'.$duration.'M');
+//
+//        //Clonage de la date de début de sortie
+//        $dateTripClone = clone $dateTrip;
+//        //Addition de la date de la sortie avec sa durée
+//        $dateTripClone->add($interval);
+//
+//        //Vérification si la date d'aujourd'hui est inférieure à la date de la sortie + sa durée
+//        if ($now < $dateTripClone and $this->getUser()->getId() == $user->getId()){
+//            return true;
+//        }
+//
+//        return false;
+    }
+
+    /**
+     * fonction permettant de savoir si le statut de la sortie est "Cloturée"
+     * @param int $stateId
+     * @return bool
+     */
+    public function tripClosed(int $stateId)//,  UserInterface $user)
+    {
+        if($stateId == 3){// and $this->getUser()->getId() == $user->getId()){
+            return true;
+        }
+        return false;
+    }
+
+
+    public function userOrOrganizer(UserInterface $user)
+    {
+        if ($this->getUser()->getId() == $user->getId()){
+            return true;
+        }
         return false;
     }
 }

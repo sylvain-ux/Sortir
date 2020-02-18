@@ -1,54 +1,59 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Hello TripController!{% endblock %}#}
+
+{#{% block body %}#}
+{#<style>#}
+{#    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
+{#    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
+{#</style>#}
+
+{#<div class="example-wrapper">#}
+{#    <h1>Hello {{ controller_name }}! ✅</h1>#}
+
+{#    This friendly message is coming from:#}
+{#    <ul>#}
+{#        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Sortir/src/Controller/TripController.php'|file_link(0) }}">src/Controller/TripController.php</a></code></li>#}
+{#        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Sortir/templates/trip/index.html.twig'|file_link(0) }}">templates/trip/index.html.twig</a></code></li>#}
+{#    </ul>#}
+{#</div>#}
+{#{% endblock %}#}
+
 {% extends 'layout.html.twig' %}
 
-{% block title %}Sortir.com - Liste des sorties{% endblock %}
+{% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
+    {#    {% for e in searchForm %}#}
+    {#        {{ form(e.dateStart) }}#}
 
+    {#    {% endfor %}#}
 
-    <div class="container">
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+    <div class="example-wrapper">
+    </div>
+
+    <div class="container mt-5">
         <div class="row">
             <div class="col-12">
                 <div class="border border-dark p-5">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
                             <h2 class="text-center">Liste des sorties</h2>
-                            {# Partie Filtre : #}
-                            {# La barre de recherche#}
                             <input class="form-control mb-4" id="tableSearch" type="text"
-                                   placeholder="Search">
-                            {# Le formulaire de filtre #}
-                            {{ form_start(searchFormView) }}
-                            <br>
-                            {{ form_label(searchFormView.site) }}
-                            {{ form_widget(searchFormView.site) }}
-                            {{ form_errors(searchFormView.site) }}
-                            <br>
-                            {{ form_label(searchFormView.dateStart) }}
-                            {{ form_widget(searchFormView.dateStart) }}
-                            {{ form_errors(searchFormView.dateStart) }}
-                            <br>
-                            {{ form_label(searchFormView.dateEnd) }}
-                            {{ form_widget(searchFormView.dateEnd) }}
-                            {{ form_errors(searchFormView.dateEnd) }}
-                            <br>
-                            {{ form_label(searchFormView.TripOrganizer) }}
-                            {{ form_widget(searchFormView.TripOrganizer) }}
-                            {{ form_errors(searchFormView.TripOrganizer) }}
-                            <br>
-                            {{ form_label(searchFormView.TripRegistered) }}
-                            {{ form_widget(searchFormView.TripRegistered) }}
-                            {{ form_errors(searchFormView.TripRegistered) }}
-                            <br>
-                            {{ form_label(searchFormView.TripNotRegistered) }}
-                            {{ form_widget(searchFormView.TripNotRegistered) }}
-                            {{ form_errors(searchFormView.TripNotRegistered) }}
-                            <br>
-                            {{ form_label(searchFormView.TripPast) }}
-                            {{ form_widget(searchFormView.TripPast) }}
-                            {{ form_errors(searchFormView.TripPast) }}
-                            <br>
-                            {{ form_end(searchFormView) }}
-
+                                   placeholder="Type something to search list items">
                             <table id="userTable" class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -65,6 +70,8 @@
                                 </thead>
                                 <tbody>
                                 {% for trip in allTrips %}
+
+
 
                                     <tr>
                                         <td>{{ trip.id }}</td>
@@ -90,53 +97,50 @@
                                         </td>
                                         <td>
                                             {% if app.user is not null %}
-                                                {# Si la sortie n'est pas en mode création, on peut afficher tous les boutons optionnels #}
-                                                {% if trip.isNotInProgress(trip.state.id, app.user) %}
+                                                
+                                                {% if trip.tripPast(trip.state.id) %}
+                                                    <a class="btn btn-light" href="{{ path('home', {'id':trip.id}) }}">Récapitulatif</a>
+                                                {% endif %}
 
-                                                    {# Si l'utilisateur est inscrit, il peut se désister #}
-                                                    {% if trip.isSubscribed(app.user) %}
-                                                        <a class="btn neumorphism-2"
-                                                           href="{{ path('trip_unsubscribe', {'id':trip.id}) }}"><span>Se désister</span></a>
-                                                        {# Sinon si l'utilisateur n'est pas inscrit, il peut s'inscrire. On vérifie aussi si le nombre d'inscrit est inférieur au nombre maximum. Sinon l'état passera à cloturer #}
-                                                    {% elseif trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
+                                                {% if trip.tripCreation(trip.state.id) and trip.userOrOrganizer(app.user) %}
+                                                    <a class="btn btn-warning"
+                                                       href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
+
+                                                {% endif %}
+
+                                                {% if trip.isCanceled(trip.state.id) and trip.userOrOrganizer(app.user) %}
+                                                    <a class="btn btn-warning"
+                                                       href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
+                                                {% endif %}
+
+                                                {% if trip.tripClosed(trip.state.id) %}
+                                                    <a class="btn btn-info"
+                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
+
+                                                {% endif %}
+
+                                                {% if trip.isInProgress(trip.state.id) %}
+                                                    <a class="btn btn-info"
+                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
+                                                {% endif %}
+
+                                                {% if trip.tripOpen(trip.state.id) %}
+                                                    {% if trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
                                                         <a class="btn neumorphism-1"
                                                            href="{{ path('trip_inscription', {'id':trip.id }) }}"><span>S'inscrire</span></a>
+                                                    {% elseif trip.isSubscribed(app.user) %}
+                                                        <a class="btn neumorphism-2"
+                                                           href="{{ path('trip_unsubscribe', {'id':trip.id}) }}"><span>Se désister</span></a>
                                                     {% endif %}
-
-                                                    {# Si la sortie est en cours, l'utilisateur peut afficher le détail #}
-                                                    {# Si la sortie a passée la date d'inscription (sortie cloturée) on peut juste afficher le détail sortie#}
-                                                    {% if trip.tripInProgressOrClosed(trip.state.id) %}
-                                                        <a class="btn btn-info"
-                                                           href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-                                                    {% endif %}
-
-
-
-
-                                                    {# Si je suis organisateur et que je crée ou j'ai créée une sortie (status En création) , je peux la modifier (sortie en mémo, uniquement visible pour l'organisteur) #}
-                                                    {% if trip.tripCreation(trip.state.id, app.user) %}
-                                                        <a class="btn btn-warning"
-                                                           href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
-                                                    {% endif %}
-
-
-                                                    {# La sortie est finie (status passée). On affiche le récapitulatif de cette sortie #}
-                                                    {% if trip.tripPast(trip.state.id) %}
-                                                        <a class="btn btn-light"
-                                                           href="{{ path('home', {'id':trip.id}) }}">Récapitulatif</a>
-                                                    {% endif %}
-
-                                                    {# La date de début et de cloture de la sortie sont supérieures à la date d'aujourd'hui alors la sortie est ouverte (status Ouvert) #}
-                                                    {% if trip.tripOpen(trip.state.id, app.user) %}
-                                                        <a class="btn btn-info"
-                                                           href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-                                                        {# Si la date d'aujoud'hui est inférieure à la date de début de la sortie + sa durée, alors je peux annuler la sortie en tant qu'organisateur #}
-                                                        {% if trip.isNotCanceled(app.user) %}
-                                                            <a class="btn btn-danger"
-                                                               href="{{ path('trip_cancel', {'id':trip.id}) }}">Annuler</a>
-                                                        {% endif %}
-                                                    {% endif %}
+                                                    <a class="btn btn-info"
+                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
                                                 {% endif %}
+
+                                                {% if trip.tripOpen(trip.state.id) and trip.userOrOrganizer(app.user) %}
+                                                    <a class="btn btn-danger"
+                                                       href="{{ path('trip_cancel', {'id':trip.id}) }}">Annuler</a>
+                                                {% endif %}
+
                                             {% endif %}
 
                                         </td>
@@ -169,15 +173,4 @@
 
     <script scr="{{ asset('assets/js/search.js') }}"></script>
 
-    <script >// Filter table
-
-    $(document).ready(function(){
-    $("#tableSearch").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#userTable tr").filter(function() {
-    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-    });
-    });
-    </script>
 {% endblock %}
