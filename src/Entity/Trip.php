@@ -309,7 +309,7 @@ class Trip
             return true;
         }
         foreach ($this->getUsers() as $us){
-            if($us->getId() != $user->getId() and $this->getUser()->getId() != $user->getId()){
+            if($us->getId() != $user->getId()){// and $this->getUser()->getId() != $user->getId()){
                 return true;
             }
         }
@@ -336,9 +336,9 @@ class Trip
      * @param UserInterface $user
      * @return bool
      */
-    public function tripCreation(int $stateId, UserInterface $user)
+    public function tripCreation(int $stateId)//, UserInterface $user)
     {
-        if($stateId == 1 and $this->getUser()->getId() == $user->getId()){
+        if($stateId == 1){// and $this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;
@@ -362,9 +362,9 @@ class Trip
      * @param int $stateId
      * @return bool
      */
-    public function tripOpen(int $stateId,  UserInterface $user)
+    public function tripOpen(int $stateId)//,  UserInterface $user)
     {
-        if($stateId == 2 and $this->getUser()->getId() == $user->getId()){
+        if($stateId == 2){// and $this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;
@@ -376,12 +376,12 @@ class Trip
      * @param int $stateId
      * @return bool
      */
-    public function isNotInProgress(int $stateId,  UserInterface $user)
+    public function isInProgress(int $stateId)//,  UserInterface $user)
     {
-        if($stateId == 1 and $this->getUser()->getId() != $user->getId()){
-            return false;
+        if($stateId == 4){// and $this->getUser()->getId() != $user->getId()){
+            return true;
         }
-        return true;
+        return false;
     }
 
 
@@ -391,9 +391,9 @@ class Trip
      * @return bool
      * @throws \Exception
      */
-    public function isCanceled(int $stateId,  UserInterface $user)
+    public function isCanceled(int $stateId)//,  UserInterface $user)
     {
-        if($stateId == 6 and $this->getUser()->getId() == $user->getId()){
+        if($stateId == 6){// and $this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;
@@ -426,9 +426,18 @@ class Trip
      * @param int $stateId
      * @return bool
      */
-    public function tripClosed(int $stateId,  UserInterface $user)
+    public function tripClosed(int $stateId)//,  UserInterface $user)
     {
-        if($stateId == 3 and $this->getUser()->getId() == $user->getId()){
+        if($stateId == 3){// and $this->getUser()->getId() == $user->getId()){
+            return true;
+        }
+        return false;
+    }
+
+
+    public function userOrOrganizer(UserInterface $user)
+    {
+        if ($this->getUser()->getId() == $user->getId()){
             return true;
         }
         return false;
