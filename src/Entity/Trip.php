@@ -93,6 +93,11 @@ class Trip
      */
     private $reason;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="trip")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -441,5 +446,17 @@ class Trip
             return true;
         }
         return false;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }
