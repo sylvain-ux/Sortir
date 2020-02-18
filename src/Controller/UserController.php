@@ -52,7 +52,6 @@ class UserController extends AbstractController
             ]
         );
 
-
     }
 
     /**
@@ -86,8 +85,8 @@ class UserController extends AbstractController
         // Traitement du user avatar
         if ($userAvatar->isSubmitted() && $userAvatar->isValid()) // je récupère la valeur du champs avatar
         {
-            $avatarField = $userAvatar->get('avatar')->getData();
-           // $avatarField = $user -> getavatarField();
+            $avatarField = $userAvatar->get('avatarField')->getData();
+           // $avatarField = $user -> getAvatarField();
 
             if ($avatarField) {
                 $originalFilename = pathinfo($avatarField->getClientOriginalName(), PATHINFO_FILENAME);
@@ -105,6 +104,7 @@ class UserController extends AbstractController
 
                 }
                 $user->setAvatarName($newFilename);
+                $user->setAvatarField(null);
 
             }
             $entityManager = $this->getDoctrine()->getManager();
@@ -121,30 +121,6 @@ class UserController extends AbstractController
         return $this->render('user/profil.html.twig', ['userFormView' => $userProfil->createView(), 'uploadAvatarView' => $userAvatar->createView()]);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**

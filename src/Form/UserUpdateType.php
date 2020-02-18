@@ -24,11 +24,27 @@ class UserUpdateType extends AbstractType
     {
         $builder
 
-            ->add('name',TextType::class)
-            ->add('firstname',TextType::class)
-            ->add('phone',TextType::class)
-            ->add('email',EmailType::class)
+            ->add('name',TextType::class,
+                [
+                    'label'=>'Prénom'
+                ])
+            ->add('firstname',TextType::class,
+            [
+                    'label'=>'Nom'
+            ])
+
+            ->add('phone',TextType::class,
+                [
+                    'label'=>'Téléphone'
+                ] )
+
+            ->add('email',EmailType::class,
+            [
+                'label'=>'Email'
+            ])
+
             ->add('school',EntityType::class,[
+                'label'=>'Ecole de rattachement',
                 'class' => School::class,
                 'choice_label' => 'name','disabled' => true
             ])

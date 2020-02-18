@@ -39,7 +39,12 @@ class TripUserUpdateType extends AbstractType
             )
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
             ->add('published', SubmitType::class, ['label' => 'Publier la sortie'])
-            ->add('drop', SubmitType::class, ['label' => 'Supprimer']);
+            ->add('drop', SubmitType::class,
+                [
+                    'label' => 'Supprimer',
+                    'attr' => array(
+                        'onclick' => 'return confirm("La suppression de votre sortie sera définitive. Voulez-vous continuer ?")')
+                ]);
 
     }
 

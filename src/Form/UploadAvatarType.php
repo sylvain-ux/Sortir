@@ -15,12 +15,12 @@ class UploadAvatarType extends AbstractType
     {
         $builder
             ->add('avatarField', FileType::class, [
-                'label'=>'Téléchargez votre photo.png',
+                'label'=>'Télécharger votre photo.png',
                 'mapped'=>true,
                 'required'=>false,
-                'attr'=>['class'=>""]
+                'attr'=>['class'=>'test']
             ])
-            ->add('save', SubmitType::class, ['label' => 'Ajoutez votre photo']);
+            ->add('save', SubmitType::class, ['label' => 'Ajouter votre photo']);
 
         ;
     }

@@ -36,12 +36,35 @@ DQL;
 
     // Recherche en fonction des dates :
 
-//    .
-//.
+    //Date de debut :
+    public function findByDateStart($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = <<<DQL
+SELECT t FROM App\Entity\Trip t WHERE t.dateTimeStart >= :id
+DQL;
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter(':id', $id);
+        $result = $query->getResult();
 
+        return $result;
+    }
 
+    //Date de fin :
+    public function findByDateEnd($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = <<<DQL
+SELECT t FROM App\Entity\Trip t WHERE :id <= t.dateTimeStart
+DQL;
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter(':id', $id);
+        $result = $query->getResult();
 
-     //Recherche pour afficher les sorties dont je suis l'organisatreur/trice :
+        return $result;
+    }
+
+    //Recherche pour afficher les sorties dont je suis l'organisatreur/trice :
     public function findByMyTrip($id)
     {
         $entityManager = $this->getEntityManager();
@@ -56,12 +79,11 @@ DQL;
     }
 
     //Recherche pour afficher les sorties auxquelles je suis inscrit/e :
-
     public function findByMyRegistration($id)
     {
         $entityManager = $this->getEntityManager();
         $dql = <<<DQL
-  SELECT t FROM App\Entity\Trip t, App\Entity\User u WHERE t.users = :id
+  SELECT t FROM App\Entity\Trip t JOIN t.users usersTrip WHERE usersTrip.id = :id
  DQL;
         $query = $entityManager->createQuery($dql);
         $query->setParameter(':id', $id);
@@ -71,6 +93,19 @@ DQL;
     }
 
     //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
+    public function findByMyNotRegistration($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = <<<DQL
+  SELECT t FROM App\Entity\Trip t JOIN t.users usersTrip WHERE usersTrip.id = :id
+ DQL;
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter(':id', $id);
+        $result = $query->getResult();
+
+        return $result;
+    }
+
 
     //Recherche pour afficher les sorties passées :
     public function findByPastTrip()
@@ -78,9 +113,10 @@ DQL;
         $entityManager = $this->getEntityManager();
         $now = new \DateTime();
         $dql = <<<DQL
-SELECT t FROM App\Entity\Trip t WHERE t.dateTimeStart < $now
+SELECT t FROM App\Entity\Trip t WHERE t.dateTimeStart < :now
 DQL;
         $query = $entityManager->createQuery($dql);
+        $query->setParameter(":now",$now);
         $result = $query->getResult();
 
         return $result;
