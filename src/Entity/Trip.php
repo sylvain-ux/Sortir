@@ -390,7 +390,7 @@ class Trip
     }
 
 
-    /**TODO inclure des asserts permettant de demander une confirmation à l'utilisateur avant d'annuler sa sortie
+    /**
      * Fonction permettant de controler si la date de début de la sortie +  sa durée sont supérieure à la date d'aujourd'hui.
      * L'organisateur uniquement pourra alors annuler la sortie
      * @return bool
