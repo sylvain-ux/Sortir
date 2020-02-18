@@ -23,6 +23,7 @@ Liste des sorties
    <th>organisateur</th>
    <th>lieu</th>
    <th>ville</th>
+   <th>Catégorie</th>
    <th>actions</th>
   </tr>
   </thead>
@@ -40,6 +41,11 @@ Liste des sorties
     <td>{{ trip.user.name }}</td>
     <td>{{ trip.location.street }}</td>
     <td>{{ trip.location.name }}</td>
+    <td>
+     {% if trip.getCategory() %}
+     {{  trip.getCategory().getName() }}
+     {% endif %}
+    </td>
     <td><a href="{{ path('admin_trip_update',{ 'id': trip.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-user-edit"></i></a></td>
    </tr>
   {% endfor %}

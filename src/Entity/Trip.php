@@ -39,8 +39,9 @@ class Trip
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\LessThan(propertyPath="dateTimeStart", message="La date doit être inférieure à la date de la sortie")
+     *
      */
+    //@Assert\LessThan(propertyPath="dateTimeStart", message="La date doit être inférieure à la date de la sortie")
     private $registDeadline;
 
     /**
