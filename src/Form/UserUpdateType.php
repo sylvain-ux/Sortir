@@ -23,6 +23,7 @@ class UserUpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('name',TextType::class)
             ->add('firstname',TextType::class)
             ->add('phone',TextType::class)
@@ -31,14 +32,10 @@ class UserUpdateType extends AbstractType
                 'class' => School::class,
                 'choice_label' => 'name','disabled' => true
             ])
-            ->add('avatar', FileType::class, [
-                'label'=>'Téléchargez votre photo.png',
-                'mapped'=>false,
-                'required'=>false,
-                'attr'=>['class'=>""]
-            ])
 
-            ->add('save', SubmitType::class, ['label' => 'Modifier']);
+
+
+            ->add('save', SubmitType::class, ['label' => 'Modifier votre profil']);
 
 
     }

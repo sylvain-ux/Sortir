@@ -1,0 +1,80 @@
+<div class="col-12 ">
+<!-- select filter control -->
+{#<select class="d-none"
+        data-jplist-control="dropdown-filter"
+        data-group="data-group-1"
+        data-name="school">
+    <option value="0" data-path="default" selected>Toutes</option>
+    {% for school in allSchools %}
+        <option value="{{ school.id }}" data-value="{{ school.id }}" data-path=".school_{{ school.id }}" >{{ school.name }}</option>
+    {% endfor %}
+</select>#}
+    <div
+            style="display: none"
+            data-jplist-control="hidden-sort"
+            data-group="data-group-1"
+            data-path=".date"
+            data-order="asc"
+            data-type="text"></div>
+    <div class="box">
+
+        <!-- checkbox path filter control -->
+        <label>
+            <input
+                    type="checkbox"
+                    data-jplist-control="checkbox-path-filter"
+                    data-path=".school_3"
+                    data-group="data-group-1"
+                    name="name1"
+                     />
+            School 3
+        </label>
+
+        <!-- checkbox path filter control -->
+        <label>
+            <input
+                    type="checkbox"
+                    data-jplist-control="checkbox-path-filter"
+                    data-path=".school_1"
+                    data-group="data-group-1"
+                    name="name2" />
+            school 1
+        </label>
+
+        <!-- checkbox path filter control -->
+        <label>
+            <input
+                    type="checkbox"
+                    data-jplist-control="checkbox-path-filter"
+                    data-path=".school_2"
+                    data-group="data-group-1"
+                    name="name3" />
+            school 2
+        </label>
+
+    </div>
+
+    <button
+            data-jplist-control="buttons-range-filter"
+            data-path=".date_filter"
+            data-datetime-format="{day}/{month}/{year}"
+            data-group="data-group-1"
+            data-name="name1"
+            data-from="01/02/2020"
+            data-to="29/02/2020">
+        Février
+    </button>
+
+
+    <div data-control-type="date-picker-range-filter" data-control-name="date-picker-range-filter" data-control-action="filter" data-path=".date_filter" data-datetime-format="{day}/{month}/{year}" data-datepicker-func="datepicker" class="jplist-date-picker-range">
+
+        <i class="fa fa-calendar jplist-icon" aria-hidden="true"></i>
+        <input type="date" class="date-picker hasDatepicker" placeholder="Datepicker" data-type="prev" id="">
+
+        <i class="fa fa-minus gap" aria-hidden="true"></i>
+
+        <i class="fa fa-calendar jplist-icon" aria-hidden="true"></i>
+        <input type="date" class="date-picker hasDatepicker" placeholder="Datepicker" data-type="next" id="">
+    </div>
+
+</div>

@@ -1,59 +1,54 @@
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block title %}Hello TripController!{% endblock %}#}
-
-{#{% block body %}#}
-{#<style>#}
-{#    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
-{#    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
-{#</style>#}
-
-{#<div class="example-wrapper">#}
-{#    <h1>Hello {{ controller_name }}! ✅</h1>#}
-
-{#    This friendly message is coming from:#}
-{#    <ul>#}
-{#        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Sortir/src/Controller/TripController.php'|file_link(0) }}">src/Controller/TripController.php</a></code></li>#}
-{#        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Sortir/templates/trip/index.html.twig'|file_link(0) }}">templates/trip/index.html.twig</a></code></li>#}
-{#    </ul>#}
-{#</div>#}
-{#{% endblock %}#}
-
 {% extends 'layout.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Sortir.com - Liste des sorties{% endblock %}
 
 {% block body %}
-    {#    {% for e in searchForm %}#}
-    {#        {{ form(e.dateStart) }}#}
 
-    {#    {% endfor %}#}
 
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
-
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
-    <div class="example-wrapper">
-    </div>
-
-    <div class="container mt-5">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="border border-dark p-5">
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
                             <h2 class="text-center">Liste des sorties</h2>
+                            {# Partie Filtre : #}
+                            {# La barre de recherche#}
                             <input class="form-control mb-4" id="tableSearch" type="text"
-                                   placeholder="Type something to search list items">
+                                   placeholder="Search">
+                            {# Le formulaire de filtre #}
+                            {{ form_start(searchFormView) }}
+                            <br>
+                            {{ form_label(searchFormView.site) }}
+                            {{ form_widget(searchFormView.site) }}
+                            {{ form_errors(searchFormView.site) }}
+                            <br>
+                            {{ form_label(searchFormView.dateStart) }}
+                            {{ form_widget(searchFormView.dateStart) }}
+                            {{ form_errors(searchFormView.dateStart) }}
+                            <br>
+                            {{ form_label(searchFormView.dateEnd) }}
+                            {{ form_widget(searchFormView.dateEnd) }}
+                            {{ form_errors(searchFormView.dateEnd) }}
+                            <br>
+                            {{ form_label(searchFormView.TripOrganizer) }}
+                            {{ form_widget(searchFormView.TripOrganizer) }}
+                            {{ form_errors(searchFormView.TripOrganizer) }}
+                            <br>
+                            {{ form_label(searchFormView.TripRegistered) }}
+                            {{ form_widget(searchFormView.TripRegistered) }}
+                            {{ form_errors(searchFormView.TripRegistered) }}
+                            <br>
+                            {{ form_label(searchFormView.TripNotRegistered) }}
+                            {{ form_widget(searchFormView.TripNotRegistered) }}
+                            {{ form_errors(searchFormView.TripNotRegistered) }}
+                            <br>
+                            {{ form_label(searchFormView.TripPast) }}
+                            {{ form_widget(searchFormView.TripPast) }}
+                            {{ form_errors(searchFormView.TripPast) }}
+                            <br>
+                            {{ form_end(searchFormView) }}
+
                             <table id="userTable" class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -70,8 +65,6 @@
                                 </thead>
                                 <tbody>
                                 {% for trip in allTrips %}
-
-
 
                                     <tr>
                                         <td>{{ trip.id }}</td>
@@ -220,4 +213,15 @@
 
     <script scr="{{ asset('assets/js/search.js') }}"></script>
 
+    <script >// Filter table
+
+    $(document).ready(function(){
+    $("#tableSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#userTable tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+    });
+    });
+    </script>
 {% endblock %}

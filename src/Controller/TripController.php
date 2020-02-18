@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\City;
+use App\Entity\School;
 use App\Entity\State;
 use App\Entity\Trip;
 use App\Entity\TripLocation;
@@ -39,7 +40,51 @@ class TripController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/map", name="map")
+     */
+    public function map(EntityManagerInterface $entityManager)
+    {
+        $schoolRepository = $entityManager->getRepository(School::class);
+        $allSchools = $schoolRepository->findAll();
+        $stateRepository = $entityManager->getRepository(State::class);
+        $allStates = $stateRepository->findAll();
+        $locationRepository = $entityManager->getRepository(TripLocation::class);
+        $allLocations = $locationRepository->findAll();
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $tripRepository->findAll();
+        //$data = array();
+        $i=0;
+        foreach ($allLocations as $location){
+            $coordinates=array((float)$location->getLongitude(),(float)$location->getLatitude());
+            $city = $location->getCity();
+            $cityName = $city->getName();
+            $data[$i]['type']='Feature';
+            $data[$i]['geometry']['type']= 'Point';
+            $data[$i]['geometry']['coordinates']=$coordinates;
+            $data[$i]['properties']['title']=$location->getName();
+            $data[$i]['properties']['address']=$location->getStreet().' '.$cityName ;
+            $i++;
+        }
+        $data = json_encode($data);
+        return $this->render('trip/map.html.twig',compact('allSchools','allStates','allLocations','allTrips','data'));
+    }
+    /**
+     * @Route("/list", name="list")
+     */
+    public function list(EntityManagerInterface $entityManager)
+    {
+        $tripRepository = $entityManager->getRepository(School::class);
+        $allSchools = $tripRepository->findAll();
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        $allTrips = $tripRepository->findAll();
 
+        foreach ($allTrips as $trip) {
+            dump($trip->getNbRegistMax());
+        }
+
+        return $this->render('trip/list.html.twig',compact('allTrips','allSchools'));
+    }
     /**
      * @Route("/create", name="create")
      */

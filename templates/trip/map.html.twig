@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Carte des sorties{% endblock %}
+
+{% block stylesheets %}
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="container-fluid mt-5 pt-5">
+        <div id="mapLoc"></div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <script>
+        var data =  JSON.parse(JSON.stringify({{data|raw}}));
+   var geojson = {
+    type: 'geojson',
+    data: data,
+    };
+    </script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/main.js') }}"></script>
+{% endblock %}
