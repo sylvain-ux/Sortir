@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\School;
 use App\Entity\State;
@@ -78,12 +79,13 @@ class TripController extends AbstractController
         $allSchools = $tripRepository->findAll();
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
-
-        foreach ($allTrips as $trip) {
+        $catRepository = $entityManager->getRepository(Category::class);
+        $allCategories = $catRepository->findAll();
+/*        foreach ($allTrips as $trip) {
             dump($trip->getLocation()->getCity()->getZipCode());
-        }
+        }*/
 
-        return $this->render('trip/list.html.twig',compact('allTrips','allSchools'));
+        return $this->render('trip/list.html.twig',compact('allTrips','allSchools','allCategories'));
     }
     /**
      * @Route("/create", name="create")

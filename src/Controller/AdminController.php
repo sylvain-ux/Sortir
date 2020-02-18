@@ -349,7 +349,7 @@ class AdminController extends AbstractController
             $entityManager->flush();
             $cityId = $trip->getId();
             $this->addFlash('success', 'Sortie ajoutée !');
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('admin_trip_list');
         }
         return $this->render('admin/trip/add.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
@@ -376,7 +376,7 @@ class AdminController extends AbstractController
 
             $this->addFlash('success', 'Sortie modifiée !');
 
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('admin_trip_list');
         }
         return $this->render('admin/trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }

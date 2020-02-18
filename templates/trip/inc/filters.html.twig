@@ -1,29 +1,37 @@
 
 <div class="filters ">
     <div class="row">
-
-        <div class="ui-group col-12 col-md-6">
-            <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="school">
-                <button class="button active btn btn-outline-primary btn-sm" data-filter="">Toutes</button>
+        <div class="ui-group col-12 col-md-2 offset-md-1 text-center filters-button-group" data-filter-group="school">
+            <select class="form-control-sm select_filter" >
+                <option class="button  btn btn-outline-primary btn-sm" value="*" data-filter="*" selected="selected">Toutes les écoles</option>
                 {% for school in allSchools %}
-                    <button class="button btn btn-outline-primary btn-sm" data-filter=".school_{{ school.id }}">{{ school.name }}</button>
+                    <option class="button " value=".school_{{ school.id }}" data-filter=".school_{{ school.id }}">{{ school.name }}</option>
                 {% endfor %}
-            </div>
+            </select>
         </div>
-        <div class="ui-group  col-12 col-md-2">
-            <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="oganize">
-                <button class="button active btn btn-outline-success btn-sm" data-filter="">Toutes</button>
-                <button class="button btn btn-outline-success btn-sm" data-filter=".organizer">Organisateur ?</button>
-                <button class="button btn btn-outline-success btn-sm" data-filter=".subscribed">Participant ?</button>
-            </div>
+
+        <div class="ui-group col-12 col-md-2 text-center filters-button-group" data-filter-group="category">
+            <select class="form-control-sm select_filter" >
+                <option class="button " data-filter="*" value="*" selected="selected">Toutes les catégories</option>
+                {% for category in allCategories %}
+                    <option class="button " value=".cat_{{ category.id }}" data-filter=".cat_{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
         </div>
-        <div class="ui-group  col-12 col-md-2">
-            <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="dates">
-                <button class="button active btn btn-outline-success btn-sm" data-filter="">Toutes</button>
-                <button class="button btn btn-outline-success btn-sm" data-filter=".past">Passées ?</button>
-                <button class="button btn btn-outline-success btn-sm" data-filter=".futur">À venir ?</button>
-            </div>
+        <div class="ui-group  col-12 col-md-2 text-center filters-button-group" data-filter-group="oganize">
+            <select class="form-control-sm select_filter">
+                <option class="button  " data-filter="*" value="*" selected="selected">Participation</option>
+                <option class="button " value=".organizer" data-filter=".organizer">J'organise</option>
+                <option class="button " value=".subscribed" data-filter=".subscribed">Je participe</option>
+            </select>
         </div>
-        <p class="col-md-2"><input type="text" class="quicksearch form-control form-control-sm" placeholder="Recherche" /></p>
+        <div class="ui-group  col-12 col-md-2 text-center filters-button-group" data-filter-group="dates">
+            <select class="form-control-sm select_filter" >
+                <option class="button " data-filter="*" value="*" selected="selected">Toutes les dates</option>
+                <option class="button" value=".past" data-filter=".past">Passées ?</option>
+                <option class="button" value=".futur" data-filter=".futur">À venir ?</option>
+            </select>
+        </div>
+        <p class="col-12 col-md-2 text-center"><input type="text" class="quicksearch form-control form-control-sm" placeholder="Recherche" /></p>
     </div>
 </div>
