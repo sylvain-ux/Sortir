@@ -1,0 +1,48 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+Liste des sorties
+{% endblock %}
+{% block body %}
+<div class="container search_container">
+    <div class="row">
+        <div class="col-12 p-5">
+            <div class="card filters p-3">
+                <div class="row">
+                {{ include('trip/inc/filters.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container-fluid">
+        <div class="row" data-jplist-group="data-group-1">
+
+            {% for trip in allTrips %}
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3 p-2" data-jplist-item>
+                <div class="card bg-light p-1">
+                    <span class="school_{{ trip.getSchool().getId() }}">{{ trip.getSchool().getName() }}</span>
+                    <h2>{{ trip.name }}</h2>
+                    <p class="date_filter">{{ trip.getDateTimeStart()|date("d/m/Y") }}</p>
+                    <p class="date">{{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                    <p class="users">{{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- no results control -->
+            <div data-jplist-control="no-results" data-group="data-group-1" data-name="no-results" class="col-12">No Results Found</div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
+    <script src="{{ asset('assets/js/jplist.min.js') }}"></script>
+    <script>
+        jplist.init();
+    </script>
+{% endblock %}
+
+
+

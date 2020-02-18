@@ -4,27 +4,40 @@
 
 {% block body %}
 
-
-    <div class="container-fluid pt-5 mt-5">
-        <h1>Profil organisateur</h1>
+<div class="container-fluid pt-5 mt-5">
+    <h3>Profil organisateur</h3>
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <div class="row">
+                    <div class="col-12 col-xl-6">
+                    {% if organizer.avatar is not empty %}
+                        <img class="img-fluid" src="{{ asset('users/' ~ organizer.id ~ '/avatar/' ~ organizer.avatar) }}">
+                            {% else %}
+                                <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">
+                    {% endif %}
+                    </div>
+                </div>
+    <div class="form_container">
     <dl>
         <dt>Prénom</dt>
-        <dd>{{organizer.firstname }}</dd>
+        <dd>{{ organizer.firstname }}</dd>
 
         <dt>Nom</dt>
-        <dd>{{organizer.name }}</dd>
+        <dd>{{ organizer.name }}</dd>
 
         <dt>Téléphone</dt>
-        <dd>{{organizer.phone }}</dd>
+        <dd>{{ organizer.phone }}</dd>
 
         <dt>Email</dt>
-        <dd>{{organizer.email }}</dd>
+        <dd>{{ organizer.email }}</dd>
 
         <dt>Ecole de rattachement</dt>
-        <dd>{{organizer.school.name}}</dd>
+        <dd>{{ organizer.school.name }}</dd>
     </dl>
+    </div>
 
-    <a class="btn btn-primary" href="{{path('home')  }}" >Retour</a>
+
+    <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>
 
 
 

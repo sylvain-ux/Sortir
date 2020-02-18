@@ -8,30 +8,20 @@
 
 {% block body %}
 
+
     <div class="container-fluid mt-5 pt-5">
-        <div id="mapLoc" class=""></div>
+        <div id="mapLoc"></div>
     </div>
 
 
-    {% set data = '{' %}
-    {% for d in allLocations %}
-        {% set point = '{"type": "Feature","geometry": {"type": "Point","coordinates": [-1.5516884,47.21791690000001]},},' %}
-        {% data = data|merge([point]) %}
-    {% endfor %}
+
 
 {% endblock %}
 
 {% block javascripts %}
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <script>
-/*   let data = [
-{"type": "Feature","geometry": {"type": "Point","coordinates": [-1.5502366,47.1869759]},},
-{    "type": "Feature","geometry": {"type": "Point","coordinates": [-1.5516884,47.21791690000001]},},
-{    "type": "Feature","geometry": {"type": "Point","coordinates": [-1.5522506,47.2162801]},},
-{    "type": "Feature","geometry": {"type": "Point","coordinates": [-1.5466586,47.2167566]},},
-{    "type": "Feature","geometry": {"type": "Point","coordinates": [-1.553366,47.2138296]},}];*/
-
-let data =
+        var data =  JSON.parse(JSON.stringify({{data|raw}}));
    var geojson = {
     type: 'geojson',
     data: data,
