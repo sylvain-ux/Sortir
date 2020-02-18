@@ -1,46 +1,128 @@
 {% extends 'layout.html.twig' %}
 {% block title %}
-Liste des sorties
+    Liste des sorties
 {% endblock %}
 {% block body %}
-<div class="container search_container">
-    <div class="row">
-        <div class="col-12 p-5">
-            <div class="card filters p-3">
-                <div class="row">
-                {{ include('trip/inc/filters.html.twig') }}
+    <div class="container-fluid search_container p-3">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="card p-3">
+                    {{ include('trip/inc/filters.html.twig') }}
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="container-fluid">
-        <div class="row" data-jplist-group="data-group-1">
+        <div class="" >
+            <div class="grid">
+                {% for trip in allTrips %}
+                    {% if app.user.id == trip.user.id %}
+                    {% set organizer = "organizer" %}
+                    {% else %}
+                        {% set organizer = "" %}
+                     {% endif %}
+                    {% if trip.isSubscribed(app.user) %}
+                        {% set subscribed = "subscribed" %}
+                    {% else %}
+                        {% set subscribed = "" %}
+                    {% endif %}
+                    {% if trip.tripPast(trip.state.id) %}
+                        {% set tripStatus = "past" %}
+                    {% else %}
+                        {% set tripStatus = "futur" %}
+                    {% endif %}
 
-            {% for trip in allTrips %}
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3 p-2" data-jplist-item>
-                <div class="card bg-light p-1">
-                    <span class="school_{{ trip.getSchool().getId() }}">{{ trip.getSchool().getName() }}</span>
-                    <h2>{{ trip.name }}</h2>
-                    <p class="date_filter">{{ trip.getDateTimeStart()|date("d/m/Y") }}</p>
-                    <p class="date">{{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
-                    <p class="users">{{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
-                </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-xl-3 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }}" >
+                        <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
+                            <div class="imgBx" data-text="" onmouseover="Circlle('.round');">
+                                <img src="{{asset('img/categories/default.jpg')}}" class="img-fluid">
+                            </div>
+                            <div class="content text-right ">
+                                <p class="school text-left"><small>{{ trip.getSchool().getName() }}</small></p>
+                                <h2 class="text-center">{{ trip.name }}</h2>
+                                 <p class="date text-center">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                                <p class="address"><address><small>
+                                    {{ trip.getLocation().getName() }}<br>
+                                    {{ trip.getLocation().getStreet() }}<br>
+                                {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
+                                    </small></address></p>
+                              <p class="users" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-            <!-- no results control -->
-            <div data-jplist-control="no-results" data-group="data-group-1" data-name="no-results" class="col-12">No Results Found</div>
         </div>
     </div>
 {% endblock %}
 
 
 {% block javascripts %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
-    <script src="{{ asset('assets/js/jplist.min.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
     <script>
-        jplist.init();
+    // quick search regex
+    var qsRegex;
+    var buttonFilter;
+
+    // init Isotope
+    var $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        filter: function() {
+            var $this = $(this);
+            var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
+            var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
+            return searchResult && buttonResult;
+        }
+    });
+
+    $('.filters').on( 'click', '.button', function() {
+        buttonFilter = $( this ).attr('data-filter');
+        $grid.isotope();
+    });
+
+    // use value of search field to filter
+    var $quicksearch = $('.quicksearch').keyup( debounce( function() {
+        qsRegex = new RegExp( $(this).val(), 'gi' );
+        console.log($(this).val());
+        $grid.isotope();
+
+    }) );
+
+
+    // debounce so filtering doesn't happen every millisecond
+    function debounce( fn, threshold ) {
+        var timeout;
+        threshold = threshold || 100;
+        return function debounced() {
+            clearTimeout( timeout );
+            var args = arguments;
+            var _this = this;
+            function delayed() {
+                fn.apply( _this, args );
+            }
+            timeout = setTimeout( delayed, threshold );
+        };
+    }
+
+    // change is-checked class on buttons
+    $('.button-group').each( function( i, buttonGroup ) {
+        var $buttonGroup = $( buttonGroup );
+        $buttonGroup.on( 'click', 'button', function() {
+            $buttonGroup.find('.active').removeClass('active');
+            $( this ).addClass('active');
+        });
+    });
+
+    function Circlle(el){
+        $(el).circleProgress({fill: {color: '#ff5c5c'}})
+            .on('circle-animation-progress', function(event,
+                                                      progress, stepValue){
+                $(this).find('strong').text(String(stepValue.toFixed(2))+'%');
+            });
+    };
+
+    Circlle('.round');
     </script>
 {% endblock %}
 
