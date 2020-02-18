@@ -86,8 +86,8 @@ class UserController extends AbstractController
         // Traitement du user avatar
         if ($userAvatar->isSubmitted() && $userAvatar->isValid()) // je récupère la valeur du champs avatar
         {
-           // $avatarFile = $userAvatar->get('avatar')->getData();
-            $avatarField = $user -> getavatarField();
+            $avatarField = $userAvatar->get('avatar')->getData();
+           // $avatarField = $user -> getavatarField();
 
             if ($avatarField) {
                 $originalFilename = pathinfo($avatarField->getClientOriginalName(), PATHINFO_FILENAME);

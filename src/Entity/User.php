@@ -59,7 +59,6 @@ class User implements UserInterface
      * )
      *
      */
-
     private $avatarField;
 
     /**
