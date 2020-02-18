@@ -289,6 +289,8 @@ $data .= '}';
 
             if ($tripForm->getClickedButton() === $tripForm->get('drop')) {
 
+
+
                 $entityManager = $this->getDoctrine()->getManager();
                 //Suppression de la sortie associée à son id
                 $entityManager->remove($trip);
@@ -376,9 +378,7 @@ $data .= '}';
 
         $tripForm->handleRequest($request);
 
-
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
-
 
             //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
             $stateRepository = $entityManager->getRepository(State::class);
@@ -394,7 +394,6 @@ $data .= '}';
 
             //Message de success
             $this->addFlash('success', 'Vous avez annulé la sortie');
-
 
             return $this->redirectToRoute("home");
         }
