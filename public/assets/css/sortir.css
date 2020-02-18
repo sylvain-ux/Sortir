@@ -1,6 +1,7 @@
 /*colors*/
 .bleu-eni{color:#134a80}
 .bg_bleu_eni{background-color: #134a80}
+.bg_white{background:#fff}
 
 
 /*navbar*/
@@ -107,6 +108,58 @@ section.main{
 /*grid*/
 .grid-item {
     float: left;
-    /*width: 33%;*/
-
 }
+
+.grid-item .card
+{
+    position: relative;
+    box-shadow: -6px -6px 10px rgba(255,255,255,0.5),
+    6px 6px 20px rgba(0,0,0,0.05);
+    min-height:200px;
+}
+
+.grid-item .card .imgBx
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card:hover .imgBx
+{
+    width: 20%;
+    height: 20%;
+    left: 0px;
+    right:0;
+    bottom:0;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card .imgBx img
+{
+    max-width: 100%;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card:hover .imgBx img
+{
+    max-width: 100%;
+}
+
+.grid-item .card .content img {
+    max-width: 80px;
+    position: absolute;
+    top: 0;
+    right: 200px;
+}
+.grid-item .card:hover{text-decoration: none}
+
+.grid-item .card .content h2{font-size:18px}

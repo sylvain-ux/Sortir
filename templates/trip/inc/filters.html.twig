@@ -1,18 +1,8 @@
-<div class="col-12 ">
-<!-- select filter control -->
-{#<select class="d-none"
-        data-jplist-control="dropdown-filter"
-        data-group="data-group-1"
-        data-name="school">
-    <option value="0" data-path="default" selected>Toutes</option>
-    {% for school in allSchools %}
-        <option value="{{ school.id }}" data-value="{{ school.id }}" data-path=".school_{{ school.id }}" >{{ school.name }}</option>
-    {% endfor %}
-</select>#}
-    <div class="filters">
-        <p class="d-none"><input type="text" class="quicksearch" placeholder="Recherche" /></p>
-        <p id="output">--</p>
-        <div class="ui-group p-2">
+
+<div class="filters ">
+    <div class="row">
+
+        <div class="ui-group col-12 col-md-6">
             <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="school">
                 <button class="button active btn btn-outline-primary btn-sm" data-filter="">Toutes</button>
                 {% for school in allSchools %}
@@ -20,19 +10,20 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="ui-group p-2">
-            <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="school">
+        <div class="ui-group  col-12 col-md-2">
+            <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="oganize">
                 <button class="button active btn btn-outline-success btn-sm" data-filter="">Toutes</button>
                 <button class="button btn btn-outline-success btn-sm" data-filter=".organizer">Organisateur ?</button>
                 <button class="button btn btn-outline-success btn-sm" data-filter=".subscribed">Participant ?</button>
             </div>
         </div>
-        <div class="ui-group p-2">
-            <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="school">
+        <div class="ui-group  col-12 col-md-2">
+            <div class="button-group js-radio-button-group btn-group-sm btn-group" role="group" data-filter-group="dates">
                 <button class="button active btn btn-outline-success btn-sm" data-filter="">Toutes</button>
                 <button class="button btn btn-outline-success btn-sm" data-filter=".past">Passées ?</button>
                 <button class="button btn btn-outline-success btn-sm" data-filter=".futur">À venir ?</button>
             </div>
         </div>
+        <p class="col-md-2"><input type="text" class="quicksearch form-control form-control-sm" placeholder="Recherche" /></p>
     </div>
 </div>
