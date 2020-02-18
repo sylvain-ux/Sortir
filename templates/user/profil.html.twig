@@ -11,15 +11,17 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 class="text-center">
-                   Mon profil
+                    Mon profil
                 </h3>
+
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-12 col-md-5">
+
                 <div class="row">
                     <div class="col-md-12">
-
+                        <br>
                         {% if app.user.getAvatarName() is not empty %}
                             <img  class="img-fluid" src="{{ asset('users/' ~ app.user.id ~ '/avatar/' ~ app.user.getAvatarName()) }}">
                         {% else %}
@@ -34,12 +36,13 @@
                     <div class="col-md-12">
                         <br>
 
-                        <a class="btn btn-info" href="{{path('user_password')  }}" >Changer votre mot de passe</a>
+                        <a class="btn btn-info" href="{{path('user_password')  }}"> Changer votre mot de passe</a>
 
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-12 col-md-5 offset-md-2">
+                <br>
                 {{ form (userFormView) }}
                 <a class="btn btn-secondary" href="{{path('home')  }}" >Annuler</a>
             </div>
