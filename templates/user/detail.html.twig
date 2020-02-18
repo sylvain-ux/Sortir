@@ -5,26 +5,123 @@
 {% block body %}
 
 
-    <div class="container-fluid pt-5 mt-5">
-        <h1>Profil organisateur</h1>
-    <dl>
-        <dt>Prénom</dt>
-        <dd>{{organizer.firstname }}</dd>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center">
+                    Organisateur
+                </h3>
+            </div>
 
-        <dt>Nom</dt>
-        <dd>{{organizer.name }}</dd>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-12 col-md-6 offset-md-6 text-center text-md-right py-3">
+                        {% if organizer.avatarName is not empty %}
+                            <img class="img-fluid" src="{{ asset('users/' ~ organizer.id ~ '/avatar/' ~ organizer.avatarName) }}">
+                        {% else %}
+                            <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <dt>Téléphone</dt>
-        <dd>{{organizer.phone }}</dd>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-12 col-md-6 text-center text-md-left py-3">
+                        <dl>
+                            <dt>Prénom</dt>
+                            <dd>{{ organizer.firstname }}</dd>
 
-        <dt>Email</dt>
-        <dd>{{organizer.email }}</dd>
+                            <dt>Nom</dt>
+                            <dd>{{ organizer.name }}</dd>
 
-        <dt>Ecole de rattachement</dt>
-        <dd>{{organizer.school.name}}</dd>
-    </dl>
+                            <dt>Téléphone</dt>
+                            <dd>{{ organizer.phone }}</dd>
 
-    <a class="btn btn-primary" href="{{path('home')  }}" >Retour</a>
+                            <dt>Email</dt>
+                            <dd>{{ organizer.email }}</dd>
+
+                            <dt>Ecole de rattachement</dt>
+                            <dd>{{ organizer.school.name }}</dd>
+                        </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#<div class="container-fluid pt-5 mt-5">#}
+{#    <h3>Profil organisateur</h3>#}
+{#        <div class="row">#}
+{#            <div class="col-12 col-xl-6">#}
+{#                <div class="row">#}
+{#                    <div class="col-12 col-xl-6">#}
+{#                    {% if organizer.avatarName is not empty %}#}
+{#                        <img class="img-fluid" src="{{ asset('users/' ~ organizer.id ~ '/avatar/' ~ organizer.avatarName) }}">#}
+{#                            {% else %}#}
+{#                                <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">#}
+{#                    {% endif %}#}
+{#                    </div>#}
+{#                </div>#}
+{#    <div class="form_container">#}
+{#    <dl>#}
+{#        <dt>Prénom</dt>#}
+{#        <dd>{{ organizer.firstname }}</dd>#}
+
+{#        <dt>Nom</dt>#}
+{#        <dd>{{ organizer.name }}</dd>#}
+
+{#        <dt>Téléphone</dt>#}
+{#        <dd>{{ organizer.phone }}</dd>#}
+
+{#        <dt>Email</dt>#}
+{#        <dd>{{ organizer.email }}</dd>#}
+
+{#        <dt>Ecole de rattachement</dt>#}
+{#        <dd>{{ organizer.school.name }}</dd>#}
+{#    </dl>#}
+{#    </div>#}
+
+
+{#    <a class="btn btn-primary" href="{{ path('home') }}">Retour</a>#}
 
 
 

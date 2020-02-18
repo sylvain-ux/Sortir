@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ResetPassword;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\UploadAvatarType;
 use App\Form\UserUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +52,6 @@ class UserController extends AbstractController
             ]
         );
 
-
     }
 
     /**
@@ -67,53 +67,58 @@ class UserController extends AbstractController
         $userProfil = $this->createForm(UserUpdateType::class,$user);
         $userProfil->handleRequest($request);
 
-        // traitement après soumission du form
+        $userAvatar = $this->createForm(UploadAvatarType::class, $user);
+        $userAvatar->handleRequest($request);
+
+        // traitement du userProfil après soumission du form
         if ($userProfil->isSubmitted() && $userProfil->isValid()) {
 
-        // je récupère la valeur du champs avatar
-            $avatarFile = $userProfil->get('avatar')->getData();
-
-
-            if ($avatarFile) {
-                $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
-
-              //  $newFilename = 'avatar'.$user->getId().'.'.$avatarFile->guessExtension();
-
-                try{
-                    $avatarFile->move(
-                        sprintf($this->getParameter('avatar_directory'),$user->getId()),
-                        $newFilename
-                    );
-                }catch (FileException $e) {
-
-                }
-                  $user->setAvatar($newFilename);
-
-
-
-
-//            }elseif ($avatarFile === null)
-//            {
-//                $defaultAvatar->
-//                $user->setAvatar($defaultAvatar);
-
-
-
-            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             $this->addFlash('success', 'profil modifié !');
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('user_profil');
+        }
+
+        // Traitement du user avatar
+        if ($userAvatar->isSubmitted() && $userAvatar->isValid()) // je récupère la valeur du champs avatar
+        {
+            $avatarField = $userAvatar->get('avatarField')->getData();
+           // $avatarField = $user -> getAvatarField();
+
+            if ($avatarField) {
+                $originalFilename = pathinfo($avatarField->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate(
+                    'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
+                    $originalFilename
+                );
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarField->guessExtension();
+                try {
+                    $avatarField->move(
+                        sprintf($this->getParameter('avatar_directory'), $user->getId()),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+                $user->setAvatarName($newFilename);
+                $user->setAvatarField(null);
+
+            }
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Vous avez bien téléchargé votre avatar !');
+
+            return $this->redirectToRoute('user_profil');
+
 
         }
 
-
-        return $this->render('user/profil.html.twig', ['userFormView' => $userProfil->createView()]);
+        return $this->render('user/profil.html.twig', ['userFormView' => $userProfil->createView(), 'uploadAvatarView' => $userAvatar->createView()]);
 
     }
 

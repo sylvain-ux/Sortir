@@ -1,47 +1,247 @@
 {% extends 'layout.html.twig' %}
 {% block title %}
-Liste des sorties
+    Liste des sorties
 {% endblock %}
 {% block body %}
-<div class="container search_container">
-    <div class="row">
-        <div class="col-12 p-5">
-            <div class="card filters p-3">
-                <div class="row">
-                {{ include('trip/inc/filters.html.twig') }}
+    <div class="container-fluid search_container p-3">
+        <div class="container text-center">
+            <div class="logo_part py-4">
+            <a class="" href="{{path('home')}}">
+                <img src="{{ asset('img/eni-sortir-white.png') }}" alt="ENI -> sortir" class="img-fluid">
+                <span class="d-none">Sortir.com</span>
+            </a>
+            </div>
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="filter_container">
+                        {{ include('trip/inc/filters.html.twig') }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="container">
+        <div class="" >
+            <div class="grid">
+                {% for trip in allTrips %}
+                    {% if app.user.id == trip.user.id %}
+                        {% set organizer = "organizer" %}
+                    {% else %}
+                        {% set organizer = "" %}
+                    {% endif %}
+                    {% if trip.isSubscribed(app.user) %}
+                        {% set subscribed = "subscribed" %}
+                    {% else %}
+                        {% set subscribed = "" %}
+                    {% endif %}
+                    {% if trip.tripPast(trip.state.id) %}
+                        {% set tripStatus = "past" %}
+                    {% else %}
+                        {% set tripStatus = "futur" %}
+                    {% endif %}
+                    {% if trip.category %}
+                        {% set cat = trip.category.id %}
+                    {% else %}
+                        {% set cat = "default" %}
+                    {% endif %}
+                    {%   set nb_item = "" %}
+                    {% if  loop.index == 1 %}
+                        {%   set nb_item = "first_elem" %}
+                    {% elseif  loop.index ==2  %}
+                        {%   set nb_item = "second_elem" %}
+                    {% elseif  loop.index ==3  %}
+                        {%   set nb_item = "third_elem" %}
+                    {% endif %}
 
-    <div class="container-fluid">
-        <div class="row" data-jplist-group="data-group-1">
 
-            {% for trip in allTrips %}
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3 p-2" data-jplist-item>
-                <div class="card bg-light p-1">
-                    <span class="school_{{ trip.getSchool().getId() }}">{{ trip.getSchool().getName() }}</span>
-                    <h2>{{ trip.name }}</h2>
-                    <p class="date_filter">{{ trip.getDateTimeStart()|date("d/m/Y") }}</p>
-                    <p class="date">{{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
-                    <p class="users">{{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
-                </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-4 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }} {{ nb_item }}" >
+                        <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
+                            <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
+
+
+                            <div class="content">
+                                <div class="items head">
+                                    <h2>{{ trip.name }}</h2>
+                                    <hr>
+                                </div>
+                                <div class="items body ">
+                                    <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                                    <p class="new text-dark">{{ trip.getLocation().getName() }} ({{ trip.getLocation().getCity().getName() }}) </p>
+                                </div>
+                                <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
+                                <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                                <p class="address d-none"><address class="d-none"><small>
+                                        {{ trip.getLocation().getName() }}<br>
+                                        {{ trip.getLocation().getStreet() }}<br>
+                                        {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
+                                    </small></address></p>
+                                <p class="users d-none" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-            <!-- no results control -->
-            <div data-jplist-control="no-results" data-group="data-group-1" data-name="no-results" class="col-12">No Results Found</div>
         </div>
     </div>
 {% endblock %}
 
 
 {% block javascripts %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
-    <script src="{{ asset('assets/js/jplist.min.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+
     <script>
-        jplist.init();
+
+        // external js: isotope.pkgd.js
+        // init Isotope
+        // store filter for each group
+        $(document).ready(function(){
+            var filters = {};
+            var filterValue = filteredValue = '';
+            // quick search regex
+            var qsRegex;
+            var buttonFilter;
+
+            $('.select_filter').each( function(){
+                filteredValue = getFiltersValue($(this));
+            });
+            var $grid = $('.grid').isotope({
+                itemSelector: '.grid-item',
+                masonry: {
+//columnWidth: 360,
+//gutter: 15
+                },
+                //filter: filteredValue,
+                filter: function() {
+                    var $this = $(this);
+                    var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
+                    var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
+                    return searchResult && buttonResult;
+                }
+            });
+            $('.select_filter').on( 'change', function(event) {
+                var $select = $( event.currentTarget );
+                /*                filteredValue = getFiltersValue($select);
+                                console.log(filteredValue);*/
+                // set filter for Isotope
+
+                buttonFilter = getFiltersValue($select);
+                //console.log($( this ));
+                $grid.isotope();
+                var elems = $grid.isotope('getFilteredItemElements');
+                $('.grid-item').removeClass('first_elem second_elem third_elem');
+                $(elems[0]).addClass('first_elem');
+                $(elems[1]).addClass('second_elem');
+                $(elems[2]).addClass('third_elem');
+                //$grid.isotope({ filter: filteredValue });
+            });
+
+            // use value of search field to filter
+            var $quicksearch = $('.quicksearch').keyup( debounce( function() {
+                qsRegex = new RegExp( $(this).val(), 'gi' );
+                //console.log($(this).val());
+                $grid.isotope();
+
+            }) );
+            // debounce so filtering doesn't happen every millisecond
+            function debounce( fn, threshold ) {
+                var timeout;
+                threshold = threshold || 100;
+                return function debounced() {
+                    clearTimeout( timeout );
+                    var args = arguments;
+                    var _this = this;
+                    function delayed() {
+                        fn.apply( _this, args );
+                    }
+                    timeout = setTimeout( delayed, threshold );
+                };
+            }
+
+            function getFiltersValue(elem){
+                var $buttonGroup = elem.parents('.filters-button-group');
+                var filterGroup = $buttonGroup.attr('data-filter-group');
+                filters[ filterGroup ] = elem.val();
+                filterValue = concatValues( filters );
+                console.log(filterValue);
+                return filterValue;
+            };
+            // flatten object by concatting values
+            function concatValues( obj ) {
+                var value = '';
+                for ( var prop in obj ) {
+                    value += obj[ prop ];
+                }
+                return value;
+            }
+
+            $('.grid').imagesLoaded( function() {
+                // images have loaded
+            });
+
+        });
     </script>
+
+
+    {#
+       <script>
+       // quick search regex
+       var qsRegex;
+       var buttonFilter;
+
+       // init Isotope
+       var $grid = $('.grid').isotope({
+           itemSelector: '.grid-item',
+           percentPosition: true,
+           filter: function() {
+               var $this = $(this);
+               var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
+               var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
+               return searchResult && buttonResult;
+           }
+       });
+
+       $('.select_filter').on( 'change', function() {
+
+           buttonFilter = $( this ).attr('data-filter');
+           console.log($( this ));
+           $grid.isotope();
+       });
+
+       // use value of search field to filter
+       var $quicksearch = $('.quicksearch').keyup( debounce( function() {
+           qsRegex = new RegExp( $(this).val(), 'gi' );
+           console.log($(this).val());
+           $grid.isotope();
+
+       }) );
+
+
+       // debounce so filtering doesn't happen every millisecond
+       function debounce( fn, threshold ) {
+           var timeout;
+           threshold = threshold || 100;
+           return function debounced() {
+               clearTimeout( timeout );
+               var args = arguments;
+               var _this = this;
+               function delayed() {
+                   fn.apply( _this, args );
+               }
+               timeout = setTimeout( delayed, threshold );
+           };
+       }
+
+       // change is-checked class on buttons
+       $('.button-group').each( function( i, buttonGroup ) {
+           var $buttonGroup = $( buttonGroup );
+           $buttonGroup.on( 'click', 'button', function() {
+               $buttonGroup.find('.active').removeClass('active');
+               $( this ).addClass('active');
+           });
+       });
+   </script>#}
+
 {% endblock %}
 
 

@@ -1,60 +1,39 @@
-<div class="col-12 ">
-<!-- select filter control -->
-{#<select class="d-none"
-        data-jplist-control="dropdown-filter"
-        data-group="data-group-1"
-        data-name="school">
-    <option value="0" data-path="default" selected>Toutes</option>
-    {% for school in allSchools %}
-        <option value="{{ school.id }}" data-value="{{ school.id }}" data-path=".school_{{ school.id }}" >{{ school.name }}</option>
-    {% endfor %}
-</select>#}
-    <div
-            style="display: none"
-            data-jplist-control="hidden-sort"
-            data-group="data-group-1"
-            data-path=".date"
-            data-order="asc"
-            data-type="text"></div>
-    <div class="box">
 
-        <!-- checkbox path filter control -->
-        <label>
-            <input
-                    type="checkbox"
-                    data-jplist-control="checkbox-path-filter"
-                    data-path=".school_3"
-                    data-group="data-group-1"
-                    name="name1"
-                     />
-            School 3
-        </label>
+<div class="filters ">
+    <div class="row">
+        <div class="ui-group col-12 col-md-2 offset-md-1 text-center filters-button-group" data-filter-group="school">
+            <select class="form-control-sm select_filter" >
+                <option class="button  btn btn-outline-primary btn-sm" value="*" data-filter="*" selected="selected">Toutes les écoles</option>
+                {% for school in allSchools %}
+                    <option class="button " value=".school_{{ school.id }}" data-filter=".school_{{ school.id }}">{{ school.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <!-- checkbox path filter control -->
-        <label>
-            <input
-                    type="checkbox"
-                    data-jplist-control="checkbox-path-filter"
-                    data-path=".school_1"
-                    data-group="data-group-1"
-                    name="name2" />
-            school 1
-        </label>
-
-        <!-- checkbox path filter control -->
-        <label>
-            <input
-                    type="checkbox"
-                    data-jplist-control="checkbox-path-filter"
-                    data-path=".school_2"
-                    data-group="data-group-1"
-                    name="name3" />
-            school 2
-        </label>
-
+        <div class="ui-group col-12 col-md-2 text-center filters-button-group" data-filter-group="category">
+            <select class="form-control-sm select_filter" >
+                <option class="button " data-filter="*" value="*" selected="selected">Toutes les catégories</option>
+                {% for category in allCategories %}
+                    <option class="button " value=".cat_{{ category.id }}" data-filter=".cat_{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="ui-group  col-12 col-md-2 text-center filters-button-group" data-filter-group="oganize">
+            <select class="form-control-sm select_filter">
+                <option class="button  " data-filter="*" value="*" selected="selected">Participation</option>
+                <option class="button " value=".organizer" data-filter=".organizer">J'organise</option>
+                <option class="button " value=".subscribed" data-filter=".subscribed">Je participe</option>
+            </select>
+        </div>
+        <div class="ui-group  col-12 col-md-2 text-center filters-button-group" data-filter-group="dates">
+            <select class="form-control-sm select_filter" >
+                <option class="button " data-filter="*" value="*" selected="selected">Toutes les dates</option>
+                <option class="button" value=".past" data-filter=".past">Passées ?</option>
+                <option class="button" value=".futur" data-filter=".futur">À venir ?</option>
+            </select>
+        </div>
+        <p class="col-12 col-md-2 text-center"><input type="text" class="quicksearch form-control form-control-sm" placeholder="Recherche" /></p>
     </div>
 
-
-
-
 </div>
+

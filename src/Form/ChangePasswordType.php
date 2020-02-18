@@ -21,6 +21,7 @@ class ChangePasswordType extends AbstractType
 
             ->add('oldPassword', PasswordType::class, [
                'required'=> true,
+                'label'=>'Ancien mot de passe'
                 ])
 
 
@@ -34,10 +35,12 @@ class ChangePasswordType extends AbstractType
             ))
 
 
-            ->add('submit', SubmitType::class, array(
+            ->add('submit', SubmitType::class,
+                array(
                 'attr' => array(
-                    'class' => 'btn btn-primary btn-block'
-                )
+                    'class' => 'btn btn-primary btn-block',
+                     ),
+                    'label'=> 'Valider'
             ));
 
 

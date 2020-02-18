@@ -1,72 +1,83 @@
 {% extends 'layout.html.twig' %}
 {% form_theme tripFormView 'bootstrap_4_layout.html.twig' %}
-{% block title %} Créer une sortie {% endblock %}
+{% block title %} Détail d'une sortie {% endblock %}
 
 {% block body %}
 
-    <h1>Détail de la sortie</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Détail de la sortie</h3>
+                {{ form_start(tripFormView) }}
+                <br>
+                {{ form_label(tripFormView.name) }}
+                {{ form_widget(tripFormView.name) }}
+                {{ form_errors(tripFormView.name) }}
+                <br>
+                {{ form_label(tripFormView.dateTimeStart) }}
+                {{ form_widget(tripFormView.dateTimeStart) }}
+                {{ form_errors(tripFormView.dateTimeStart) }}
+                <br>
+                {{ form_label(tripFormView.registDeadline) }}
+                {{ form_widget(tripFormView.registDeadline) }}
+                {{ form_errors(tripFormView.registDeadline) }}
+                <br>
+                {{ form_label(tripFormView.nbRegistMax) }}
+                {{ form_widget(tripFormView.nbRegistMax) }}
+                {{ form_errors(tripFormView.nbRegistMax) }}
+                <br>
+                {{ form_label(tripFormView.nbRegistMin) }}
+                {{ form_widget(tripFormView.nbRegistMin) }}
+                {{ form_errors(tripFormView.nbRegistMin) }}
+                <br>
+                {{ form_label(tripFormView.duration) }}
+                {{ form_widget(tripFormView.duration) }}
+                {{ form_errors(tripFormView.duration) }}
+                <br>
+                <br>
+                {{ form_label(tripFormView.info) }}
+                {{ form_widget(tripFormView.info) }}
+                {{ form_errors(tripFormView.info) }}
+                <br>
+                {{ form_label(tripFormView.school) }}
+                {{ form_widget(tripFormView.school) }}
+                {{ form_errors(tripFormView.school) }}
+                <br>
+                {{ form_label(tripFormView.location) }}
+                {{ form_widget(tripFormView.location) }}
+                {{ form_errors(tripFormView.location) }}
+                <br>
+                {{ form_end(tripFormView) }}
+            </div>
 
-    {{ form_start(tripFormView) }}
-    <br>
-    {{ form_label(tripFormView.name) }}
-    {{ form_widget(tripFormView.name) }}
-    {{ form_errors(tripFormView.name) }}
-    <br>
-    {{ form_label(tripFormView.dateTimeStart) }}
-    {{ form_widget(tripFormView.dateTimeStart) }}
-    {{ form_errors(tripFormView.dateTimeStart) }}
-    <br>
-    {{ form_label(tripFormView.registDeadline) }}
-    {{ form_widget(tripFormView.registDeadline) }}
-    {{ form_errors(tripFormView.registDeadline) }}
-    <br>
-    {{ form_label(tripFormView.nbRegistMax) }}
-    {{ form_widget(tripFormView.nbRegistMax) }}
-    {{ form_errors(tripFormView.nbRegistMax) }}
-    <br>
-    {{ form_label(tripFormView.nbRegistMin) }}
-    {{ form_widget(tripFormView.nbRegistMin) }}
-    {{ form_errors(tripFormView.nbRegistMin) }}
-    <br>
-    {{ form_label(tripFormView.duration) }}
-    {{ form_widget(tripFormView.duration) }}
-    {{ form_errors(tripFormView.duration) }}
-    <br>
-    <br>
-    {{ form_label(tripFormView.info) }}
-    {{ form_widget(tripFormView.info) }}
-    {{ form_errors(tripFormView.info) }}
-    <br>
-    {{ form_label(tripFormView.school) }}
-    {{ form_widget(tripFormView.school) }}
-    {{ form_errors(tripFormView.school) }}
-    <br>
-    {{ form_label(tripFormView.location) }}
-    {{ form_widget(tripFormView.location) }}
-    {{ form_errors(tripFormView.location) }}
-    <br>
-    {{ form_end(tripFormView) }}
+            <div class="col-md-6 offset-md-2">
+                <h3>Participants</h3>
+                <div class="row">
+                    {% for u in allUsers %}
+                        <div class="col-md-6">
+                            <div class="card text-center">
+                                {% if u.avatarName is not empty %}
+                                    <img class="img-fluid"
+                                         src="{{ asset('users/' ~ u.id ~ '/avatar/' ~ u.avatarName) }}">
+                                {% else %}
+                                    <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">
+
+                                {% endif %}
+                                {{ u.name }}
+                                {{ u.firstName }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-<h2>Liste des participants inscrits :</h2>
-<table id="userTable" class="table table-bordered">
-    <thead>
-    <tr>
 
-        <th>Nom</th>
-        <th>Prenom</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for u in allUsers %}
 
-    <tr>
 
-       <td>{{ u.name }}</td>
-        <td>{{ u.firstName }}</td>
-        {% endfor %}
-    </tbody>
-</table>
+
 
 
     <a class="btn btn-secondary" href="{{ path('home') }}">Retour</a>

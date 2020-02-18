@@ -1,6 +1,7 @@
 /*colors*/
 .bleu-eni{color:#134a80}
 .bg_bleu_eni{background-color: #134a80}
+.bg_white{background:#fff}
 
 
 /*navbar*/
@@ -13,52 +14,21 @@
 .alerts-container .alert .alert-success{background:rgba(212,237,218,0.7)!important}
 
 
-<<<<<<< HEAD
-/*table{*/
-/*    border-collapse: separate;*/
-/*}*/
-/*body{*/
-/*    background-color: #E0E5EC;*/
-/*}*/
-/*.container{*/
-/*    display: flex;*/
-/*    background: #E0E5EC;*/
-/*}*/
-=======
+
 /*home*/
 section.main{
-    padding:50px 0;
-    min-height:80vh;
+    padding:0;
     background-color: #dae0e5;
+    position:relative
     /*background:url(bg/nantes.jpg) no-repeat center center / cover;*/
 }
->>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
+
 
 
 /*.fa-check {*/
 /*    color: green;*/
 /*}*/
 
-
-<<<<<<< HEAD
-/*.neumorphism-0{*/
-/*    margin: 2px;*/
-/*    border-radius: 5px;*/
-/*    background: #E0E5EC;*/
-
-/*    box-shadow: -2px -2px 8px rgba(255,255,255,1),*/
-/*    -2px -2px 12px rgba(255,255,255,0.5),*/
-/*    inset 2px 2px 4px rgba(255,255,255,0.1),*/
-/*    2px 2px 8px rgba(0,0,0,0.15);*/
-/*}*/
-
-/*.neumorphism-1{*/
-/*    margin: 10px;*/
-/*    border-radius: 5px;*/
-/*    background: #E0E5EC;*/
-
-=======
->>>>>>> c643683ee3efc186ecc40256c8b792097f762aa6
 /*.neumorphism-1{*/
 /*    margin: 10px;*/
 /*    border-radius: 5px;*/
@@ -134,3 +104,87 @@ section.main{
     width: 20px;
     background: url(marker.png) no-repeat;
 }
+
+
+/*list of trips*/
+.search_container{min-height:70vh;background: url(cities/nantes.jpg) no-repeat center center / cover}
+.search_container > .container{margin-top:5vh}
+.filter_container{background:rgba(0,0,0,0.7);padding:40px 30px 30px 30px}
+/*grid*/
+.grid-item {
+/*    float: left;*/
+}
+.grid-item.first_elem{margin-top:-180px;}
+.grid-item.second_elem{margin-top:-120px;}
+.grid-item.third_elem{margin-top:-60px;}
+
+.grid-item .card{position: relative;min-height:250px;border-radius:0;border:0;box-shadow:0 0 10px 0 rgba(0,0,0,0.2)}
+.grid-item .card .overlay{position: absolute;top:0;left:0;height: 100%;width:100%;  opacity: 1;    transition: all 0.5s;}
+.grid-item .card:hover .overlay {opacity: 0;}
+.grid-item .card:hover{text-decoration: none}
+.grid-item .card .content{z-index:-1;opacity:0}
+.grid-item .card:hover .content{z-index:10;opacity:1;transition: all 0.7s;}
+.grid-item .card .head,.grid-item .card .body {
+    margin-top:10%;
+    transition: all 0.7s;
+    padding:30px 15px;
+}
+.grid-item .card .head h2{font-size:17px;color:#000}
+.grid-item .card:hover .head {margin-top:2%}
+.grid-item .card:hover .body {margin-top:18%}
+.grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
+.grid-item .card:hover .head hr{width:22%;}
+/*
+.grid-item .card
+{
+    position: relative;
+    box-shadow: -6px -6px 10px rgba(255,255,255,0.5),
+    6px 6px 20px rgba(0,0,0,0.05);
+    min-height:200px;
+}
+
+.grid-item .card .imgBx
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card:hover .imgBx
+{
+    width: 20%;
+    height: 20%;
+    left: 0px;
+    right:0;
+    bottom:0;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card .imgBx img
+{
+    max-width: 100%;
+    transition: 0.5s ease-in-out;
+}
+
+.grid-item .card:hover .imgBx img
+{
+    max-width: 100%;
+}
+
+.grid-item .card .content img {
+    max-width: 80px;
+    position: absolute;
+    top: 0;
+    right: 200px;
+}
+.grid-item .card:hover{text-decoration: none}
+
+.grid-item .card .content h2{font-size:18px}*/

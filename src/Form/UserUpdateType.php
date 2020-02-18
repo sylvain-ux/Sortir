@@ -23,23 +23,35 @@ class UserUpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class)
-            ->add('firstname',TextType::class)
-            ->add('phone',TextType::class)
-            ->add('email',EmailType::class)
+
+            ->add('name',TextType::class,
+                [
+                    'label'=>'Prénom'
+                ])
+            ->add('firstname',TextType::class,
+            [
+                    'label'=>'Nom'
+            ])
+
+            ->add('phone',TextType::class,
+                [
+                    'label'=>'Téléphone'
+                ] )
+
+            ->add('email',EmailType::class,
+            [
+                'label'=>'Email'
+            ])
+
             ->add('school',EntityType::class,[
+                'label'=>'Ecole de rattachement',
                 'class' => School::class,
                 'choice_label' => 'name','disabled' => true
             ])
-            ->add('avatar', FileType::class, [
-                'label'=>'Téléchargez votre photo.png',
-                'mapped'=>false,
-                'required'=>false,
-                'attr'=>['class'=>""]
-            ])
 
 
-            ->add('save', SubmitType::class, ['label' => 'Modifier']);
+
+            ->add('save', SubmitType::class, ['label' => 'Modifier votre profil']);
 
 
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\School;
 use App\Entity\State;
@@ -78,12 +79,13 @@ class TripController extends AbstractController
         $allSchools = $tripRepository->findAll();
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
+        $catRepository = $entityManager->getRepository(Category::class);
+        $allCategories = $catRepository->findAll();
+/*        foreach ($allTrips as $trip) {
+            dump($trip->getLocation()->getCity()->getZipCode());
+        }*/
 
-        foreach ($allTrips as $trip) {
-            dump($trip->getNbRegistMax());
-        }
-
-        return $this->render('trip/list.html.twig',compact('allTrips','allSchools'));
+        return $this->render('trip/list.html.twig',compact('allTrips','allSchools','allCategories'));
     }
     /**
      * @Route("/create", name="create")
@@ -305,6 +307,8 @@ class TripController extends AbstractController
 
             if ($tripForm->getClickedButton() === $tripForm->get('drop')) {
 
+
+
                 $entityManager = $this->getDoctrine()->getManager();
                 //Suppression de la sortie associée à son id
                 $entityManager->remove($trip);
@@ -392,9 +396,7 @@ class TripController extends AbstractController
 
         $tripForm->handleRequest($request);
 
-
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
-
 
             //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
             $stateRepository = $entityManager->getRepository(State::class);
@@ -410,7 +412,6 @@ class TripController extends AbstractController
 
             //Message de success
             $this->addFlash('success', 'Vous avez annulé la sortie');
-
 
             return $this->redirectToRoute("home");
         }

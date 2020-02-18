@@ -21,7 +21,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -84,15 +83,7 @@ class AdminController extends AbstractController
 
             $userId = $user->getId();
 
-            //send email sendEmail(MailerInterface $mailer, $from, $to, $object, $body)
-            $response = $this->forward('App\Controller\MailerController::sendEmail', [
-                'from'  => 'info@sortir.com',
-                'to' => $userForm->get('email')->getData(),
-                'object' => 'compte créé',
-                'body' => '
-<p>votre compte vient d\'etre créé !</p>',
-//<p>votre mot de passe est <strong>'.$userForm->get('plainPassword')->getData().'</strong></p>',
-            ]);
+
             $this->addFlash('success', 'utilisateur ajouté !');
 
             return $this->redirectToRoute('admin_home');
@@ -106,7 +97,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/user/update/{id}", name="user_update", requirements={"id" : "\d+"})
      */
-    public function updateUser(Request $request, EntityManagerInterface $entityManager, $id = 0,MailerInterface  $mailInterface)
+    public function updateUser(Request $request, EntityManagerInterface $entityManager, $id = 0)
     {
         $userRepository = $entityManager->getRepository(User::class);
         if ($id) {
@@ -127,8 +118,6 @@ class AdminController extends AbstractController
 
                 $userId = $user->getId();
 
-            //send email
-            $mailInterface->send();
 
             $this->addFlash('success', 'utilisateur modifié !');
 
@@ -360,7 +349,7 @@ class AdminController extends AbstractController
             $entityManager->flush();
             $cityId = $trip->getId();
             $this->addFlash('success', 'Sortie ajoutée !');
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('admin_trip_list');
         }
         return $this->render('admin/trip/add.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
@@ -387,7 +376,7 @@ class AdminController extends AbstractController
 
             $this->addFlash('success', 'Sortie modifiée !');
 
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('admin_trip_list');
         }
         return $this->render('admin/trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }

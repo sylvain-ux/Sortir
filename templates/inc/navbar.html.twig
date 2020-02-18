@@ -1,38 +1,36 @@
-<nav class="navbar navbar-main bg_bleu_eni white navbar-expand-lg Xnavbar-dark Xbg-dark Xfixed-top">
-
+<nav class="navbar navbar-main Xbg_bleu_eni white navbar-expand-lg Xnavbar-dark Xbg-dark fixed-top">
+    {% if app.request.get('_route')!='trip_list' %}
         <a class="navbar-brand" href="{{path('home')}}">
             <img src="{{ asset('img/eni-sortir-white.png') }}" alt="ENI -> sortir" class="img-fluid">
             <span class="d-none">Sortir.com</span>
         </a>
-
+    {% endif %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    {% if app.user %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('home') }}">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('user_profil') }}">Profil</a>
-                    </li>
-                    {% endif %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-sm btn-outline-light text-light" href="{{ path('admin_home') }}">Admin</a>
-                        </li>
-                    {% endif %}
+{#                    {% if app.user %}#}
+{#                    <li class="nav-item active">#}
+{#                        <a class="nav-link" href="{{ path('home') }}">Accueil</a>#}
+{#                    </li>#}
+{#                    {% endif %}#}
+
                 </ul>
 
         <div class="nav navbar-nav ml-auto">
 
             <p>
                 {% if app.user %}
-                <span class="btn btn-default text-light">Bonjour {{ app.user.firstname }}</span>
+                <a class="btn btn-default text-light" href="{{ path('user_profil') }}">Bonjour {{ app.user.firstname }}</a>
                 <a href="{{ path('logout') }}" class="btn btn-sm btn-outline-danger" title="Déconnexion"><i
                             class="fas fa-power-off"></i></a>
+                {% if is_granted('ROLE_ADMIN') %}
+
+                <a class="btn btn-default text-light" href="{{ path('admin_home') }}">Admin</a>
+
+            {% endif %}
             </p>
             {% else %}
                 <p class="text-right">
