@@ -25,10 +25,9 @@ background-color: #fff;
 body:not(#body_trip_list){padding-top:150px}
 
 
-.main .form_container
+.form_container
 {
     padding:25px;
-    margin-top:10%;
     background:rgba(255,255,255,0.7);
     box-shadow: -6px -6px 10px rgba(255,255,255,0.3),
                 6px 6px 20px rgba(0,0,0,0.1);
