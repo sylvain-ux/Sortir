@@ -18,7 +18,7 @@ class UploadAvatarType extends AbstractType
                 'label'=>'Télécharger votre photo.png',
                 'mapped'=>true,
                 'required'=>false,
-//                'attr'=>['class'=>""]
+                'attr'=>['class'=>'test']
             ])
             ->add('save', SubmitType::class, ['label' => 'Ajouter votre photo']);
 

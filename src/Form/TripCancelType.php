@@ -48,11 +48,16 @@ class TripCancelType extends AbstractType
                 TextareaType::class,
                 [
                     'label' => 'Motif d\'annulation :',
-                    'required' => false,
+                    'required' => true,
                     'attr' => array('placeholder' => '...'),
                 ]
             )
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
+            ->add('save', SubmitType::class,
+                [
+                'label' => 'Enregistrer',
+                    'attr' => array(
+                        'onclick' => 'return confirm("L\'annulation de votre sortie sera définitive. Voulez-vous continuer ?")')
+                ]);
 
     }
 

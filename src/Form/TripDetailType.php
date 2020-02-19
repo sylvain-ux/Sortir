@@ -38,7 +38,7 @@ class TripDetailType extends AbstractType
             ->add(
                 'duration',
                 IntegerType::class,
-                ['label' => 'Durée :', 'disabled' => true,]
+                ['label' => 'Durée (en minutes):', 'disabled' => true,]
             )
             ->add(
                 'info',
@@ -63,7 +63,7 @@ class TripDetailType extends AbstractType
             ->add(
                 'location',
                 EntityType::class,
-                ['class' => TripLocation::class, 'choice_label' => 'name', 'disabled' => true,]
+                ['class' => TripLocation::class, 'choice_label' => 'name', 'label' => 'Localisation', 'disabled' => true,]
             );
     }
 

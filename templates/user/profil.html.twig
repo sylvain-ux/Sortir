@@ -16,25 +16,27 @@
 
             </div>
         </div>
+
         <div class="row">
             <div class="col-12 col-md-5">
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <br>
+                    <div class="col-12 col-md-6 offset-md-3 py-5">
+
                         {% if app.user.getAvatarName() is not empty %}
                             <img  class="img-fluid" src="{{ asset('users/' ~ app.user.id ~ '/avatar/' ~ app.user.getAvatarName()) }}">
                         {% else %}
                             <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">
-                            <br>
+
                         {% endif %}
+                    </div>
+                    <div class="col-12">
                         {{ form (uploadAvatarView) }}
                     </div>
                 </div>
-
+                <hr>
                 <div class="row">
-                    <div class="col-md-12">
-                        <br>
+                    <div class="col-12 py-3">
 
                         <a class="btn btn-info" href="{{path('user_password')  }}"> Changer votre mot de passe</a>
 
@@ -48,12 +50,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
 
 
 

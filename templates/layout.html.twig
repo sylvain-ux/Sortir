@@ -14,13 +14,13 @@
     {% block stylesheets %}{% endblock %}
 
 </head>
-<body>
+<body id="body_{{ app.request.get('_route') }}">
 {{ include ('inc/navbar.html.twig') }}
 
 
-<section class="container-fluid main">
+
 {% block body %}{% endblock %}
-</section>
+
 
 <div class="alerts-container wow fadeInRight">
     {% for label, msgs in app.flashes %}
@@ -34,9 +34,10 @@
 
 
 <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/wow.min.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 {% block javascripts %}
 {% endblock %}
 <script>
