@@ -110,7 +110,10 @@ class AdminController extends AbstractController
 
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+    // if( actif == 0 il faut que le role devient desactivé -> setRoles
 
+            //$user->setRoles('ROLE_BANISHED');
+            // faire la boucle inverse pour réactivé un user
 
                 $entityManager->persist($user);
                 $entityManager->flush();
