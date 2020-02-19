@@ -22,12 +22,14 @@
         "symfony/requirements-checker": "^1.1",
         "symfony/security-bundle": "4.4.*",
         "symfony/security-csrf": "4.4.*",
+        "symfony/swiftmailer-bundle": "^3.4",
         "symfony/twig-bundle": "4.4.*",
         "symfony/validator": "4.4.*",
         "symfony/var-dumper": "4.4.*",
         "symfony/yaml": "4.4.*",
         "twig/extra-bundle": "^3.0",
         "twig/intl-extra": "^3.0"
+
     },
     "require-dev": {
     },
