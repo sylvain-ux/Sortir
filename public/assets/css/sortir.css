@@ -96,3 +96,5 @@ body:not(#body_trip_list){padding-top:150px;background: url(cities/nantes.jpg) n
 .grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
 .grid-item .card:hover .head hr{width:22%;}
 
+/*ADMIN*/
+body#admin{padding-top:0;background: #f2f4f5}
