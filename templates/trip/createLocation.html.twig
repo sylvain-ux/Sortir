@@ -1,35 +1,44 @@
 {% extends 'layout.html.twig' %}
-
+{% form_theme trip_LocationFormView 'bootstrap_4_layout.html.twig' %}
 {% block title %} Créer un Lieu {% endblock %}
 
 {% block body %}
 
-    <h1 class="mt-5">Créer un Lieu</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form_container">
+                    <h4 class="text-center">Création d'un lieu</h4>
+                    <hr>
+                    {{ form_start(trip_LocationFormView) }}
 
+                    {{ form_label(trip_LocationFormView.name) }}
+                    {{ form_widget(trip_LocationFormView.name) }}
+                    {{ form_errors(trip_LocationFormView.name) }}
+                    <br>
+                    {{ form_label(trip_LocationFormView.city) }}
+                    {{ form_widget(trip_LocationFormView.city) }}
+                    {{ form_errors(trip_LocationFormView.city) }}
+                    <br>
+                    {{ form_label(trip_LocationFormView.street) }}
+                    {{ form_widget(trip_LocationFormView.street) }}
+                    {{ form_errors(trip_LocationFormView.street) }}
+                    <br>
 
-    {{ form_start(trip_LocationFormView) }}
-
-    {{ form_label(trip_LocationFormView.name) }}
-    {{ form_widget(trip_LocationFormView.name) }}
-    {{ form_errors(trip_LocationFormView.name) }}
-    <br>
-    {{ form_label(trip_LocationFormView.city) }}
-    {{ form_widget(trip_LocationFormView.city) }}
-    {{ form_errors(trip_LocationFormView.city) }}
-    <br>
-    {{ form_label(trip_LocationFormView.street) }}
-    {{ form_widget(trip_LocationFormView.street) }}
-    {{ form_errors(trip_LocationFormView.street) }}
-    <br>
-
-    {{ form_label(trip_LocationFormView.latitude) }}
-    {{ form_widget(trip_LocationFormView.latitude) }}
-    {{ form_errors(trip_LocationFormView.latitude) }}
-    <br>
-    {{ form_label(trip_LocationFormView.longitude) }}
-    {{ form_widget(trip_LocationFormView.longitude) }}
-    {{ form_errors(trip_LocationFormView.longitude) }}
-    <br>
-    {{ form_end(trip_LocationFormView) }}
-
+                    {{ form_label(trip_LocationFormView.latitude) }}
+                    {{ form_widget(trip_LocationFormView.latitude) }}
+                    {{ form_errors(trip_LocationFormView.latitude) }}
+                    <br>
+                    {{ form_label(trip_LocationFormView.longitude) }}
+                    {{ form_widget(trip_LocationFormView.longitude) }}
+                    {{ form_errors(trip_LocationFormView.longitude) }}
+                    <br>
+                    {{ form_end(trip_LocationFormView) }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a class="btn neumorphism-1" href="{{ path('home') }}">Retour</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

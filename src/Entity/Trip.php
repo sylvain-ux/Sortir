@@ -314,12 +314,16 @@ class Trip
         if($nbInscrit == 0){
             return true;
         }
+        $foundUser = false;
         foreach ($this->getUsers() as $us){
-            if($us->getId() != $user->getId()){
-                return true;
+            if($us->getId() == $user->getId()){
+                $foundUser = true;
             }
         }
-        return false;
+        if($foundUser){
+            return false;
+        }
+        return true;
     }
 
 

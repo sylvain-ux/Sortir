@@ -19,7 +19,6 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
-
     public function findBySchoolID($id)
     {
         $entityManager = $this->getEntityManager();
@@ -93,19 +92,23 @@ DQL;
     }
 
     //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
-    public function findByMyNotRegistration($id)
+    public function findByMyNotRegistration($user)
     {
-        $entityManager = $this->getEntityManager();
-        $dql = <<<DQL
-  SELECT t FROM App\Entity\Trip t JOIN t.users usersTrip WHERE usersTrip.id = :id
- DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-        $result = $query->getResult();
+        $qb = $this->createQueryBuilder('e');
+        $subQb = $this->createQueryBuilder('sq')
+            ->innerJoin('sq.users', 'sqb', 'with',"sqb.id in (:user)")
+            //->Where('sqb.user = :user')
+            ->setParameter(':user', $user->getId());
 
+        $qb
+            ->addselect('i')
+            ->leftJoin('e.users', 'i')
+            ->andWhere('e NOT IN ('.$subQb->getDQL().')')
+            ->setParameter(':user', $user);
+
+        $result = $qb->getQuery()->getResult();
         return $result;
     }
-
 
     //Recherche pour afficher les sorties passées :
     public function findByPastTrip()
@@ -116,8 +119,8 @@ DQL;
 SELECT t FROM App\Entity\Trip t WHERE t.dateTimeStart < :now
 DQL;
         $query = $entityManager->createQuery($dql);
-        $query->setParameter(":now",$now);
-        $result = $query->getResult();
+        $query->setParameter(":now", $now);
+        $result = $query->get();
 
         return $result;
     }

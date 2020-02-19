@@ -131,7 +131,7 @@ class TripController extends AbstractController
         return $this->render(
             'trip/create.html.twig',
             [
-                'tripFormView' => $tripForm->createView(),
+                'currentTrip'=>$trip, 'tripFormView' => $tripForm->createView(),
 //                'trip_LocationFormView' => $trip_LocationForm->createView(),
 //                'cityFormView' => $cityForm->createView(),
             ]
@@ -208,6 +208,10 @@ class TripController extends AbstractController
             $currentTrip->setState($stateClosed);
         }
 
+        //Récupération de tous les utilisateurs de la sortie
+        $allUsers = $currentTrip->getUsers();
+
+
         //Je l'ajoute en BDD
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($currentTrip);
@@ -216,7 +220,10 @@ class TripController extends AbstractController
         //Message de success
         $this->addFlash('success', 'Vous êtes inscrit sur la sortie');
 
-        return $this->redirectToRoute('home');
+        return $this->render(
+            'trip/detail.html.twig',
+            ['currentTrip' => $currentTrip, 'allUsers' => $allUsers]
+        );
     }
 
 
@@ -247,6 +254,8 @@ class TripController extends AbstractController
             $currentTrip->setState($stateOpen);
         }
 
+        //Récupération de tous les utilisateurs de la sortie
+        $allUsers = $currentTrip->getUsers();
 
         //MaJ BDD
         $entityManager = $this->getDoctrine()->getManager();
@@ -256,7 +265,10 @@ class TripController extends AbstractController
         //Message de success
         $this->addFlash('success', 'Vous avez désinscrit sur la sortie');
 
-        return $this->redirectToRoute('home');
+        return $this->render(
+            'trip/detail.html.twig',
+            ['currentTrip' => $currentTrip, 'allUsers' => $allUsers]
+        );
 
     }
 
@@ -303,6 +315,9 @@ class TripController extends AbstractController
         $tripForm = $this->createForm(TripUserUpdateType::class, $trip);
         $tripForm->handleRequest($request);
 
+        //Récupération de tous les participants de la sortie
+        $allUsers = $trip->getUsers();
+
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
 
             if ($tripForm->getClickedButton() === $tripForm->get('drop')) {
@@ -339,7 +354,7 @@ class TripController extends AbstractController
                 //Message de success
                 $this->addFlash('success', 'Vous avez publié la sortie');
 
-                return $this->redirectToRoute('home');
+                return $this->render('trip/detail.html.twig', ['currentTrip'=>$trip, 'allUsers' => $allUsers]);
             }
 
             if ($tripForm->getClickedButton() === $tripForm->get('save')) {
@@ -352,11 +367,11 @@ class TripController extends AbstractController
 
                 $this->addFlash('success', 'Sortie modifiée !');
 
-                return $this->redirectToRoute('home');
+                return $this->render('trip/detail.html.twig', ['currentTrip'=>$trip, 'allUsers' => $allUsers]);
             }
         }
 
-        return $this->render('trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
+        return $this->render('trip/update.html.twig', ['trip'=>$trip, 'tripFormView' => $tripForm->createView()]);
     }
 
     /**
@@ -370,13 +385,13 @@ class TripController extends AbstractController
         } else {
             $trip = new Trip();
         }
-        $tripForm = $this->createForm(TripDetailType::class, $trip);
+    //    $tripForm = $this->createForm(TripDetailType::class, $trip);
 
         $allUsers = $trip->getUsers();
 
         return $this->render(
             'trip/detail.html.twig',
-            ['tripFormView' => $tripForm->createView(), 'allUsers' => $allUsers]
+            ['currentTrip' => $trip, 'allUsers' => $allUsers]
         );
     }
 
@@ -416,7 +431,27 @@ class TripController extends AbstractController
             return $this->redirectToRoute("home");
         }
 
-        return $this->render('trip/cancel.html.twig', ['tripFormView' => $tripForm->createView()]);
+        return $this->render('trip/cancel.html.twig', ['currentTrip'=>$trip, 'tripFormView' => $tripForm->createView()]);
     }
 
+
+    /**
+     * @Route("/summary:{id}", name="summary", requirements={"id":"\d+"})
+     */
+    public function summaryTrip(EntityManagerInterface $entityManager, $id = 0)
+    {
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        if ($id) {
+            $trip = $tripRepository->find($id);
+        } else {
+            $trip = new Trip();
+        }
+
+        $allUsers = $trip->getUsers();
+
+        return $this->render(
+            'trip/recapitulatif.html.twig',
+            ['currentTrip' => $trip, 'allUsers' => $allUsers]
+        );
+    }
 }
