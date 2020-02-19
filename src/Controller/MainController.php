@@ -79,11 +79,10 @@ class MainController extends AbstractController
                 if ($myNotTrip != null) {
                     //Mon id connecté
                     $myId = $this->getUser();
-                    $allTrips = $tripRepository->findByMyRegistration($myId);
+                    $allTrips = $tripRepository->findByMyNotRegistration($myId);
                 }
             }
         }
-
 
         return $this->render(
             'trip/index.html.twig',
