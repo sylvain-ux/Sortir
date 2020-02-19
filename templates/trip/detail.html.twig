@@ -3,140 +3,146 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="form_container">
-                <h4 class="text-center">Sortie : {{ currentTrip.name }}</h4>
-                <h5 class="text-center">{{ currentTrip.state.info }}</h5>
-                <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="bloc">
+                    <h4 class="text-center">Sortie : {{ currentTrip.name }}</h4>
+                    <hr>
 
-                <dl>
-                    <dt>Date et heure de la sortie :</dt>
-                    <dd>{{ currentTrip.dateTimeStart|date("m/d/Y") }}</dd>
+                    <dl>
+                        <dt>Date et heure de la sortie :</dt>
+                        <dd>{{ currentTrip.dateTimeStart|date("m/d/Y") }}</dd>
 
-                    <dt>Date limite d'inscription :</dt>
-                    <dd>{{ currentTrip.registDeadline|date("m/d/Y") }}</dd>
+                        <dt>Date limite d'inscription :</dt>
+                        <dd>{{ currentTrip.registDeadline|date("m/d/Y") }}</dd>
 
-                    <dt>Nombre de places minimum :</dt>
-                    <dd>{{ currentTrip.nbRegistMin }}</dd>
+                        <dt>Nombre de places minimum :</dt>
+                        <dd>{{ currentTrip.nbRegistMin }}</dd>
 
-                    <dt>Nombre de places maximum :</dt>
-                    <dd>{{ currentTrip.nbRegistMax }}</dd>
+                        <dt>Nombre de places maximum :</dt>
+                        <dd>{{ currentTrip.nbRegistMax }}</dd>
 
-                    <dt>Durée (en minutes) :</dt>
-                    <dd>{{ currentTrip.duration }}</dd>
+                        <dt>Durée (en minutes) :</dt>
+                        <dd>{{ currentTrip.duration }}</dd>
 
-                    <dt>Description et infos :</dt>
-                    <dd>{{ currentTrip.info }}</dd>
+                        <dt>Description et infos :</dt>
+                        <dd>{{ currentTrip.info }}</dd>
 
-                    <dt>Ville organisatrice :</dt>
-                    <dd>{{ currentTrip.school.name }}</dd>
+                        <dt>Ville organisatrice :</dt>
+                        <dd>{{ currentTrip.school.name }}</dd>
 
-                    <dt>Localisation :</dt>
-                    <dd>{{ currentTrip.location.name }}</dd>
-                    <dd>{{ currentTrip.location.street }}</dd>
-                    <dd>{{ currentTrip.location.city.zipCode }} {{ currentTrip.location.city.name }}</dd>
-                </dl>
+                        <dt>Localisation :</dt>
+                        <dd>{{ currentTrip.location.name }}</dd>
+                        <dd>{{ currentTrip.location.street }}</dd>
+                        <dd>{{ currentTrip.location.city.zipCode }} {{ currentTrip.location.city.name }}</dd>
+                    </dl>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form_container">
-                <h4>Participants</h4>
-                <div class="row">
-                    {% for u in allUsers %}
-                        <div class="col-md-12 py-1">
-                            {% if u.avatarName is not empty %}
-                                <img src="{{ asset('users/' ~ u.id ~ '/avatar/' ~ u.avatarName) }}"
+            <div class="col-md-3">
+                <div class="bloc">
+                    <h4 class="text-center">Etat de la sortie</h4>
+                    <h5 class="text-center">{{ currentTrip.state.info }}</h5>
+                </div>
+                <div class="bloc mt-2">
+                    <h4>Organisateur</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            {% if currentTrip.user.avatarName is not empty %}
+                                <img src="{{ asset('users/' ~ currentTrip.user.id ~ '/avatar/' ~ currentTrip.user.avatarName) }}"
                                      class="rounded-circle" width="50" height="50">
                             {% else %}
                                 <img src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}"
                                      class="rounded-circle" width="50" height="50">
 
                             {% endif %}
-                            {{ u.name }}
-                            {{ u.firstName }}
+                            <a href="{{ path('user_detail', {'id' : currentTrip.user.id}) }}">{{ currentTrip.user.name }}
+                                {{ currentTrip.user.firstName }}</a>
                         </div>
-                    {% endfor %}
+                    </div>
+                </div>
+                <div class="bloc mt-2">
+                    <h4>Participants</h4>
+                    <div class="row">
+                        {% if currentTrip.users|length == 0 and not currentTrip.isCanceled(currentTrip.state.id) and not currentTrip.tripClosed(currentTrip.state.id) %}
+                            <h6 class="text-center"> Soyez le premier à vous inscrire </h6>
+                        {% endif %}
+                        {% for u in allUsers %}
+                            <div class="col-md-12 py-1">
+                                {% if u.avatarName is not empty %}
+                                    <img src="{{ asset('users/' ~ u.id ~ '/avatar/' ~ u.avatarName) }}"
+                                         class="rounded-circle" width="50" height="50">
+                                {% else %}
+                                    <img src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}"
+                                         class="rounded-circle" width="50" height="50">
+
+                                {% endif %}
+                                {{ u.name }}
+                                {{ u.firstName }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-            <div class="form_container mt-2">
-                <h4>Organisateur</h4>
+            <div class="col-md-2">
                 <div class="row">
                     <div class="col-12">
-                        {% if currentTrip.user.avatarName is not empty %}
-                            <img src="{{ asset('users/' ~ currentTrip.user.id ~ '/avatar/' ~ currentTrip.user.avatarName) }}"
-                                 class="rounded-circle" width="50" height="50">
-                        {% else %}
-                            <img src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}"
-                                 class="rounded-circle" width="50" height="50">
+                        {% if app.user is not null %}
+
+
+                            {# Sortie: STATUT PASSEE #}
+
+                            {% if currentTrip.tripPast(currentTrip.state.id) %}
+                                <a class="btn neumorphism-1" href="{{ path('trip_summary', {'id':currentTrip.id}) }}">Récapitulatif</a>
+                            {% endif %}
+
+                            {# Sortie: STATUT EN CREATION / Organisateur connecté: OUI #}
+                            {% if currentTrip.tripCreation(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
+                                <a class="btn neumorphism-1"
+                                   href="{{ path('trip_update', {'id':currentTrip.id}) }}">Modifier</a>
+
+                            {% endif %}
+
+                            {# Sortie: STATUT ANNULE / Organisateur connecté: OUI #}
+                            {% if currentTrip.isCanceled(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
+                                <a class="btn neumorphism-1"
+                                   href="{{ path('trip_update', {'id':currentTrip.id}) }}">Modifier</a>
+                            {% endif %}
+
+                            {# Sortie: STATUT CLOTUREE #}
+                            {% if currentTrip.tripClosed(currentTrip.state.id) %}
+
+                            {% endif %}
+
+                            {# Sortie: STATUT EN COURS #}
+                            {% if currentTrip.isInProgress(currentTrip.state.id) %}
+                            {% endif %}
+
+                            {# Sortie: STATUT OUVERTE #}
+                            {% if currentTrip.tripOpen(currentTrip.state.id) %}
+                                {# Utilisateur connecté: NON INSCRIT #}
+                                {% if currentTrip.isNotSubscribed(app.user,currentTrip.users|length,currentTrip.nbRegistMax) %}
+                                    <a class="btn neumorphism-1"
+                                       href="{{ path('trip_inscription', {'id':currentTrip.id }) }}"><span>S'inscrire</span></a>
+                                    {# Utilisateur connecté: INSCRIT #}
+                                {% elseif currentTrip.isSubscribed(app.user) %}
+                                    <a class="btn neumorphism-1"
+                                       href="{{ path('trip_unsubscribe', {'id':currentTrip.id}) }}"><span>Se désister</span></a>
+                                {% endif %}
+                            {% endif %}
+
+                            {# Sortie: STATUT OUVERTE / Organisateur connecté: OUI #}
+                            {% if currentTrip.tripOpen(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
+                                <a class="btn neumorphism-1"
+                                   href="{{ path('trip_cancel', {'id':currentTrip.id}) }} ">Annuler la sortie</a>
+                            {% endif %}
 
                         {% endif %}
-                        <a href="{{ path('user_detail', {'id' : currentTrip.user.id}) }}">{{ currentTrip.user.name }}
-                            {{ currentTrip.user.firstName }}</a>
+                        <a class="btn neumorphism-1" href="{{ path('trip_list') }}">Retour</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="row">
-                <div class="col-12">
-                    {% if app.user is not null %}
-
-
-                        {# Sortie: STATUT PASSEE #}
-
-                        {% if currentTrip.tripPast(currentTrip.state.id) %}
-                            <a class="btn neumorphism-1" href="{{ path('trip_summary', {'id':currentTrip.id}) }}">Récapitulatif</a>
-                        {% endif %}
-
-                        {# Sortie: STATUT EN CREATION / Organisateur connecté: OUI #}
-                        {% if currentTrip.tripCreation(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
-                            <a class="btn neumorphism-1"
-                               href="{{ path('trip_update', {'id':currentTrip.id}) }}">Modifier</a>
-
-                        {% endif %}
-
-                        {# Sortie: STATUT ANNULE / Organisateur connecté: OUI #}
-                        {% if currentTrip.isCanceled(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
-                            <a class="btn neumorphism-1"
-                               href="{{ path('trip_update', {'id':currentTrip.id}) }}">Modifier</a>
-                        {% endif %}
-
-                        {# Sortie: STATUT CLOTUREE #}
-                        {% if currentTrip.tripClosed(currentTrip.state.id) %}
-
-                        {% endif %}
-
-                        {# Sortie: STATUT EN COURS #}
-                        {% if currentTrip.isInProgress(currentTrip.state.id) %}
-                        {% endif %}
-
-                        {# Sortie: STATUT OUVERTE #}
-                        {% if currentTrip.tripOpen(currentTrip.state.id) %}
-                            {# Utilisateur connecté: NON INSCRIT #}
-                            {% if currentTrip.isNotSubscribed(app.user,currentTrip.users|length,currentTrip.nbRegistMax) %}
-                                <a class="btn neumorphism-1"
-                                   href="{{ path('trip_inscription', {'id':currentTrip.id }) }}"><span>S'inscrire</span></a>
-                                {# Utilisateur connecté: INSCRIT #}
-                            {% elseif currentTrip.isSubscribed(app.user) %}
-                                <a class="btn neumorphism-1"
-                                   href="{{ path('trip_unsubscribe', {'id':currentTrip.id}) }}"><span>Se désister</span></a>
-                            {% endif %}
-                        {% endif %}
-
-                        {# Sortie: STATUT OUVERTE / Organisateur connecté: OUI #}
-                        {% if currentTrip.tripOpen(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
-                            <a class="btn neumorphism-1"
-                               href="{{ path('trip_cancel', {'id':currentTrip.id}) }} ">Annuler la sortie</a>
-                        {% endif %}
-
-                    {% endif %}
-                    <a class="btn neumorphism-1" href="{{ path('trip_list') }}">Retour</a>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 
-    {% endblock %}
+{% endblock %}

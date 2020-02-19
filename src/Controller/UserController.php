@@ -16,11 +16,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
-
 /**
  * @Route("/user", name="user_")
  */
-
 class UserController extends AbstractController
 {
     /**
@@ -28,9 +26,12 @@ class UserController extends AbstractController
      */
     public function index()
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        return $this->render(
+            'user/index.html.twig',
+            [
+                'controller_name' => 'UserController',
+            ]
+        );
     }
 
     /**
@@ -40,7 +41,6 @@ class UserController extends AbstractController
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError(); // Est-ce qu'il y a eu des erreurs ?
-
 
 
         // last name entered by the user
@@ -61,32 +61,46 @@ class UserController extends AbstractController
      * @route("/escale", name="escale")
      *
      */
-public function escale(Request $request, EntityManagerInterface $entityManager)
-{
+    public function escale(Request $request, EntityManagerInterface $entityManager)
+    {
+
         $user = $this->getUser();
-        if ($user->getActif()==false)
-        {
-        $this->addFlash('info', "Votre compte a été désactivé. Veuillez contacter un administrateur.");
+        dump($user->getRoles());
+       //die();
+        if ($user->getRoles() == ['ROLE_BANISHED']) {
+
+            $this->addFlash('danger', "Votre compte a été désactivé. Veuillez contacter un administrateur.");
+
             return $this->redirectToRoute('user_login');
-        }else{
+
+        } elseif (in_array('ROLE_ADMIN', $user->getRoles() ) ) {
+
+            return $this->redirectToRoute('admin_home');
+        } else {
             return $this->redirectToRoute('user_profil');
         }
-}
 
 
+        //($user->getRoles()==['ROLE_ADMIN'])
+
+
+    }
 
 
     /**
      * @route("/profil", name="profil")
      */
-    public function profil (Request $request, EntityManagerInterface $entityManager)
-    {
+    public
+    function profil(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ) {
         // récupérer le user qui est connecté
 
         $user = $this->getUser();
 
         // créer un formulaire Usertype et y ajouter le User
-        $userProfil = $this->createForm(UserUpdateType::class,$user);
+        $userProfil = $this->createForm(UserUpdateType::class, $user);
         $userProfil->handleRequest($request);
 
         $userAvatar = $this->createForm(UploadAvatarType::class, $user);
@@ -108,7 +122,7 @@ public function escale(Request $request, EntityManagerInterface $entityManager)
         if ($userAvatar->isSubmitted() && $userAvatar->isValid()) // je récupère la valeur du champs avatar
         {
             $avatarField = $userAvatar->get('avatarField')->getData();
-           // $avatarField = $user -> getAvatarField();
+            // $avatarField = $user -> getAvatarField();
 
             if ($avatarField) {
                 $originalFilename = pathinfo($avatarField->getClientOriginalName(), PATHINFO_FILENAME);
@@ -140,7 +154,10 @@ public function escale(Request $request, EntityManagerInterface $entityManager)
 
         }
 
-        return $this->render('user/profil.html.twig', ['userFormView' => $userProfil->createView(), 'uploadAvatarView' => $userAvatar->createView()]);
+        return $this->render(
+            'user/profil.html.twig',
+            ['userFormView' => $userProfil->createView(), 'uploadAvatarView' => $userAvatar->createView()]
+        );
 
     }
 
@@ -148,33 +165,38 @@ public function escale(Request $request, EntityManagerInterface $entityManager)
     /**
      * @route ("/password", name="password")
      */
-    public function passwordChange (Request $request, UserPasswordEncoderInterface $passwordEncoder)
-    {
+    public
+    function passwordChange(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
         //$em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $resetPassword = new ResetPassword();
         $mdpForm = $this->createForm(ChangePasswordType::class, $resetPassword);
 
         $mdpForm->handleRequest($request);
-        if ($mdpForm->isSubmitted() && $mdpForm->isValid()){
+        if ($mdpForm->isSubmitted() && $mdpForm->isValid()) {
 
-                $user->setPassword(
-                    $passwordEncoder->encodePassword(
-                        $user,
-                        $mdpForm->get('newPassword')->getData()
-                    ));
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $mdpForm->get('newPassword')->getData()
+                )
+            );
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success','Votre mot de passe a  bien été changé !');
+            $this->addFlash('success', 'Votre mot de passe a  bien été changé !');
+
             return $this->redirectToRoute('user_profil');
 
         }
 
 
-        return $this->render('user/password.html.twig', ['mdpFormView' => $mdpForm->createView()]);
+        return $this->render('user/password.html.twig', ['user'=>$user, 'mdpFormView' => $mdpForm->createView()]);
     }
 
 
@@ -182,9 +204,11 @@ public function escale(Request $request, EntityManagerInterface $entityManager)
      * @route("/detail/{id}", name="detail", requirements={"id": "\d+"})
      */
 
-    public function detail($id, EntityManagerInterface $entityManager)
-
-    {
+    public
+    function detail(
+        $id,
+        EntityManagerInterface $entityManager
+    ) {
 
         $userRepo = $entityManager->getRepository(User::class);
         $organizer = $userRepo->find($id);
@@ -192,56 +216,6 @@ public function escale(Request $request, EntityManagerInterface $entityManager)
         return $this->render('user/detail.html.twig', compact('organizer'));
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
