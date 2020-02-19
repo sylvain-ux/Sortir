@@ -232,6 +232,8 @@ class TripController extends AbstractController
         //Message de success
         $this->addFlash('success', 'Vous êtes inscrit sur la sortie');
 
+
+
         return $this->render(
             'trip/detail.html.twig',
             ['currentTrip' => $currentTrip, 'allUsers' => $allUsers]
@@ -401,9 +403,20 @@ class TripController extends AbstractController
 
         $allUsers = $trip->getUsers();
 
+            $coordinates=array((float)$trip->getLocation()->getLongitude(),(float)$trip->getLocation()->getLatitude());
+            $city = $trip->getLocation()->getCity();
+            $cityName = $city->getName();
+            $data[0]['type']='Feature';
+            $data[0]['geometry']['type']= 'Point';
+            $data[0]['geometry']['coordinates']=$coordinates;
+            $data[0]['properties']['title']=$trip->getLocation()->getName();
+            $data[0]['properties']['address']=$trip->getLocation()->getStreet().' '.$cityName ;
+
+        $data = json_encode($data);
+
         return $this->render(
             'trip/detail.html.twig',
-            ['currentTrip' => $trip, 'allUsers' => $allUsers]
+            ['currentTrip' => $trip, 'allUsers' => $allUsers,'data' => $data]
         );
     }
 

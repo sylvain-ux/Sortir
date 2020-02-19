@@ -1,6 +1,8 @@
 {% extends 'layout.html.twig' %}
 {% block title %} Détail d'une sortie {% endblock %}
-
+{% block stylesheets %}
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
 {% block body %}
 
     <div class="container">
@@ -144,5 +146,217 @@
             </div>
         </div>
     </div>
+
+    <div class="container mt-5">
+        <div id="mapTripDetail">
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {% set marker = asset('assets/css/marker.png') %}
+    <script>
+    function initMap() {
+    var myLatLng = {lat: {{currentTrip.getLocation.getLatitude()}}, lng: {{currentTrip.getLocation.getLongitude()}}};
+
+    var map = new google.maps.Map(document.getElementById('mapTripDetail'), {
+    zoom: 13,
+    center: myLatLng,
+        styles: [
+            {
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#bdbdbd"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dadada"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#c9c9c9"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            }
+        ]
+    });
+        var image = "{{marker}}";
+        var contentString = '<div id="content">'+
+            '<h5>{{currentTrip.name}}</h5>'+
+             '<p>{{ currentTrip.getLocation.name }} : {{ currentTrip.getLocation.street }}, {{ currentTrip.getLocation.city.name }}</p>'+
+                '<p><hr>{{ currentTrip.info }}</p>'+
+        '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+
+
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            icon: image,
+            title:"Hello World!"
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+
+
+// To add the marker to the map, call setMap();
+        marker.setMap(map);
+
+    }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc4FIU239oleSDmVnMUvl2c7rUyLFYSW0&callback=initMap">
+    </script>
 
 {% endblock %}

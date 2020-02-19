@@ -9,19 +9,24 @@
 .navbar-main{}
 #main_navbar{transition: all 0.3s ease}
 #main_navbar.smaller{background:rgba(255,255,255,1);box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);}
-#body_trip_list #main_navbar .navbar-brand{display: none}
-#body_trip_list #main_navbar.smaller .navbar-brand{display: block}
+#body_trip_list #main_navbar .navbar-brand,#body_home #main_navbar .navbar-brand{display: none}
+#body_trip_list #main_navbar.smaller .navbar-brand,#body_home #main_navbar.smaller .navbar-brand{display: block}
 .alerts-container{position:fixed;bottom:50px;right:15px;max-width:40%;}
 .alerts-container .alert{border-radius:0;}
 .alerts-container .alert .alert-danger{background:rgba(248,215,218,0.7)!important}
 .alerts-container .alert .alert-success{background:rgba(212,237,218,0.7)!important}
 
-
+/*logo*/
+#main_navbar .first_logo{display:block}
+#main_navbar .second_logo{display:none}
+#main_navbar.smaller .second_logo{display:block}
+#main_navbar.smaller .first_logo{display:none}
 
 /*home*/
 body{
 background-color: #fff;
 padding-top: 100px;
+    min-height: 100vh;
 }
 body#body_trip_list,body#body_home{padding-top:0px;background: #fff}
 
@@ -102,6 +107,10 @@ body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center cent
 .grid-item .card:hover .body {margin-top:8%}
 .grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
 .grid-item .card:hover .head hr{width:22%;}
+
+
+/*trip details*/
+#mapTripDetail{position:relative;height:450px;width:100%;margin-bottom:150px;border-radius:15px;overflow:hidden;box-shadow:0 0 15px 0 rgba(0,0,0,0.3)}
 
 
 /*ADMIN*/
