@@ -62,7 +62,17 @@
                         {{ form_errors(searchFormView.TripPast) }}
                             </div>
                         </div>
-                        {{ form_end(searchFormView) }}
+                        <div class="row">
+
+                            <div class="col-12  {% if app.user.id is defined %}col-md-6 text-right{% else %} text-center {% endif %} ">
+                                 {{ form_end(searchFormView) }}
+                            </div>
+
+                        {% if app.user.id is defined %}
+                            <div class="col-12 col-md-6 text-left">
+                            <a class="btn-success btn" href="{{ path('trip_create') }}">Créer une sortie</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
