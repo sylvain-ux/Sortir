@@ -64,11 +64,12 @@
                                 <div class="items head">
                                     <h2>{{ trip.name }}</h2>
                                     <hr>
+                                    <small>{{ trip.getLocation().getCity().getName() }}</small>
                                 </div>
-                                <div class="items body">
-                                    <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
-                                    <p class="new text-dark">{{ trip.getLocation().getName() }}<br><small>{{ trip.getLocation().getCity().getName() }}</small></p>
-                                    <p class="users text-dark" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
+                                <div class="items body text-center">
+                                    <p class="date text-dark">Le {{ trip.getDateTimeStart()|format_datetime('full', 'none', locale='fr') }}</p>
+                                    <p class="new text-dark">{{ trip.getLocation().getName() }}</p>
+                                    <p class="users text-dark " data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}"><b>{{ trip.getUsers()|length }}</b> inscrit(s)</p>
                                     <p class="text-dark font-weight-bold">{{ trip.state.info }}</p>
                                 </div>
                                 <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>

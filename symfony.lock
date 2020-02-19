@@ -435,6 +435,9 @@
     "symfony/yaml": {
         "version": "v4.4.4"
     },
+    "twig/extra-bundle": {
+        "version": "v3.0.3"
+    },
     "twig/intl-extra": {
         "version": "v3.0.3"
     },

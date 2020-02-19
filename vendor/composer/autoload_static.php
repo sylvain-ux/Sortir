@@ -23,6 +23,7 @@ class ComposerStaticIniteec43ec2ab884716f9953d03a260e8a5
         ),
         'T' => 
         array (
+            'Twig\\Extra\\TwigExtraBundle\\' => 27,
             'Twig\\Extra\\Intl\\' => 16,
             'Twig\\' => 5,
         ),
@@ -130,6 +131,10 @@ class ComposerStaticIniteec43ec2ab884716f9953d03a260e8a5
         'Zend\\Code\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
+        ),
+        'Twig\\Extra\\TwigExtraBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/extra-bundle/src',
         ),
         'Twig\\Extra\\Intl\\' => 
         array (
