@@ -21,9 +21,9 @@
 /*home*/
 body{
 background-color: #fff;
-padding: 100px;
+padding-top: 100px;
 }
-body#body_trip_list{padding-top:150px;background: #fff}
+body#body_trip_list,body#body_home{padding-top:0px;background: #fff}
 
 /* Initialisation des backgrounds suivant le moment de la journée*/
 body.morning { background: url(bg/city_morning/citymorning5.jpg) no-repeat center center / cover; }
