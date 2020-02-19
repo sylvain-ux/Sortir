@@ -19,9 +19,8 @@
 {#                    {% endif %}#}
 
                 </ul>
-
+    </div>
         <div class="nav navbar-nav ml-auto">
-
             <p>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a class="btn btn-warning btn-sm" href="{{ path('admin_home') }}" data-toggle="tooltip" data-placement="bottom" title="Administration"><i class="fas fa-user-shield"></i></a>
@@ -36,7 +35,5 @@
                     <a href="{{ path('user_login') }}" class="btn btn-sm btn-outline-info" title="Se connecter"  data-toggle="tooltip" data-placement="bottom" title="Connexion"><i class="fas fa-power-off"></i></a>
                 </p>
             {% endif %}
-
         </div>
-    </div>
 </nav>

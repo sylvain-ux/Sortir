@@ -17,7 +17,7 @@
     function navbar() {
         var distanceY = window.pageYOffset || document.documentElement.scrollTop,
             //menu
-            menu_pos = 200,
+            menu_pos = 100,
             menu = $('#main_navbar');
         if (distanceY > menu_pos) {
             $('#main_navbar').addClass('smaller');

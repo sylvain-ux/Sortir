@@ -22,6 +22,7 @@
 body{
 background-color: #fff;
 }
+body:not(#body_trip_list){padding-top:150px}
 
 
 
