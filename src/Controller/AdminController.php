@@ -116,6 +116,8 @@ class AdminController extends AbstractController
             if ($user->getActif()==false)
             {
                 $user->setRoles(['ROLE_BANISHED']);
+            }else{
+                $user->setRoles(['ROLE_USER']);
             }
 
 
