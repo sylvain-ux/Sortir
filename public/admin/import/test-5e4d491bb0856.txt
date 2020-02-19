@@ -1,0 +1,8 @@
+bex,guillaume,gui@free.fr,abcdefgh,240754193
+bexovitch,guy,gui2@free.fr,abcdefgh,240754193
+cornic,emilie,gui3@free.fr,abcdefgh,240754193
+cornicovich,emile,gui4@free.fr,abcdefgh,240754193
+priou,sylvain,gui5@free.fr,abcdefgh,240754193
+prioucic,sylvie,gui6@free.fr,abcdefgh,240754193
+basson,Carole-anne,gui7@free.fr,abcdefgh,240754193
+bassonic,Carole-anne,gui8@free.fr,abcdefgh,240754193

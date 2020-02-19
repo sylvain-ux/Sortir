@@ -21,19 +21,27 @@
 /*home*/
 body{
 background-color: #fff;
-
+padding-top: 100px;
 }
-body:not(#body_trip_list){padding-top:150px;background: url(cities/nantes.jpg) no-repeat center center / cover}
+body#body_trip_list,body#body_home{padding-top:0px;background: #fff}
+
+/* Initialisation des backgrounds suivant le moment de la journée*/
+body.morning { background: url(bg/city_morning/citymorning5.jpg) no-repeat center center / cover; }
+body.sunset { background: url(bg/city_afternoon/city_afternoon1.jpg) no-repeat center center / cover; }
+body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center center / cover; }
 
 
-.form_container
-{
-    padding:25px;
-    background:rgba(255,255,255,0.7);
-    box-shadow: -6px -6px 10px rgba(255,255,255,0.3),
-                6px 6px 20px rgba(0,0,0,0.1);
-    border-radius: 10px;
-}
+
+
+
+/*.form_container*/
+/*{*/
+/*    padding:25px;*/
+/*    background:rgba(255,255,255,0.7);*/
+/*    box-shadow: -6px -6px 10px rgba(255,255,255,0.3),*/
+/*                6px 6px 20px rgba(0,0,0,0.1);*/
+/*    border-radius: 10px;*/
+/*}*/
 
 .bloc{background:rgba(255,255,255,0.85);padding:30px;border-radius:15px;box-shadow:0 0 15px 0 rgba(0,0,0,0.5)}
 .neumorphism-1
@@ -45,14 +53,13 @@ body:not(#body_trip_list){padding-top:150px;background: url(cities/nantes.jpg) n
     background: #f5f5f5;
     font-size: 16px;
     text-decoration: none;
-    box-shadow: -4px -4px 15px rgba(255,255,255,0.3),
-                4px 4px 15px rgba(0,0,0,0.1);
+    box-shadow:0 0 15px 0 rgba(0,0,0,0.5);
 }
 
 .neumorphism-1:hover
 {
-    box-shadow: inset -4px -4px 10px rgba(255,255,255,0.5),
-    inset 4px 4px 10px rgba(0,0,0,0.1);
+    box-shadow: inset -3px -3px 8px rgba(255,255,255,0.5),
+                inset 3px 3px 8px rgba(0,0,0,0.5);
 }
 
 
@@ -67,7 +74,7 @@ body:not(#body_trip_list){padding-top:150px;background: url(cities/nantes.jpg) n
 
 
 /*list of trips*/
-.search_container{height:75vh;min-height:600px;background: url(cities/nantes.jpg) no-repeat center center / cover}
+.search_container{height:75vh;min-height:600px;background: url(cities/navbaraccueil.jpg) no-repeat center center / cover}
 .search_container > .container{margin-top:5vh}
 .filter_container{background:rgba(255,255,255,0.7);padding:40px 30px 30px 30px;border-radius:15px}
 .filter_container .form-control-sm{border-radius: 0}
@@ -95,4 +102,8 @@ body:not(#body_trip_list){padding-top:150px;background: url(cities/nantes.jpg) n
 .grid-item .card:hover .body {margin-top:8%}
 .grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
 .grid-item .card:hover .head hr{width:22%;}
+
+
+/*ADMIN*/
+body#admin{padding-top:0;background: #f2f4f5}
 

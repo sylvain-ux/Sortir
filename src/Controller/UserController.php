@@ -196,7 +196,7 @@ class UserController extends AbstractController
         }
 
 
-        return $this->render('user/password.html.twig', ['mdpFormView' => $mdpForm->createView()]);
+        return $this->render('user/password.html.twig', ['user'=>$user, 'mdpFormView' => $mdpForm->createView()]);
     }
 
 

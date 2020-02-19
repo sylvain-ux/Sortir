@@ -9,6 +9,7 @@ use App\Entity\Trip;
 use App\Entity\TripLocation;
 use App\Entity\User;
 use App\Form\CityAddType;
+use App\Form\ImportUsersType;
 use App\Form\LocationAddType;
 use App\Form\LocationUpdateType;
 use App\Form\RegistrationFormType;
@@ -18,8 +19,10 @@ use App\Form\StateAddType;
 use App\Form\TripAddType;
 use App\Form\TripUpdateType;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -49,6 +52,60 @@ class AdminController extends AbstractController
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
         return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities','allTrips'));
+    }
+
+    /**
+     * @Route("/user/import", name="user_import")
+     */
+    public function importUsers(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $importForm = $this->createForm(ImportUsersType::class);
+        $importForm->handleRequest($request);
+
+        if ($importForm->isSubmitted() && $importForm->isValid()) {
+           $fileCSV = $importForm['fileCSV']->getData();
+
+           dump($fileCSV);
+
+            if ($fileCSV) {
+                $originalFilename = pathinfo($fileCSV->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate(
+                    'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
+                    $originalFilename
+                );
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$fileCSV->guessExtension();
+                try {
+                    $fileCSV->move(
+                        $this->getParameter('csv_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+
+            }
+
+            //parsing
+            $row = 1;
+            if (($handle = fopen($newFilename, "r")) !== FALSE) {
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    $num = count($data);
+
+                    dump($num);
+                    die();
+                    echo "<p> $num champs à la ligne $row: <br /></p>\n";
+                    $row++;
+                    for ($c=0; $c < $num; $c++) {
+                        echo $data[$c] . "<br />\n";
+                    }
+                }
+                fclose($handle);
+            }
+
+
+        }
+
+        return $this->render('admin/user/import.html.twig', ['importForm' => $importForm->createView()]);
     }
 
     /**
@@ -108,7 +165,6 @@ class AdminController extends AbstractController
         }
         $userForm = $this->createForm(\App\Form\UserType::class,$user);
         $userForm->handleRequest($request);
-
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
 
@@ -391,6 +447,9 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/trip/update.html.twig', ['tripFormView' => $tripForm->createView()]);
     }
+
+
+
 
     /**
      * @Route("/city/auto/{id}", name="city_auto", requirements={"id" : "\d+"})
