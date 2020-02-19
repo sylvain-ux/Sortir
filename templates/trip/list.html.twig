@@ -65,11 +65,11 @@
                                     <h2>{{ trip.name }}</h2>
                                     <hr>
                                 </div>
-                                <div class="items body ">
+                                <div class="items body">
                                     <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
                                     <p class="new text-dark">{{ trip.getLocation().getName() }}<br><small>{{ trip.getLocation().getCity().getName() }}</small></p>
                                     <p class="users text-dark" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
-                                    <p class="text-dark">{{ trip.state.info }}</p>
+                                    <p class="text-dark font-weight-bold">{{ trip.state.info }}</p>
                                 </div>
                                 <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
                                 <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
