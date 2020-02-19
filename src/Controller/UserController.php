@@ -41,6 +41,8 @@ class UserController extends AbstractController
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError(); // Est-ce qu'il y a eu des erreurs ?
 
+
+
         // last name entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -53,6 +55,26 @@ class UserController extends AbstractController
         );
 
     }
+
+
+    /**
+     * @route("/escale", name="escale")
+     *
+     */
+public function escale(Request $request, EntityManagerInterface $entityManager)
+{
+        $user = $this->getUser();
+        if ($user->getActif()==false)
+        {
+        $this->addFlash('info', "Votre compte a été désactivé. Veuillez contacter un administrateur.");
+            return $this->redirectToRoute('user_login');
+        }else{
+            return $this->redirectToRoute('user_profil');
+        }
+}
+
+
+
 
     /**
      * @route("/profil", name="profil")
