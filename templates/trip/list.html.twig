@@ -2,6 +2,9 @@
 {% block title %}
     Liste des sorties
 {% endblock %}
+{% block stylesheets %}
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
 {% block body %}
     <div class="container-fluid search_container p-3">
         <div class="container text-center">
@@ -54,19 +57,20 @@
                     {% endif %}
 
 
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-4 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }} {{ nb_item }}" >
+                    <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-6 col-xl-3 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }} {{ nb_item }}" >
                         <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
                             <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
-
-
                             <div class="content">
                                 <div class="items head">
                                     <h2>{{ trip.name }}</h2>
                                     <hr>
+                                    <small>{{ trip.getLocation().getCity().getName() }}</small>
                                 </div>
-                                <div class="items body ">
-                                    <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
-                                    <p class="new text-dark">{{ trip.getLocation().getName() }} ({{ trip.getLocation().getCity().getName() }}) </p>
+                                <div class="items body text-center">
+                                    <p class="date text-dark">Le {{ trip.getDateTimeStart()|format_datetime('full', 'none', locale='fr') }}</p>
+                                    <p class="new text-dark">{{ trip.getLocation().getName() }}</p>
+                                    <p class="users text-dark " data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}"><b>{{ trip.getUsers()|length }}</b> inscrit(s)</p>
+                                    <p class="text-dark font-weight-bold">{{ trip.state.info }}</p>
                                 </div>
                                 <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
                                 <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
@@ -75,14 +79,18 @@
                                         {{ trip.getLocation().getStreet() }}<br>
                                         {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
                                     </small></address></p>
-                                <p class="users d-none" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
-                            </div>
+                              </div>
                         </a>
                     </div>
                 {% endfor %}
             </div>
         </div>
     </div>
+
+<div class="container-fluid p-0 mt-5 d-none">
+    <div id="mapLoc"></div>
+</div>
+
 {% endblock %}
 
 
@@ -90,158 +98,14 @@
     <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
 
-    <script>
-
-        // external js: isotope.pkgd.js
-        // init Isotope
-        // store filter for each group
-        $(document).ready(function(){
-            var filters = {};
-            var filterValue = filteredValue = '';
-            // quick search regex
-            var qsRegex;
-            var buttonFilter;
-
-            $('.select_filter').each( function(){
-                filteredValue = getFiltersValue($(this));
-            });
-            var $grid = $('.grid').isotope({
-                itemSelector: '.grid-item',
-                masonry: {
-//columnWidth: 360,
-//gutter: 15
-                },
-                //filter: filteredValue,
-                filter: function() {
-                    var $this = $(this);
-                    var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
-                    var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
-                    return searchResult && buttonResult;
-                }
-            });
-            $('.select_filter').on( 'change', function(event) {
-                var $select = $( event.currentTarget );
-                /*                filteredValue = getFiltersValue($select);
-                                console.log(filteredValue);*/
-                // set filter for Isotope
-
-                buttonFilter = getFiltersValue($select);
-                //console.log($( this ));
-                $grid.isotope();
-                var elems = $grid.isotope('getFilteredItemElements');
-                $('.grid-item').removeClass('first_elem second_elem third_elem');
-                $(elems[0]).addClass('first_elem');
-                $(elems[1]).addClass('second_elem');
-                $(elems[2]).addClass('third_elem');
-                //$grid.isotope({ filter: filteredValue });
-            });
-
-            // use value of search field to filter
-            var $quicksearch = $('.quicksearch').keyup( debounce( function() {
-                qsRegex = new RegExp( $(this).val(), 'gi' );
-                //console.log($(this).val());
-                $grid.isotope();
-
-            }) );
-            // debounce so filtering doesn't happen every millisecond
-            function debounce( fn, threshold ) {
-                var timeout;
-                threshold = threshold || 100;
-                return function debounced() {
-                    clearTimeout( timeout );
-                    var args = arguments;
-                    var _this = this;
-                    function delayed() {
-                        fn.apply( _this, args );
-                    }
-                    timeout = setTimeout( delayed, threshold );
-                };
-            }
-
-            function getFiltersValue(elem){
-                var $buttonGroup = elem.parents('.filters-button-group');
-                var filterGroup = $buttonGroup.attr('data-filter-group');
-                filters[ filterGroup ] = elem.val();
-                filterValue = concatValues( filters );
-                console.log(filterValue);
-                return filterValue;
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+        <script>
+            var data =  JSON.parse(JSON.stringify({{data|raw}}));
+            var geojson = {
+                type: 'geojson',
+                data: data,
             };
-            // flatten object by concatting values
-            function concatValues( obj ) {
-                var value = '';
-                for ( var prop in obj ) {
-                    value += obj[ prop ];
-                }
-                return value;
-            }
-
-            $('.grid').imagesLoaded( function() {
-                // images have loaded
-            });
-
-        });
-    </script>
-
-
-    {#
-       <script>
-       // quick search regex
-       var qsRegex;
-       var buttonFilter;
-
-       // init Isotope
-       var $grid = $('.grid').isotope({
-           itemSelector: '.grid-item',
-           percentPosition: true,
-           filter: function() {
-               var $this = $(this);
-               var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
-               var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
-               return searchResult && buttonResult;
-           }
-       });
-
-       $('.select_filter').on( 'change', function() {
-
-           buttonFilter = $( this ).attr('data-filter');
-           console.log($( this ));
-           $grid.isotope();
-       });
-
-       // use value of search field to filter
-       var $quicksearch = $('.quicksearch').keyup( debounce( function() {
-           qsRegex = new RegExp( $(this).val(), 'gi' );
-           console.log($(this).val());
-           $grid.isotope();
-
-       }) );
-
-
-       // debounce so filtering doesn't happen every millisecond
-       function debounce( fn, threshold ) {
-           var timeout;
-           threshold = threshold || 100;
-           return function debounced() {
-               clearTimeout( timeout );
-               var args = arguments;
-               var _this = this;
-               function delayed() {
-                   fn.apply( _this, args );
-               }
-               timeout = setTimeout( delayed, threshold );
-           };
-       }
-
-       // change is-checked class on buttons
-       $('.button-group').each( function( i, buttonGroup ) {
-           var $buttonGroup = $( buttonGroup );
-           $buttonGroup.on( 'click', 'button', function() {
-               $buttonGroup.find('.active').removeClass('active');
-               $( this ).addClass('active');
-           });
-       });
-   </script>#}
-
+        </script>
 {% endblock %}
 
 

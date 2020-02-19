@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque|Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Crete+Round|Maven+Pro|Raleway=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/sortir.css') }}">
     <script src="https://kit.fontawesome.com/96225b8db3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
@@ -14,13 +14,13 @@
     {% block stylesheets %}{% endblock %}
 
 </head>
-<body>
+<body id="body_{{ app.request.get('_route') }}">
 {{ include ('inc/navbar.html.twig') }}
 
 
-<section class="container-fluid main">
+
 {% block body %}{% endblock %}
-</section>
+
 
 <div class="alerts-container wow fadeInRight">
     {% for label, msgs in app.flashes %}
@@ -37,6 +37,7 @@
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/wow.min.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 {% block javascripts %}
 {% endblock %}
 <script>

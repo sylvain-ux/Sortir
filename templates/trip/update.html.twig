@@ -4,14 +4,17 @@
     Modifier une sortie
 {% endblock %}
 {% block body %}
-    <div class="container mt-5">
+    <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="border border-dark p-5">
-                    <h2 class="text-center">Modifier une sortie</h2>
+            <div class="col-md-12">
+                <div class="bloc">
+                    <h4 class="text-center">Modification d'une sortie</h4>
+                    <hr>
                     {{ form(tripFormView) }}
-                    <a class="btn btn-secondary" href="{{ path('home') }}">Annuler</a>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <a class="btn neumorphism-1" href="{{ path('trip_detail', {'id':trip.id}) }}">Retour</a>
             </div>
         </div>
     </div>

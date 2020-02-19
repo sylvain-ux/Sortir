@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Trip;
+use App\Form\SearchType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Trip|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,113 +22,89 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
+    //ENORME REQUETE AVEC QUERY BUILDER
+    public function findFilters(
+        $schoolId,
+        $dateStartId,
+        $dateEndId,
+        $organizerId,
+        $myRegistrationId,
+        $myNotRegistrationId,
+        $pastTrip,
+        Request $request,
+        UserInterface $user
+    ) {
 
-    public function findBySchoolID($id)
-    {
-        $entityManager = $this->getEntityManager();
-
-        $dql = <<<DQL
-SELECT t FROM App\Entity\Trip t WHERE t.school = :id
-DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    // Recherche en fonction des dates :
-
-    //Date de debut :
-    public function findByDateStart($id)
-    {
-        $entityManager = $this->getEntityManager();
-        $dql = <<<DQL
-SELECT t FROM App\Entity\Trip t WHERE t.dateTimeStart >= :id
-DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    //Date de fin :
-    public function findByDateEnd($id)
-    {
-        $entityManager = $this->getEntityManager();
-        $dql = <<<DQL
-SELECT t FROM App\Entity\Trip t WHERE :id <= t.dateTimeStart
-DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    //Recherche pour afficher les sorties dont je suis l'organisatreur/trice :
-    public function findByMyTrip($id)
-    {
-        $entityManager = $this->getEntityManager();
-        $dql = <<<DQL
- SELECT t FROM App\Entity\Trip t WHERE  t.user = :id
- DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    //Recherche pour afficher les sorties auxquelles je suis inscrit/e :
-    public function findByMyRegistration($id)
-    {
-        $entityManager = $this->getEntityManager();
-        $dql = <<<DQL
-  SELECT t FROM App\Entity\Trip t JOIN t.users usersTrip WHERE usersTrip.id = :id
- DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
-    public function findByMyNotRegistration($id)
-    {
-        $entityManager = $this->getEntityManager();
-        $dql = <<<DQL
-  SELECT t FROM App\Entity\Trip t JOIN t.users usersTrip WHERE usersTrip.id = :id
- DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(':id', $id);
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-
-    //Recherche pour afficher les sorties passées :
-    public function findByPastTrip()
-    {
-        $entityManager = $this->getEntityManager();
+        $qb = $this->createQueryBuilder('t');
+        $subQb = $this->createQueryBuilder('sq');
         $now = new \DateTime();
-        $dql = <<<DQL
-SELECT t FROM App\Entity\Trip t WHERE t.dateTimeStart < :now
-DQL;
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter(":now",$now);
-        $result = $query->getResult();
+
+
+        //Recherche en fonction des ville organisatrice :
+        if ($schoolId != null) {
+            $qb
+                ->where('t.school = :schoolId')
+                ->setParameter(':schoolId', $schoolId->getId());
+        }
+
+        // Recherche en fonction des dates :
+        //Date de debut :
+        if ($dateStartId != null) {
+            $qb
+                ->andWhere('t.dateTimeStart >= :dateStartId')
+                ->setParameter(':dateStartId', $dateStartId);
+        }
+
+        //Date de fin :
+        if ($dateEndId != null) {
+            $qb
+                ->andWhere('t.dateTimeStart <= :dateEndId')
+                ->setParameter(':dateEndId', $dateEndId);
+        }
+
+        //Recherche pour afficher les sorties dont je suis l'organisatreur/trice :
+        if ($organizerId != null) {
+            echo("coucou");
+            $qb
+                ->andWhere('t.user = :organizerId')
+                ->setParameter(':organizerId', $user->getId());
+        }
+
+        //Recherche pour afficher les sorties auxquelles je suis inscrit/e :
+        if ($myRegistrationId != null) {
+            $qb
+                ->innerJoin('t.users', 'sqb', 'with', "sqb.id in (:user)")
+                ->setParameter(':user', $user->getId());
+        }
+
+        //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
+        if ($myNotRegistrationId != null) {
+            $subQb
+                ->innerJoin('sq.users', 'sqb2', 'with', "sqb2.id in (:user)")
+                ->setParameter(':user', $user->getId());
+
+            $qb
+                ->addselect('i')
+                ->leftJoin('t.users', 'i')
+                ->andWhere('t NOT IN ('.$subQb->getDQL().')')
+                ->setParameter(':user', $user);
+        }
+
+        //Recherche pour afficher les sorties passées :
+        if ($pastTrip != null) {
+            $qb
+                ->andWhere('t.dateTimeStart <= :now')
+                ->setParameter(':now', $now);
+        }
+
+        $result = $qb->getQuery()->getResult();
 
         return $result;
     }
 
-
-    // /**
-    //  * @return Trip[] Returns an array of Trip objects
-    //  */
+// /**
+//  * @return Trip[] Returns an array of Trip objects
+//  */
     /*
     public function findByExampleField($value)
     {

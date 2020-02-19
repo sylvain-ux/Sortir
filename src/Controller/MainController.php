@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Category;
+use App\Entity\School;
 use App\Entity\User;
 use App\Form\SearchType;
 use App\Form\UserType;
@@ -25,69 +27,63 @@ class MainController extends AbstractController
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
 
+        $schoolRepository = $entityManager->getRepository(School::class);
+        $school = $schoolRepository->findAll();
+
+
+        $categoryRepository = $entityManager->getRepository(Category::class);
+        $allCategory = $categoryRepository->findAll();
+
+
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
 
-            //fonction activé que si je clique sur le bouton 'Recherche'
-            if ($searchForm->getClickedButton() === $searchForm->get('save')) {
+            //ENORME FONCTION
 
-                //Recherche en fonction des ville organisatrice :
-                $school = $searchForm->get('site')->getData();
-                if ($school != null) {
-                    $schoolId = $school->getId();
-                    $allTrips = $tripRepository->findBySchoolID($schoolId);
-                }
+            $schoolId = $searchForm->get('site')->getData();
+            $dateStartId = $searchForm->get('dateStart')->getData();
+            $dateEndId = $searchForm->get('dateEnd')->getData();
+            //Mon id connecté
+            $organizerId = $searchForm->get('TripOrganizer')->getData();
+            $myRegistrationId = $searchForm->get('TripRegistered')->getData();
+            $myNotRegistrationId = $searchForm->get('TripNotRegistered')->getData();
+            $pastTrip = $searchForm->get('TripPast')->getData();
 
-                //Recherche pour afficher les sorties dont je suis l'organisatreur/trice :
-                $organizer = $searchForm->get('TripOrganizer')->getData();
-                if ($organizer != null) {
-                    //Mon id connecté
-                    $myId = $this->getUser();
-                    $allTrips = $tripRepository->findByMyTrip($myId);
-                }
-
-                //Recherche pour afficher les sorties passées :
-                $pastTrip = $searchForm->get('TripPast')->getData();
-                if ($pastTrip != null) {
-                    $allTrips = $tripRepository->findByPastTrip();
-                }
-
-                // Recherche en fonction des dates :
-                // Date de debut :
-                $dateStart = $searchForm->get('dateStart')->getData();
-                if ($dateStart != null) {
-                    $allTrips = $tripRepository->findByDateStart($dateStart);
-                }
-
-                // Date de fin :
-                $dateEnd = $searchForm->get('dateEnd')->getData();
-                if ($dateEnd != null) {
-                    $allTrips = $tripRepository->findByDateEnd($dateEnd);
-                }
-
-                //Recherche pour afficher les sorties auxquelles je suis inscrit/e :
-                $myTrip = $searchForm->get('TripRegistered')->getData();
-                if ($myTrip != null) {
-                    //Mon id connecté
-                    $myId = $this->getUser();
-                    $allTrips = $tripRepository->findByMyRegistration($myId);
-                }
-                //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
-                $myNotTrip = $searchForm->get('TripNotRegistered')->getData();
-                if ($myNotTrip != null) {
-                    //Mon id connecté
-                    $myId = $this->getUser();
-                    $allTrips = $tripRepository->findByMyRegistration($myId);
-                }
-            }
+            $allTrips = $tripRepository->findFilters(
+                $schoolId,
+                $dateStartId,
+                $dateEndId,
+                $organizerId,
+                $myRegistrationId,
+                $myNotRegistrationId,
+                $pastTrip,
+                $request,
+                $this->getUser()
+            );
         }
 
 
+        $i=0;
+        foreach ($allTrips as $trip){
+            $coordinates=array((float)$trip->getLocation()->getLongitude(),(float)$trip->getLocation()->getLatitude());
+            $city = $trip->getLocation()->getCity();
+            $cityName = $city->getName();
+            $data[$i]['type']='Feature';
+            $data[$i]['geometry']['type']= 'Point';
+            $data[$i]['geometry']['coordinates']=$coordinates;
+            $data[$i]['properties']['title']=$trip->getName();
+            $data[$i]['properties']['id']=$trip->getId();
+            $data[$i]['properties']['title_location']=$trip->getLocation()->getName();
+            $data[$i]['properties']['link']= $this->redirectToRoute('trip_detail',['id',$trip->getId()]);
+            $data[$i]['properties']['address']=$trip->getLocation()->getStreet().' '.$cityName ;
+            $i++;
+        }
+        $data = json_encode($data);
         return $this->render(
-            'trip/index.html.twig',
-            ['allTrips' => $allTrips, 'searchFormView' => $searchForm->createView()]
+            'trip/list.html.twig',
+            ['data'=>$data, 'allCategories'=>$allCategory, 'allSchools'=>$school, 'allTrips' => $allTrips, 'searchFormView' => $searchForm->createView()]
         );
 
     }

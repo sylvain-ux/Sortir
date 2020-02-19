@@ -1,86 +1,362 @@
 {% extends 'layout.html.twig' %}
-{% form_theme tripFormView 'bootstrap_4_layout.html.twig' %}
 {% block title %} Détail d'une sortie {% endblock %}
-
+{% block stylesheets %}
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
 {% block body %}
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <h3>Détail de la sortie</h3>
-                {{ form_start(tripFormView) }}
-                <br>
-                {{ form_label(tripFormView.name) }}
-                {{ form_widget(tripFormView.name) }}
-                {{ form_errors(tripFormView.name) }}
-                <br>
-                {{ form_label(tripFormView.dateTimeStart) }}
-                {{ form_widget(tripFormView.dateTimeStart) }}
-                {{ form_errors(tripFormView.dateTimeStart) }}
-                <br>
-                {{ form_label(tripFormView.registDeadline) }}
-                {{ form_widget(tripFormView.registDeadline) }}
-                {{ form_errors(tripFormView.registDeadline) }}
-                <br>
-                {{ form_label(tripFormView.nbRegistMax) }}
-                {{ form_widget(tripFormView.nbRegistMax) }}
-                {{ form_errors(tripFormView.nbRegistMax) }}
-                <br>
-                {{ form_label(tripFormView.nbRegistMin) }}
-                {{ form_widget(tripFormView.nbRegistMin) }}
-                {{ form_errors(tripFormView.nbRegistMin) }}
-                <br>
-                {{ form_label(tripFormView.duration) }}
-                {{ form_widget(tripFormView.duration) }}
-                {{ form_errors(tripFormView.duration) }}
-                <br>
-                <br>
-                {{ form_label(tripFormView.info) }}
-                {{ form_widget(tripFormView.info) }}
-                {{ form_errors(tripFormView.info) }}
-                <br>
-                {{ form_label(tripFormView.school) }}
-                {{ form_widget(tripFormView.school) }}
-                {{ form_errors(tripFormView.school) }}
-                <br>
-                {{ form_label(tripFormView.location) }}
-                {{ form_widget(tripFormView.location) }}
-                {{ form_errors(tripFormView.location) }}
-                <br>
-                {{ form_end(tripFormView) }}
-            </div>
+            <div class="col-md-7">
+                <div class="bloc">
+                    <h4 class="text-center">Sortie : {{ currentTrip.name }}</h4>
+                    <hr>
 
-            <div class="col-md-6 offset-md-2">
-                <h3>Participants</h3>
-                <div class="row">
-                    {% for u in allUsers %}
-                        <div class="col-md-6">
-                            <div class="card text-center">
+                    <dl>
+                        <dt>Date et heure de la sortie :</dt>
+                        <dd>{{ currentTrip.dateTimeStart|date("m/d/Y") }}</dd>
+
+                        <dt>Date limite d'inscription :</dt>
+                        <dd>{{ currentTrip.registDeadline|date("m/d/Y") }}</dd>
+
+                        <dt>Nombre de places minimum :</dt>
+                        <dd>{{ currentTrip.nbRegistMin }}</dd>
+
+                        <dt>Nombre de places maximum :</dt>
+                        <dd>{{ currentTrip.nbRegistMax }}</dd>
+
+                        <dt>Durée (en minutes) :</dt>
+                        <dd>{{ currentTrip.duration }}</dd>
+
+                        <dt>Description et infos :</dt>
+                        <dd>{{ currentTrip.info }}</dd>
+
+                        <dt>Ville organisatrice :</dt>
+                        <dd>{{ currentTrip.school.name }}</dd>
+
+                        <dt>Localisation :</dt>
+                        <dd>{{ currentTrip.location.name }}</dd>
+                        <dd>{{ currentTrip.location.street }}</dd>
+                        <dd>{{ currentTrip.location.city.zipCode }} {{ currentTrip.location.city.name }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bloc">
+                    <h4 class="text-center">Etat de la sortie</h4>
+                    <h5 class="text-center">{{ currentTrip.state.info }}</h5>
+                </div>
+                <div class="bloc mt-2">
+                    <h4>Organisateur</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            {% if currentTrip.user.avatarName is not empty %}
+                                <img src="{{ asset('users/' ~ currentTrip.user.id ~ '/avatar/' ~ currentTrip.user.avatarName) }}"
+                                     class="rounded-circle" width="50" height="50">
+                            {% else %}
+                                <img src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}"
+                                     class="rounded-circle" width="50" height="50">
+
+                            {% endif %}
+                            <a href="{{ path('user_detail', {'id' : currentTrip.user.id}) }}">{{ currentTrip.user.name }}
+                                {{ currentTrip.user.firstName }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bloc mt-2">
+                    <h4>Participants</h4>
+                    <div class="row">
+                        {% if currentTrip.users|length == 0 and not currentTrip.isCanceled(currentTrip.state.id) and not currentTrip.tripClosed(currentTrip.state.id) %}
+                            <h6 class="text-center"> Soyez le premier à vous inscrire </h6>
+                        {% endif %}
+                        {% for u in allUsers %}
+                            <div class="col-md-12 py-1">
                                 {% if u.avatarName is not empty %}
-                                    <img class="img-fluid"
-                                         src="{{ asset('users/' ~ u.id ~ '/avatar/' ~ u.avatarName) }}">
+                                    <img src="{{ asset('users/' ~ u.id ~ '/avatar/' ~ u.avatarName) }}"
+                                         class="rounded-circle" width="50" height="50">
                                 {% else %}
-                                    <img class="img-fluid" src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}">
+                                    <img src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}"
+                                         class="rounded-circle" width="50" height="50">
 
                                 {% endif %}
                                 {{ u.name }}
                                 {{ u.firstName }}
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-12">
+                        {% if app.user is not null %}
+
+
+                            {# Sortie: STATUT PASSEE #}
+
+                            {% if currentTrip.tripPast(currentTrip.state.id) %}
+                                <a class="btn neumorphism-1" href="{{ path('trip_summary', {'id':currentTrip.id}) }}">Récapitulatif</a>
+                            {% endif %}
+
+                            {# Sortie: STATUT EN CREATION / Organisateur connecté: OUI #}
+                            {% if currentTrip.tripCreation(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
+                                <a class="btn neumorphism-1"
+                                   href="{{ path('trip_update', {'id':currentTrip.id}) }}">Modifier</a>
+
+                            {% endif %}
+
+                            {# Sortie: STATUT ANNULE / Organisateur connecté: OUI #}
+                            {% if currentTrip.isCanceled(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
+                                <a class="btn neumorphism-1"
+                                   href="{{ path('trip_update', {'id':currentTrip.id}) }}">Modifier</a>
+                            {% endif %}
+
+                            {# Sortie: STATUT CLOTUREE #}
+                            {% if currentTrip.tripClosed(currentTrip.state.id) %}
+
+                            {% endif %}
+
+                            {# Sortie: STATUT EN COURS #}
+                            {% if currentTrip.isInProgress(currentTrip.state.id) %}
+                            {% endif %}
+
+                            {# Sortie: STATUT OUVERTE #}
+                            {% if currentTrip.tripOpen(currentTrip.state.id) %}
+                                {# Utilisateur connecté: NON INSCRIT #}
+                                {% if currentTrip.isNotSubscribed(app.user,currentTrip.users|length,currentTrip.nbRegistMax) %}
+                                    <a class="btn neumorphism-1"
+                                       href="{{ path('trip_inscription', {'id':currentTrip.id }) }}"><span>S'inscrire</span></a>
+                                    {# Utilisateur connecté: INSCRIT #}
+                                {% elseif currentTrip.isSubscribed(app.user) %}
+                                    <a class="btn neumorphism-1"
+                                       href="{{ path('trip_unsubscribe', {'id':currentTrip.id}) }}"><span>Se désister</span></a>
+                                {% endif %}
+                            {% endif %}
+
+                            {# Sortie: STATUT OUVERTE / Organisateur connecté: OUI #}
+                            {% if currentTrip.tripOpen(currentTrip.state.id) and currentTrip.userOrOrganizer(app.user) %}
+                                <a class="btn neumorphism-1"
+                                   href="{{ path('trip_cancel', {'id':currentTrip.id}) }} ">Annuler la sortie</a>
+                            {% endif %}
+
+                        {% endif %}
+                        <a class="btn neumorphism-1" href="{{ path('trip_list') }}">Retour</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="container mt-5">
+        <div id="mapTripDetail">
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {% set marker = asset('assets/css/marker.png') %}
+    <script>
+    function initMap() {
+    var myLatLng = {lat: {{currentTrip.getLocation.getLatitude()}}, lng: {{currentTrip.getLocation.getLongitude()}}};
+
+    var map = new google.maps.Map(document.getElementById('mapTripDetail'), {
+    zoom: 13,
+    center: myLatLng,
+        styles: [
+            {
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#bdbdbd"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dadada"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#c9c9c9"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
+                    }
+                ]
+            }
+        ]
+    });
+        var image = "{{marker}}";
+        var contentString = '<div id="content">'+
+            '<h5>{{currentTrip.name}}</h5>'+
+             '<p>{{ currentTrip.getLocation.name }} : {{ currentTrip.getLocation.street }}, {{ currentTrip.getLocation.city.name }}</p>'+
+                '<p><hr>{{ currentTrip.info }}</p>'+
+        '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
 
 
 
 
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            icon: image,
+            title:"Hello World!"
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
 
 
+// To add the marker to the map, call setMap();
+        marker.setMap(map);
 
-    <a class="btn btn-secondary" href="{{ path('home') }}">Retour</a>
+    }
 
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc4FIU239oleSDmVnMUvl2c7rUyLFYSW0&callback=initMap">
+    </script>
 
 {% endblock %}
