@@ -1,15 +1,31 @@
+html {font-size: 62.5%;}
+body{
+    min-height: 100vh;
+    background-color: #fff;
+    padding-top: 100px;
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+body#body_trip_list,body#body_home{padding-top:0px;background: #fff}
+
+/* Initialisation des backgrounds suivant le moment de la journée*/
+body.morning { background: url(bg/city_morning/citymorning5.jpg) no-repeat center center / cover; }
+body.sunset { background: url(bg/city_afternoon/city_afternoon1.jpg) no-repeat center center / cover; }
+body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center center / cover; }
+
 /* Titles */
 h1,h2,h3,h4{
     font-family: 'Crete Round', serif;
     /*font-family: 'Roboto Slab', serif;*/
     /*font-family: 'Lato', sans-serif;*/
-    font-size: 25px;
+    font-size: 2.5rem;
     font-weight: 500;
 }
 
 h5,a{
     font-family: 'Maven Pro', sans-serif;
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: 400;
 }
 
@@ -38,25 +54,6 @@ h5,a{
 #main_navbar.smaller .first_logo{display:none}
 
 /*home*/
-body{
-    min-height: 100vh;
-    background-color: #fff;
-    padding-top: 100px;
-    font-family: 'Maven Pro', sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-}
-body#body_trip_list,body#body_home{padding-top:0px;background: #fff}
-
-/* Initialisation des backgrounds suivant le moment de la journée*/
-body.morning { background: url(bg/city_morning/citymorning5.jpg) no-repeat center center / cover; }
-body.sunset { background: url(bg/city_afternoon/city_afternoon1.jpg) no-repeat center center / cover; }
-body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center center / cover; }
-
-
-
-
-
 /*.form_container*/
 /*{*/
 /*    padding:25px;*/
@@ -75,7 +72,7 @@ body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center cent
     border-radius: 20px;
     background: #f5f5f5;
     font-family: 'Maven Pro', sans-serif;
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 400;
     text-decoration: none;
     box-shadow: -3px -3px 8px rgba(255,255,255,0.15),
@@ -100,7 +97,7 @@ body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center cent
 
 
 /*list of trips*/
-.search_container{height:75vh;min-height:600px;background: url(cities/navbaraccueil.jpg) no-repeat center center / cover}
+.search_container{height:40vh;min-height:400px;background: url(cities/navbaraccueil.jpg) no-repeat center center / cover}
 .search_container > .container{margin-top:5vh}
 .filter_container{background:rgba(255,255,255,0.7);padding:40px 30px 30px 30px;border-radius:15px}
 .filter_container .form-control-sm{border-radius: 0}
@@ -124,12 +121,30 @@ body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center cent
     padding:20px 15px;
 
 }
-.grid-item .card .head h2{font-size:17px;color:#000}
+.grid-item .card .head h2{font-size:1.7rem;color:#000}
 .grid-item .card:hover .head {margin-top:1%}
 .grid-item .card:hover .body {margin-top:8%}
 .grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
 .grid-item .card:hover .head hr{width:22%;}
 
+
+
+.grid-item.grid-item2 .card{border-radius: 0;box-shadow:0 0 0 0;min-height:inherit;}
+.grid-item.grid-item2 .card .overlay{border-radius: 0}
+.grid-item.grid-item2 .card .head,.grid-item .card .body {margin-top:0;padding:10px}
+.grid-item.grid-item2 .card:hover .head {margin-top:0}
+.grid-item.grid-item2 .card:hover .body {margin-top:0}
+.grid-item.grid-item2 .card .content p{margin:0;font-size:1.4rem}
+.grid-item.grid-item2 .card .head,.grid-item.grid-item2 .card .body {
+    margin-top:0;
+    transition: all 0.7s;
+    padding:10px;
+
+}
+.grid-item-add{min-height:300px;}
+.grid-item-add .card{position:relative;background:#1d2124;color:#fff;transition:all 0.3s ease;border:1px solid #1d2124}
+.grid-item-add h3{position:absolute;top:50%;left:5%;text-align: center;transform: translateY(-50%);width:90%}
+.grid-item-add .card:hover{position:relative;background:#fff;color:#1d2124}
 
 /*trip details*/
 #mapTripDetail{position:relative;height:450px;width:100%;margin-bottom:150px;border-radius:15px;overflow:hidden;box-shadow:0 0 15px 0 rgba(0,0,0,0.3)}
@@ -138,9 +153,13 @@ body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center cent
 /*ADMIN*/
 body#admin{padding-top:0;background: #f2f4f5}
 
-
-
-
+/*forms*/
+.form-control-sm{font-size:1.4rem}
+.form-control{font-size:1.6rem}
+/*btns*/
+.btn-group-sm > .btn, .btn-sm{font-size:1.4rem}
+.btn-group > .btn, .btn{font-size:1.6rem}
+.valid-tooltip,.tooltip{font-size:1.4rem}
 /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) {
 body{padding-bottom:50px}

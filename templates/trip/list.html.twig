@@ -14,7 +14,7 @@
                 <span class="d-none">Sortir.com</span>
             </a>
             </div>
-            <div class="row">
+            <div class="row d-none">
                 <div class="col-12 ">
                     <div class="filter_container">
                         {{ include('trip/inc/filters.html.twig') }}
@@ -23,9 +23,15 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid bg-dark text-light p-5">
+        <div class="container p-2">
+        {{ include('trip/inc/filters.html.twig') }}
+        </div>
+    </div>
+    <div class="container-fluid p-0">
         <div class="" >
             <div class="grid">
+
                 {% for trip in allTrips %}
                     {% if app.user.id == trip.user.id %}
                         {% set organizer = "organizer" %}
@@ -47,17 +53,14 @@
                     {% else %}
                         {% set cat = "default" %}
                     {% endif %}
-                    {%   set nb_item = "" %}
-                    {% if  loop.index == 1 %}
-                        {%   set nb_item = "first_elem" %}
-                    {% elseif  loop.index ==2  %}
-                        {%   set nb_item = "second_elem" %}
-                    {% elseif  loop.index ==3  %}
-                        {%   set nb_item = "third_elem" %}
-                    {% endif %}
-
-
-                    <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-6 col-xl-3 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }} {{ nb_item }}" >
+{% if loop.first or loop.index is divisible by(9) %}
+                    <div  class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 grid-item grid-item2 grid-item-add" >
+                        <a href="{{ path('trip_create') }}" class="card  text-center p-2">
+                            <h3><i class="fas fa-map-marked-alt fa-2x"></i><span class="d-block mt-2">Créer votre sortie !</span></h3>
+                        </a>
+                    </div>
+{% endif %}
+                    <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 grid-item grid-item2 school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }}" >
                         <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
                             <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
                             <div class="content">
