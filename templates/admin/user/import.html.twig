@@ -1,0 +1,20 @@
+{% extends 'admin/admin-layout.html.twig' %}
+{% form_theme importForm 'bootstrap_4_layout.html.twig' %}
+{% block title %}
+    Importer des utilisateurs
+{% endblock %}
+{% block titre_page %}Importer des utilisateurs{% endblock %}
+{% block breadcrumb %}import utilisateurs{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        {{ form(importForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

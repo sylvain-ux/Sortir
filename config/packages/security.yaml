@@ -76,4 +76,6 @@ security:
 
 #  parameters:
 #    avatar_directory: '%kernel.project_dir%/public/images/avatar'
+parameters:
+  csv_directory: '%kernel.project_dir%/public/admin/import'
 

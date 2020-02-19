@@ -41,7 +41,7 @@ body{
     font-size: 18px;
     font-weight: 400;
 }
-body#body_trip_list{padding-top:150px;background: #fff}
+body#body_trip_list,body#body_home{padding-top:0px;background: #fff}
 
 /* Initialisation des backgrounds suivant le moment de la journée*/
 body.morning { background: url(bg/city_morning/citymorning5.jpg) no-repeat center center / cover; }
@@ -123,3 +123,8 @@ body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center cent
 .grid-item .card:hover .body {margin-top:8%}
 .grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
 .grid-item .card:hover .head hr{width:22%;}
+
+
+/*ADMIN*/
+body#admin{padding-top:0;background: #f2f4f5}
+

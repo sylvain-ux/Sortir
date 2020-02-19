@@ -1,55 +1,117 @@
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block title %}Hello TripController!{% endblock %}#}
-
-{#{% block body %}#}
-{#<style>#}
-{#    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
-{#    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
-{#</style>#}
-
-{#<div class="example-wrapper">#}
-{#    <h1>Hello {{ controller_name }}! ✅</h1>#}
-
-{#    This friendly message is coming from:#}
-{#    <ul>#}
-{#        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Sortir/src/Controller/TripController.php'|file_link(0) }}">src/Controller/TripController.php</a></code></li>#}
-{#        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Sortir/templates/trip/index.html.twig'|file_link(0) }}">templates/trip/index.html.twig</a></code></li>#}
-{#    </ul>#}
-{#</div>#}
-{#{% endblock %}#}
-
 {% extends 'layout.html.twig' %}
-
-{% block title %}Hello MainController!{% endblock %}
+{% form_theme searchFormView 'bootstrap_4_layout.html.twig' %}
+{% block title %}Liste des sorties{% endblock %}
 
 {% block body %}
-    {#    {% for e in searchForm %}#}
-    {#        {{ form(e.dateStart) }}#}
 
-    {#    {% endfor %}#}
 
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
+    <div class="container-fluid search_container p-3">
+        <div class="container text-center">
+            <div class="logo_part py-4">
+                <a class="" href="{{path('home')}}">
+                    <img src="{{ asset('img/eni-sortir-white.png') }}" alt="ENI -> sortir" class="img-fluid">
+                    <span class="d-none">Sortir.com</span>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="filter_container">
+                        {{ form_start(searchFormView) }}
+                        <div class="row">
+                            <div class="col-12 col-md-3">
+                              <input class="form-control-sm" id="tableSearch" type="text" placeholder="recherche ...">
+                            </div>
 
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
-    <div class="example-wrapper">
+                            <div class="col-12 col-md-3 form-group input-group-sm">
+                            {#{{ form_label(searchFormView.site) }}#}
+                            {{ form_widget(searchFormView.site) }}
+                            {{ form_errors(searchFormView.site) }}
+                            </div>
+                            <div class="col-12 col-md-3 form-group input-group-sm">
+{#                        {{ form_label(searchFormView.dateStart) }}#}
+                        {{ form_widget(searchFormView.dateStart) }}
+                        {{ form_errors(searchFormView.dateStart) }}
+                            </div>
+                            <div class="col-12 col-md-3 form-group input-group-sm">
+                        {#{{ form_label(searchFormView.dateEnd) }}#}
+                        {{ form_widget(searchFormView.dateEnd) }}
+                        {{ form_errors(searchFormView.dateEnd) }}
+                            </div>
+                        </div>
+                        <div class="row">
+
+                        <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                        {{ form_label(searchFormView.TripOrganizer) }}
+                        {{ form_widget(searchFormView.TripOrganizer) }}
+                        {{ form_errors(searchFormView.TripOrganizer) }}
+                        </div>
+                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                        {{ form_label(searchFormView.TripRegistered) }}
+                        {{ form_widget(searchFormView.TripRegistered) }}
+                        {{ form_errors(searchFormView.TripRegistered) }}
+                            </div>
+                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                        {{ form_label(searchFormView.TripNotRegistered) }}
+                        {{ form_widget(searchFormView.TripNotRegistered) }}
+                        {{ form_errors(searchFormView.TripNotRegistered) }}
+                            </div>
+                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                        {{ form_label(searchFormView.TripPast) }}
+                        {{ form_widget(searchFormView.TripPast) }}
+                        {{ form_errors(searchFormView.TripPast) }}
+                            </div>
+                        </div>
+                        {{ form_end(searchFormView) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="container mt-5">
+        <div class="container">
+            <div class="" >
+                <div class="grid">
+                    {% for trip in allTrips %}
+                        {% if trip.category %}
+                            {% set cat = trip.category.id %}
+                        {% else %}
+                            {% set cat = "default" %}
+                        {% endif %}
+
+                     <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-6 col-xl-3 p-2 grid-item " >
+            <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
+                <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
+                <div class="content">
+                    <div class="items head">
+                        <h2>{{ trip.name }}</h2>
+                        <hr>
+                    </div>
+                    <div class="items body ">
+                        <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                        <p class="new text-dark">{{ trip.getLocation().getName() }}<br><small>{{ trip.getLocation().getCity().getName() }}</small></p>
+                        <p class="users text-dark" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
+                        <p class="text-dark">{{ trip.state.info }}</p>
+                    </div>
+                    <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
+                    <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                    <p class="address d-none"><address class="d-none"><small>
+                            {{ trip.getLocation().getName() }}<br>
+                            {{ trip.getLocation().getStreet() }}<br>
+                            {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
+                        </small></address></p>
+                </div>
+            </a>
+        </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+    <div class="container mt-5 bloc d-none">
         <div class="row">
-            <div class="col-12">
-                <div class="border border-dark p-5">
-                    <div class="tab-content" id="myTabContent">
+
+                    <div class="tab-content d-none" id="myTabContent">
                         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
                             <h2 class="text-center">Liste des sorties</h2>
                             <input class="form-control mb-4" id="tableSearch" type="text"
@@ -88,7 +150,10 @@
                             {{ form_end(searchFormView) }}
 
 
-                            <table id="userTable" class="table table-bordered">
+
+
+
+                            <table id="userTable" class="table table-bordered d-none">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -215,18 +280,16 @@
 {% endblock %}
 
 {% block javascripts %}
-
-    <script scr="{{ asset('assets/js/search.js') }}"></script>
-
+<script scr="{{ asset('assets/js/search.js') }}"></script>
+<script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
     <script>
-
-
         // Filter table
 
         $(document).ready(function () {
             $("#tableSearch").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#userTable tr").filter(function () {
+                $(".grid-item").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
