@@ -57,16 +57,17 @@
 
             geojson.data.forEach(function (marker) {
 // create a HTML element for each feature
+                //console.log(marker.properties.link.toString());
                 var el = document.createElement('div');
                 el.className = 'marker-' + marker.properties.markersymbol;
 // make a marker for each feature and add to the map
                 new mapboxgl.Marker(el)
                     .setLngLat(marker.geometry.coordinates)
                     .setPopup(new mapboxgl.Popup({
-//offset: 25,
                         className: 'test',
                     }) // add popups
-                        .setHTML('<h5>'+marker.properties.title+'</h5><p>'+marker.properties.address+'</p>'))
+
+                        .setHTML('<h5>'+marker.properties.title+'</h5><p>'+marker.properties.title_location+'</p><p class="text-center"><a href="http://localhost/sortir/public/trip/detail/'+marker.properties.id+'" class="btn btn-primary btn-sm">En savoir +</a></p>'))
                     .addTo(map);
             });
 
@@ -168,4 +169,20 @@ $(document).ready(function(){
         // images have loaded
     });
 
+});
+
+
+// Fonction permettant de changer le background en fonction de l'heure actuelle
+$(document).ready(function(){
+    var d = new Date();
+    var n = d.getHours();
+    if (n > 19 || n < 6)
+        // If time is after 7PM or before 6AM, apply night theme to ‘body’
+        $('body').addClass('night');
+    else if (n > 16 && n < 19)
+        // If time is between 4PM – 7PM sunset theme to ‘body’
+        $('body').addClass('sunset');
+    else
+        // Else use ‘morning’ theme
+        $('body').addClass('morning');
 });

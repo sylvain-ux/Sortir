@@ -21,80 +21,46 @@
 /*home*/
 body{
 background-color: #fff;
+padding: 100px;
 }
-body:not(#body_trip_list){padding-top:150px}
+body#body_trip_list{padding-top:150px;background: #fff}
+
+/* Initialisation des backgrounds suivant le moment de la journée*/
+body.morning { background: url(bg/city_morning/citymorning5.jpg) no-repeat center center / cover; }
+body.sunset { background: url(bg/city_afternoon/city_afternoon1.jpg) no-repeat center center / cover; }
+body.night { background: url(bg/city_night/citynight1.jpg) no-repeat center center / cover; }
 
 
 
-/*.fa-check {*/
-/*    color: green;*/
+
+
+/*.form_container*/
+/*{*/
+/*    padding:25px;*/
+/*    background:rgba(255,255,255,0.7);*/
+/*    box-shadow: -6px -6px 10px rgba(255,255,255,0.3),*/
+/*                6px 6px 20px rgba(0,0,0,0.1);*/
+/*    border-radius: 10px;*/
 /*}*/
 
-/*.neumorphism-1{*/
-/*    margin: 10px;*/
-/*    border-radius: 5px;*/
-/*    background: #fcfeff;*/
+.bloc{background:rgba(255,255,255,0.85);padding:30px;border-radius:15px;box-shadow:0 0 15px 0 rgba(0,0,0,0.5)}
+.neumorphism-1
+{
+    text-align: left;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 20px;
+    background: #f5f5f5;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow:0 0 15px 0 rgba(0,0,0,0.5);
+}
 
-
-/*    box-shadow: -2px -2px 8px rgba(255,255,255,1),*/
-/*                -2px -2px 12px rgba(255,255,255,0.5),*/
-/*                inset 2px 2px 4px rgba(255,255,255,0.1),*/
-/*                        2px 2px 8px rgba(0,0,0,0.15);*/
-/*}*/
-
-/*.neumorphism-1:hover {*/
-/*    box-shadow: inset -2px -2px 8px rgba(255,255,255,1),*/
-/*                inset -2px -2px 12px rgba(255,255,255,0.5),*/
-/*                inset 2px 2px 4px rgba(255,255,255,0.1),*/
-/*                inset 2px 2px 8px rgba(0,0,0,0.15);*/
-/*}*/
-/*.neuromorphism-1:hover span{*/
-/*    display: inline-block;*/
-/*    transform: scale(0.98);*/
-/*}*/
-/*.neumorphism-2{*/
-/*    border-radius: 5px;*/
-
-/*    background: #ebebeb;*/
-
-/*    background: #fcfeff;*/
-
-/*    box-shadow: inset 3px 3px 5px rgba(163,177,198, 0.6), inset -3px -3px 5px    rgba(255,255,255, 0.5);*/
-/*}*/
-
-/*.neumorphism-2:hover {*/
-/*    box-shadow: 3px 3px 5px rgba(163,177,198, 0.6), -3px -3px 5px    rgba(255,255,255, 0.5);*/
-/*}*/
-/*.neuromorphism-2:hover span{*/
-/*    display: inline-block;*/
-/*    transform: scale(0.98);*/
-/*}*/
-
-
-/*.neumorphism-3{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    height: 30px;*/
-/*    width: 30px;*/
-/*    border-radius: 10%;*/
-/*    background: #fdfdfe;*/
-/*    box-shadow: 3px 3px 5px rgba(163,177,198, 0.6), -3px -3px 5px    rgba(255,255,255, 0.5);*/
-/*    position: relative;*/
-
-/*}*/
-
-/*.neumorphism-3::after {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    height: 80%;*/
-/*    width: 80%;*/
-/*    border-radius: 10%;*/
-/*    background: transparent;*/
-/*    box-shadow: inset 3px 3px 5px rgba(163,177,198, 0.6), inset -3px -3px 5px    rgba(255,255,255, 0.5);*/
-
-/*}*/
-
+.neumorphism-1:hover
+{
+    box-shadow: inset -3px -3px 8px rgba(255,255,255,0.5),
+                inset 3px 3px 8px rgba(0,0,0,0.5);
+}
 
 
 /*map*/
@@ -108,7 +74,7 @@ body:not(#body_trip_list){padding-top:150px}
 
 
 /*list of trips*/
-.search_container{height:75vh;min-height:600px;background: url(cities/nantes.jpg) no-repeat center center / cover}
+.search_container{height:75vh;min-height:600px;background: url(cities/navbaraccueil.jpg) no-repeat center center / cover}
 .search_container > .container{margin-top:5vh}
 .filter_container{background:rgba(255,255,255,0.7);padding:40px 30px 30px 30px;border-radius:15px}
 .filter_container .form-control-sm{border-radius: 0}
@@ -136,4 +102,3 @@ body:not(#body_trip_list){padding-top:150px}
 .grid-item .card:hover .body {margin-top:8%}
 .grid-item .card .head hr{transition: all 0.7s;width:0;background:#000;border:1px solid #000;margin-left:0;}
 .grid-item .card:hover .head hr{width:22%;}
-

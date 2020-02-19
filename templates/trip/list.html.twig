@@ -2,6 +2,9 @@
 {% block title %}
     Liste des sorties
 {% endblock %}
+{% block stylesheets %}
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
 {% block body %}
     <div class="container-fluid search_container p-3">
         <div class="container text-center">
@@ -54,7 +57,7 @@
                     {% endif %}
 
 
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-3 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }} {{ nb_item }}" >
+                    <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-6 col-xl-3 p-2 grid-item school_{{ trip.getSchool().getId() }} {{ organizer }} {{ subscribed }} {{ tripStatus }} cat_{{ cat }} {{ nb_item }}" >
                         <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
                             <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
                             <div class="content">
@@ -66,7 +69,7 @@
                                     <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
                                     <p class="new text-dark">{{ trip.getLocation().getName() }}<br><small>{{ trip.getLocation().getCity().getName() }}</small></p>
                                     <p class="users text-dark" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
-
+                                    <p class="text-dark">{{ trip.state.info }}</p>
                                 </div>
                                 <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
                                 <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
@@ -82,12 +85,26 @@
             </div>
         </div>
     </div>
+
+<div class="container-fluid p-0 mt-5 d-none">
+    <div id="mapLoc"></div>
+</div>
+
 {% endblock %}
 
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+        <script>
+            var data =  JSON.parse(JSON.stringify({{data|raw}}));
+            var geojson = {
+                type: 'geojson',
+                data: data,
+            };
+        </script>
 {% endblock %}
 
 

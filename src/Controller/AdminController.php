@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
+
 /**
  * @Route("/admin", name="admin_")
  */
@@ -110,6 +111,16 @@ class AdminController extends AbstractController
 
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+
+           // si le user est actif = 0 (false) il passe en role banished et n'a accès qu'à la page login
+            if ($user->getActif()==false)
+            {
+                $user->setRoles(['ROLE_BANISHED']);
+            }else{
+                $user->setRoles(['ROLE_USER']);
+            }
+
+
 
 
                 $entityManager->persist($user);
