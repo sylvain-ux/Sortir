@@ -1,9 +1,9 @@
 {% extends'layout.html.twig' %}
 {% block title %}Connexion{% endblock %}
 {% block body %}
-    <div class="container mt-5">
+    <div class="container  mt-sm-1 mt-md-2 mt-lg-5">
         <div class="row">
-            <div class="col-12 col-md-4 offset-md-4 pt-5">
+            <div class="col-sm-12 col-md-8 offset-md-2 col-xl-4 offset-xl-4 pt-sm-1 pt-md-3 pt-lg-5">
                 <div class="bloc">
                     {% if error %}
                         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
