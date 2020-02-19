@@ -1,4 +1,39 @@
-$(document).ready(function(){
+//navbar & anchors
+
+    $('a[href*="#"]:not([href="#"])').click(function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 120
+                }, 1000);
+                return false;
+            }
+        }
+    });
+
+
+    function navbar() {
+        var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+            //menu
+            menu_pos = 200,
+            menu = $('#main_navbar');
+        if (distanceY > menu_pos) {
+            $('#main_navbar').addClass('smaller');
+        } else {
+            $('#main_navbar').removeClass('smaller');
+        }
+        //console.log(distanceY);
+    }
+
+    window.onload = function () {
+        navbar();
+        window.addEventListener('scroll', navbar);
+    }
+
+
+    $(document).ready(function(){
     //Mapbox
     $(function() {
         var $map = $('#mapLoc');
@@ -35,37 +70,7 @@ $(document).ready(function(){
                     .addTo(map);
             });
 
-/*            geojson.data.forEach(function (marker) {
 
-                // create a HTML element for each feature
-                var el = document.createElement('div');
-                el.className = 'marker';
-                //var html = '<h3 class="h3 title">'+marker.properties.title+'</h3><p class="">'+marker.properties.description+'</p><p>'+marker.properties.type+'</p>';
-                var myPopup = new mapboxgl.Popup({
-                    offset: 25,
-                });
-
-                myPopup.on('open', function(){
-                    //console.log(marker.properties.link_spot);
-                    //$('.info_map').html(html);
-
-                    $('.info_map #info_map_title').html('Recevez des informations <br>sur notre parternaire <br><strong>'+marker.properties.title+'</strong>');
-                    $('.mapboxgl-marker').removeClass("active");
-                    $('.info_map').show();
-                    el.classList.add("active");
-                    $('.info_map #country').val(''+marker.properties.title+'');
-
-                });
-                //replace info_map content
-
-
-                // make a marker for each feature and add to the map
-                new mapboxgl.Marker(el)
-                    .setLngLat(marker.geometry.coordinates)
-                    .setPopup(myPopup)
-                    .addTo(map);
-
-            });*/
             $( ".info_map .close" ).click(function() {
                 $('.info_map').hide();
             });
@@ -73,4 +78,94 @@ $(document).ready(function(){
 
 
     });
+});
+
+
+
+// external js: isotope.pkgd.js
+// init Isotope
+// store filter for each group
+$(document).ready(function(){
+    var filters = {};
+    var filterValue = filteredValue = '';
+    // quick search regex
+    var qsRegex;
+    var buttonFilter;
+
+    $('.select_filter').each( function(){
+        filteredValue = getFiltersValue($(this));
+    });
+    var $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        masonry: {
+//columnWidth: 360,
+//gutter: 15
+        },
+        //filter: filteredValue,
+        filter: function() {
+            var $this = $(this);
+            var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
+            var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
+            return searchResult && buttonResult;
+        }
+    });
+    $('.select_filter').on( 'change', function(event) {
+        var $select = $( event.currentTarget );
+        /*                filteredValue = getFiltersValue($select);
+                        console.log(filteredValue);*/
+        // set filter for Isotope
+
+        buttonFilter = getFiltersValue($select);
+        //console.log($( this ));
+        $grid.isotope();
+        var elems = $grid.isotope('getFilteredItemElements');
+        /*                $('.grid-item').removeClass('first_elem second_elem third_elem');
+                        $(elems[0]).addClass('first_elem');
+                        $(elems[1]).addClass('second_elem');
+                        $(elems[2]).addClass('third_elem');*/
+    });
+
+    // use value of search field to filter
+    var $quicksearch = $('.quicksearch').keyup( debounce( function() {
+        qsRegex = new RegExp( $(this).val(), 'gi' );
+        //console.log($(this).val());
+        $grid.isotope();
+
+    }) );
+    // debounce so filtering doesn't happen every millisecond
+    function debounce( fn, threshold ) {
+        var timeout;
+        threshold = threshold || 100;
+        return function debounced() {
+            clearTimeout( timeout );
+            var args = arguments;
+            var _this = this;
+            function delayed() {
+                fn.apply( _this, args );
+            }
+            timeout = setTimeout( delayed, threshold );
+        };
+    }
+
+    function getFiltersValue(elem){
+        var $buttonGroup = elem.parents('.filters-button-group');
+        var filterGroup = $buttonGroup.attr('data-filter-group');
+        filters[ filterGroup ] = elem.val();
+        filterValue = concatValues( filters );
+        console.log(filterValue);
+        return filterValue;
+    };
+    // flatten object by concatting values
+    function concatValues( obj ) {
+        var value = '';
+        for ( var prop in obj ) {
+            value += obj[ prop ];
+        }
+        return value;
+    }
+
+    $('.grid').imagesLoaded( function() {
+        // images have loaded
+    });
+
 });

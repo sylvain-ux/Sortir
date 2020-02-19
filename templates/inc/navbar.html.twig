@@ -1,10 +1,11 @@
-<nav class="navbar navbar-main Xbg_bleu_eni white navbar-expand-lg Xnavbar-dark Xbg-dark fixed-top">
-    {% if app.request.get('_route')!='trip_list' %}
+<nav id="main_navbar" class="navbar navbar-main Xbg_bleu_eni white navbar-expand-lg Xnavbar-dark Xbg-dark fixed-top">
+{#    {% if app.request.get('_route')!='trip_list' %}#}
         <a class="navbar-brand" href="{{path('home')}}">
-            <img src="{{ asset('img/eni-sortir-white.png') }}" alt="ENI -> sortir" class="img-fluid">
+            <img src="{{ asset('img/eni-sortir-white.png') }}" alt="ENI -> sortir" class="img-fluid d-none">
             <span class="d-none">Sortir.com</span>
+            <img src="{{ asset('img/eni-sortir.png') }}" alt="ENI -> sortir" class="img-fluid second_logo">
         </a>
-    {% endif %}
+{#    {% endif %}#}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -22,20 +23,17 @@
         <div class="nav navbar-nav ml-auto">
 
             <p>
-                {% if app.user %}
-                <a class="btn btn-default text-light" href="{{ path('user_profil') }}">Bonjour {{ app.user.firstname }}</a>
-                <a href="{{ path('logout') }}" class="btn btn-sm btn-outline-danger" title="Déconnexion"><i
-                            class="fas fa-power-off"></i></a>
                 {% if is_granted('ROLE_ADMIN') %}
-
-                <a class="btn btn-default text-light" href="{{ path('admin_home') }}">Admin</a>
-
-            {% endif %}
+                    <a class="btn btn-warning btn-sm" href="{{ path('admin_home') }}" data-toggle="tooltip" data-placement="bottom" title="Administration"><i class="fas fa-user-shield"></i></a>
+                {% endif %}
+                {% if app.user %}
+                <a class="btn btn-info btn-sm" href="{{ path('user_profil') }}" data-toggle="tooltip" data-placement="bottom" title="Profil"><i class="fas fa-user-cog"></i>{#Bonjour {{ app.user.firstname }}#}</a>
+                <a href="{{ path('logout') }}" class="btn btn-sm btn-danger" title="Déconnexion" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-power-off"></i></a>
+                {% endif %}
             </p>
-            {% else %}
+            {% if app.user is not defined %}
                 <p class="text-right">
-                    <a href="{{ path('user_login') }}" class="btn btn-sm btn-outline-info" title="Se connecter"><i
-                                class="fas fa-power-off"></i></a>
+                    <a href="{{ path('user_login') }}" class="btn btn-sm btn-outline-info" title="Se connecter"  data-toggle="tooltip" data-placement="bottom" title="Connexion"><i class="fas fa-power-off"></i></a>
                 </p>
             {% endif %}
 
