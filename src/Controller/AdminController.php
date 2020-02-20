@@ -50,7 +50,7 @@ class AdminController extends AbstractController
         $cityRepository = $entityManager->getRepository(City::class);
         $allCities = $cityRepository->findAll();
         $tripRepository = $entityManager->getRepository(Trip::class);
-        $allTrips = $tripRepository->findAll();
+        $allTrips = $tripRepository->findAllByDate();
 
         $i=0;
         foreach ($allTrips as $trip){
