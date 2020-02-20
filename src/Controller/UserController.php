@@ -47,7 +47,6 @@ class UserController extends AbstractController
         // last name entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
         return $this->render(
             'user/login.html.twig',
             [
@@ -121,45 +120,41 @@ class UserController extends AbstractController
         }
 
         // Traitement du user avatar
-        if ($userAvatar->isSubmitted() ) // je récupère la valeur du champs avatar
+        if ($userAvatar->isSubmitted() && $userAvatar->isValid()) // je récupère la valeur du champs avatar
         {
-            if ($userAvatar->isValid()) {
+            $avatarField = $userAvatar->get('avatarField')->getData();
+            // $avatarField = $user -> getAvatarField();
 
-                $avatarField = $userAvatar->get('avatarField')->getData();
-                // $avatarField = $user -> getAvatarField();
-
-                if ($avatarField) {
-                    $originalFilename = pathinfo($avatarField->getClientOriginalName(), PATHINFO_FILENAME);
-                    $safeFilename = transliterator_transliterate(
-                        'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
-                        $originalFilename
+            if ($avatarField) {
+                $originalFilename = pathinfo($avatarField->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate(
+                    'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
+                    $originalFilename
+                );
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarField->guessExtension();
+                try {
+                    $avatarField->move(
+                        sprintf($this->getParameter('avatar_directory'), $user->getId()),
+                        $newFilename
                     );
-                    $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarField->guessExtension();
-                    try {
-                        $avatarField->move(
-                            sprintf($this->getParameter('avatar_directory'), $user->getId()),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-
-                    }
-                    $user->setAvatarName($newFilename);
-                    $user->setAvatarField(null);
+                } catch (FileException $e) {
 
                 }
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->addFlash('success', 'Vous avez bien téléchargé votre avatar !');
-
-                return $this->redirectToRoute('user_profil');
-
+                $user->setAvatarName($newFilename);
+                $user->setAvatarField(null);
 
             }
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            $user->setAvatarField(null);
+            $this->addFlash('success', 'Vous avez bien téléchargé votre avatar !');
+
+            return $this->redirectToRoute('user_profil');
+
+
         }
+
         return $this->render(
             'user/profil.html.twig',
             ['userFormView' => $userProfil->createView(), 'uploadAvatarView' => $userAvatar->createView()]
