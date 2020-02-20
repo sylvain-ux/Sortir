@@ -32,7 +32,7 @@ class SearchType extends AbstractType
                     'class' => School::class,
                     'choice_label' => 'name',
                     'required' => false,
-                    'label' => 'École :',
+                    'label' => 'École',
                     'mapped' => false,
                     'placeholder' => 'Toutes',
                 ]
