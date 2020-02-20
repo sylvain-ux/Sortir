@@ -157,9 +157,7 @@ h5,a{
 #mapTripDetail{position:relative;height:450px;width:100%;margin-bottom:150px;border-radius:15px;overflow:hidden;box-shadow:0 0 15px 0 rgba(0,0,0,0.3)}
 
 
-/*ADMIN*/
-body#admin{padding-top:0;background: #f2f4f5;font-size:1.6rem}
-#admin select.form-control:not([size]):not([multiple]){height:inherit}
+
 
 
 /*forms*/

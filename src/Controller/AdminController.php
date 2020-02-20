@@ -51,7 +51,25 @@ class AdminController extends AbstractController
         $allCities = $cityRepository->findAll();
         $tripRepository = $entityManager->getRepository(Trip::class);
         $allTrips = $tripRepository->findAll();
-        return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities','allTrips'));
+
+        $i=0;
+        foreach ($allTrips as $trip){
+            $coordinates=array((float)$trip->getLocation()->getLongitude(),(float)$trip->getLocation()->getLatitude());
+            $city = $trip->getLocation()->getCity();
+            $cityName = $city->getName();
+            $data[$i]['type']='Feature';
+            $data[$i]['geometry']['type']= 'Point';
+            $data[$i]['geometry']['coordinates']=$coordinates;
+            $data[$i]['properties']['title']=$trip->getName();
+            $data[$i]['properties']['id']=$trip->getId();
+            $data[$i]['properties']['title_location']=$trip->getLocation()->getName();
+            $data[$i]['properties']['link']= $this->redirectToRoute('trip_detail',['id',$trip->getId()]);
+            $data[$i]['properties']['address']=$trip->getLocation()->getStreet().' '.$cityName ;
+            $i++;
+        }
+        $data = json_encode($data);
+
+        return $this->render('admin/index.html.twig',compact('allUsers','allSchools','allStates','allLocations','allCities','allTrips','data'));
     }
 
     /**
