@@ -83,7 +83,6 @@ class AdminController extends AbstractController
         if ($importForm->isSubmitted() && $importForm->isValid()) {
            $fileCSV = $importForm['fileCSV']->getData();
 
-           dump($fileCSV);
 
             if ($fileCSV) {
                 $originalFilename = pathinfo($fileCSV->getClientOriginalName(), PATHINFO_FILENAME);
@@ -109,8 +108,7 @@ class AdminController extends AbstractController
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     $num = count($data);
 
-                    dump($num);
-                    die();
+
                     echo "<p> $num champs à la ligne $row: <br /></p>\n";
                     $row++;
                     for ($c=0; $c < $num; $c++) {
