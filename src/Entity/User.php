@@ -54,8 +54,10 @@ class User implements UserInterface
 
     /**
      * @Assert\Image(
-     *     maxWidth = 1000,
-     *     maxHeight = 1000,
+     *     maxWidth = 2000,
+     *     maxHeight = 2000,
+     *     maxWidthMessage="La largeur de votre photo est trop grande",
+     *     maxHeightMessage="La hauteur de votre photo est trop grande"
      * )
      *
      */
@@ -81,6 +83,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatarName;
+
     /**
      * @return mixed
      */
@@ -131,10 +134,6 @@ class User implements UserInterface
         $this->organizer = new ArrayCollection();
     }
 
-
-
-
-    
 
     public function getId(): ?int
     {
@@ -214,7 +213,6 @@ class User implements UserInterface
     }
 
 
-
     /**
      * @return Collection|Trip[]
      */
@@ -290,10 +288,11 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        if (empty($this->roles)){
+        if (empty($this->roles)) {
             $this->roles = ['ROLE_USER'];
         }
-        return $this-> roles;
+
+        return $this->roles;
     }
 
     /**
@@ -301,7 +300,8 @@ class User implements UserInterface
      */
     public function setRoles(array $roles): self
     {
-        $this -> roles = $roles;
+        $this->roles = $roles;
+
         return $this;
 
     }
@@ -353,10 +353,6 @@ class User implements UserInterface
 //        $this->resetToken = $resetToken;
 //    }
 //
-
-
-
-
 
 
 }

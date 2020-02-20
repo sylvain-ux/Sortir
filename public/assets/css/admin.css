@@ -1,0 +1,6 @@
+#adminMap{height:600px}
+#adminMap .mapboxgl-marker, .mapboxgl-marker {
+    height: 120px;
+    width: 40px;
+    background: url(marker.png) no-repeat;
+}

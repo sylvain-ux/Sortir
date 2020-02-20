@@ -453,6 +453,10 @@ class TripController extends AbstractController
         $tripForm->handleRequest($request);
 
         if ($tripForm->isSubmitted() && $tripForm->isValid()) {
+            //dump($tripForm->get('reason')->getData());die();
+
+            $reason = $tripForm->get('reason')->getData();
+            $trip->setReason($reason);
 
             //je récupère le status dans la BDD correspond à l'ID souhaité avec un find by
             $stateRepository = $entityManager->getRepository(State::class);

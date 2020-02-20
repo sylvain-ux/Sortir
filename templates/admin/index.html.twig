@@ -1,6 +1,7 @@
 {% extends '/admin/admin-layout.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
 {% endblock %}
 {% block title %}Tableau de bord{% endblock %}
 {% block breadcrumb %}Tableau de bord{% endblock %}
@@ -27,7 +28,7 @@
                                 <div class="btn-group" role="group" aria-label="">
                                 <a href="{{ path('admin_user_list') }}" class="btn btn-sm btn-outline-info">Tous les utilisateurs</a>
                                 <a href="{{ path('admin_user_add') }}" class="btn btn-sm btn-outline-info">Ajouter un nouvel utilisateur</a>
-                                <a href="{{ path('admin_user_import') }}" class="btn btn-sm btn-outline-info " >Importer des utilisateurs</a>
+{#                                <a href="{{ path('admin_user_import') }}" class="btn btn-sm btn-outline-info " >Importer des utilisateurs</a>#}
                                 </div>
                             </div>
                             <div class="col-12">
@@ -105,6 +106,11 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="adminMap"></div>
+            </div>
+        </div>
     </div>
 
 
@@ -112,6 +118,16 @@
 {% endblock %}
 
 
-        {% block javascripts %}
-
-        {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <script>
+        var data =  JSON.parse(JSON.stringify({{data|raw}}));
+        var geojson = {
+            type: 'geojson',
+            data: data,
+        };
+    </script>
+{% endblock %}
