@@ -27,7 +27,7 @@
                     <dd> {{ form_widget(tripFormView.reason) }}</dd>
                     <dd> {{ form_errors(tripFormView.reason) }}</dd>
                 </dl>
-                <a class="btn neumorphism-1" type="submit" href="{{ path('trip_cancel') }}">Enregistrer</a>
+                <a class="btn neumorphism-1" type="submit" href="{{ path('trip_cancel', {'id':currentTrip.id} ) }}">Enregistrer</a>
 
 
             </div>
