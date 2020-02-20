@@ -55,7 +55,7 @@ class User implements UserInterface
     /**
      * @Assert\Image(
      *     maxWidth = 2000,
-     *     maxHeight = 2000,
+     *     maxHeight = 2000
      *     maxWidthMessage="La largeur de votre photo est trop grande"
      *     maxHeightMessage="La hauteur de votre photo est trop grande"
      * )

@@ -64,7 +64,7 @@ h5,a{
 /*}*/
 
 .bloc{background:rgba(255,255,255,0.85);padding:30px;border-radius:15px;box-shadow:0 0 15px 0 rgba(0,0,0,0.5)}
-.neumorphism-1
+.neumorphism-1,.btn, .btn.btn-primary
 {
     text-align: left;
     padding: 10px 20px;
@@ -77,9 +77,12 @@ h5,a{
     text-decoration: none;
     box-shadow: -3px -3px 8px rgba(255,255,255,0.15),
                 3px 3px 8px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    color:#212529!important;
+    border:0!important
 }
 
-.neumorphism-1:hover
+.neumorphism-1:hover,.btn:hover, .btn.btn-primary:hover
 {
     box-shadow: inset -3px -3px 8px rgba(255,255,255,0.5),
                 inset 3px 3px 8px rgba(0,0,0,0.2);
