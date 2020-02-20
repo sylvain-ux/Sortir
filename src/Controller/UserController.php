@@ -66,7 +66,7 @@ class UserController extends AbstractController
     {
 
         $user = $this->getUser();
-        dump($user->getRoles());
+        //dump($user->getRoles());
         //die();
         if ($user->getRoles() == ['ROLE_BANISHED']) {
 
