@@ -19,20 +19,30 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('site', EntityType::class, ['class' => School::class, 'choice_label' => 'name','required' => false, 'label' => 'École :','mapped' => false,])
+            ->add('site', EntityType::class, [
+                'class' => School::class,
+                'choice_label' => 'name',
+                'required' => false,
+                'label' => 'École :',
+                'mapped' => false,
+                'placeholder' => 'Toutes',
+                ])
             ->add(
                 'dateStart',
                 DateType::class,
-                ['widget' => 'single_text', 'label' => 'À partir','required' => false,'mapped' => false,]
+                ['widget' => 'single_text', 'label' => 'À partir','required' => false,'mapped' => false, 'placeholder' => 'À partir',]
             )
             ->add(
                 'dateEnd',
                 DateType::class,
-                ['widget' => 'single_text', 'label' => 'Jusqu\'à','required' => false,'mapped' => false,]
+                ['widget' => 'single_text', 'label' => 'Jusqu\'à','required' => false,'mapped' => false, 'placeholder' => 'Jusqu\'à',]
             )
             ->add('TripOrganizer', CheckboxType::class, ['label' => "J'organise",'required' => false,'mapped' => false,])
-            ->add('TripRegistered', CheckboxType::class, ['label' => "Je participe",'required' => false,'mapped' => false,])
-            ->add('TripNotRegistered', CheckboxType::class, ['label' => "Non inscrit(e)",'required' => false,'mapped' => false,])
+            ->add('TripRegistered', CheckboxType::class, ['label' => "Je participe",'required' => false,'mapped' => false,
+                'attr' => ['class' => 'check check1','data-class'=> '.check2']
+            ])
+            ->add('TripNotRegistered', CheckboxType::class, ['label' => "Non inscrit(e)",'required' => false,'mapped' => false,
+                                                             'attr' => ['class' => 'check check2','data-class'=> '.check1']])
             ->add('TripPast', CheckboxType::class, ['label' => "Sorties passées",'required' => false,'mapped' => false,])
             ->add('save', SubmitType::class, ['label' => 'Rechercher']);
 

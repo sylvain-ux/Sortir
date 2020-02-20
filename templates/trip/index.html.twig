@@ -4,7 +4,6 @@
 
 {% block body %}
 
-
     <div class="container-fluid search_container p-3">
         <div class="container text-center">
             <div class="logo_part py-4">
@@ -13,64 +12,66 @@
                     <span class="d-none">Sortir.com</span>
                 </a>
             </div>
-            <div class="row">
-                <div class="col-12 ">
-                    <div class="filter_container">
-                        {{ form_start(searchFormView) }}
-                        <div class="row">
-                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
-                                <label>Recherche</label>
-                                <input class="form-control-sm" id="tableSearch" type="text" placeholder="">
-                            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark text-light">
+        <div class="row">
+            <div class="col-12 ">
+                <div class=" Xfilter_container">
+                    {{ form_start(searchFormView) }}
+                    <div class="row">
+                        <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                            <label for="tableSearch">Recherche</label>
+                            <input class="form-control" id="tableSearch" type="text" placeholder="recherche...">
+                        </div>
 
-                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                        <div class="col-12 col-md-3 form-group input-group-sm text-left">
                             {{ form_label(searchFormView.site) }}
                             {{ form_widget(searchFormView.site) }}
                             {{ form_errors(searchFormView.site) }}
-                            </div>
-                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
-                        {{ form_label(searchFormView.dateStart) }}
-                        {{ form_widget(searchFormView.dateStart) }}
-                        {{ form_errors(searchFormView.dateStart) }}
-                            </div>
-                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
-                        {{ form_label(searchFormView.dateEnd) }}
-                        {{ form_widget(searchFormView.dateEnd) }}
-                        {{ form_errors(searchFormView.dateEnd) }}
-                            </div>
                         </div>
-                        <div class="row">
-
                         <div class="col-12 col-md-3 form-group input-group-sm text-left">
-                        {{ form_label(searchFormView.TripOrganizer) }}
-                        {{ form_widget(searchFormView.TripOrganizer) }}
-                        {{ form_errors(searchFormView.TripOrganizer) }}
+                            {{ form_label(searchFormView.dateStart) }}
+                            {{ form_widget(searchFormView.dateStart) }}
+                            {{ form_errors(searchFormView.dateStart) }}
                         </div>
-                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
-                        {{ form_label(searchFormView.TripRegistered) }}
-                        {{ form_widget(searchFormView.TripRegistered) }}
-                        {{ form_errors(searchFormView.TripRegistered) }}
-                            </div>
-                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
-                        {{ form_label(searchFormView.TripNotRegistered) }}
-                        {{ form_widget(searchFormView.TripNotRegistered) }}
-                        {{ form_errors(searchFormView.TripNotRegistered) }}
-                            </div>
-                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
-                        {{ form_label(searchFormView.TripPast) }}
-                        {{ form_widget(searchFormView.TripPast) }}
-                        {{ form_errors(searchFormView.TripPast) }}
-                            </div>
+                        <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                            {{ form_label(searchFormView.dateEnd) }}
+                            {{ form_widget(searchFormView.dateEnd) }}
+                            {{ form_errors(searchFormView.dateEnd) }}
                         </div>
-                        <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3 col-xl-1 offset-xl-8 form-group input-group-sm text-left check_part">
+                            {{ form_label(searchFormView.TripOrganizer) }}
+                            {{ form_widget(searchFormView.TripOrganizer) }}
+                            {{ form_errors(searchFormView.TripOrganizer) }}
+                        </div>
+                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
+                            {{ form_label(searchFormView.TripRegistered) }}
+                            {{ form_widget(searchFormView.TripRegistered) }}
+                            {{ form_errors(searchFormView.TripRegistered) }}
+                        </div>
+                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
+                            {{ form_label(searchFormView.TripNotRegistered) }}
+                            {{ form_widget(searchFormView.TripNotRegistered) }}
+                            {{ form_errors(searchFormView.TripNotRegistered) }}
+                        </div>
+                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
+                            {{ form_label(searchFormView.TripPast) }}
+                            {{ form_widget(searchFormView.TripPast) }}
+                            {{ form_errors(searchFormView.TripPast) }}
+                        </div>
+                    </div>
+                    <div class="row">
 
-                            <div class="col-12  {% if app.user.id is defined %}col-md-6 text-right{% else %} text-center {% endif %} ">
-                                 {{ form_end(searchFormView) }}
-                            </div>
+                        <div class="col-12  {% if app.user.id is defined %}col-md-6 text-right{% else %} text-center {% endif %} ">
+                            {{ form_end(searchFormView) }}
+                        </div>
 
                         {% if app.user.id is defined %}
                             <div class="col-12 col-md-6 text-left">
-                            <a class="btn-success btn" href="{{ path('trip_create') }}">Créer une sortie</a>
+                                <a class="btn-success btn" href="{{ path('trip_create') }}">Créer une sortie</a>
                             </div>
                         {% endif %}
                     </div>
@@ -78,233 +79,290 @@
             </div>
         </div>
     </div>
-
-        <div class="container">
-            <div class="" >
-                <div class="grid">
+    <div class="container-fluid">
+        <div class="" >
+            <div class="grid">
+                {% if allTrips|length > 0 %}
                     {% for trip in allTrips %}
                         {% if trip.category %}
                             {% set cat = trip.category.id %}
                         {% else %}
                             {% set cat = "default" %}
                         {% endif %}
+                        {% if loop.first or loop.index is divisible by(9) %}
+                            <div  class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 grid-item  grid-item-add" >
+                                <a href="{{ path('trip_create') }}" class="card  text-center p-2">
+                                    <h3><i class="fas fa-map-marked-alt fa-2x"></i><span class="d-block mt-2">Créer votre sortie !</span></h3>
+                                </a>
+                            </div>
+                        {% endif %}
 
-                     <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-6 col-xl-3 p-2 grid-item " >
-            <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
-                <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
-                <div class="content">
-                    <div class="items head">
-                        <h2>{{ trip.name }}</h2>
-                        <hr>
-                    </div>
-                    <div class="items body ">
-                        <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
-                        <p class="new text-dark">{{ trip.getLocation().getName() }}<br><small>{{ trip.getLocation().getCity().getName() }}</small></p>
-                        <p class="users text-dark" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
-                        <p class="text-dark">{{ trip.state.info }}</p>
-                    </div>
-                    <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
-                    <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
-                    <p class="address d-none"><address class="d-none"><small>
-                            {{ trip.getLocation().getName() }}<br>
-                            {{ trip.getLocation().getStreet() }}<br>
-                            {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
-                        </small></address></p>
-                </div>
-            </a>
-        </div>
-                     {% endfor %}
-                </div>
-            </div>
-        </div>
-
-
-    <div class="container mt-5 bloc d-none">
-        <div class="row">
-
-                    <div class="tab-content d-none" id="myTabContent">
-                        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
-                            <h2 class="text-center">Liste des sorties</h2>
-                            <input class="form-control mb-4" id="tableSearch" type="text"
-                                   placeholder="Search ...">
-                            {{ form_start(searchFormView) }}
-                            <br>
-                            {{ form_label(searchFormView.site) }}
-                            {{ form_widget(searchFormView.site) }}
-                            {{ form_errors(searchFormView.site) }}
-                            <br>
-                            {{ form_label(searchFormView.dateStart) }}
-                            {{ form_widget(searchFormView.dateStart) }}
-                            {{ form_errors(searchFormView.dateStart) }}
-                            <br>
-                            {{ form_label(searchFormView.dateEnd) }}
-                            {{ form_widget(searchFormView.dateEnd) }}
-                            {{ form_errors(searchFormView.dateEnd) }}
-                            <br>
-                            {{ form_label(searchFormView.TripOrganizer) }}
-                            {{ form_widget(searchFormView.TripOrganizer) }}
-                            {{ form_errors(searchFormView.TripOrganizer) }}
-                            <br>
-                            {{ form_label(searchFormView.TripRegistered) }}
-                            {{ form_widget(searchFormView.TripRegistered) }}
-                            {{ form_errors(searchFormView.TripRegistered) }}
-                            <br>
-                            {{ form_label(searchFormView.TripNotRegistered) }}
-                            {{ form_widget(searchFormView.TripNotRegistered) }}
-                            {{ form_errors(searchFormView.TripNotRegistered) }}
-                            <br>
-                            {{ form_label(searchFormView.TripPast) }}
-                            {{ form_widget(searchFormView.TripPast) }}
-                            {{ form_errors(searchFormView.TripPast) }}
-                            <br>
-
-                            {{ form_end(searchFormView) }}
-
-
-
-
-
-                            <table id="userTable" class="table table-bordered d-none">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nom de la sortie</th>
-                                    <th>Date de la sortie</th>
-                                    <th>Clôture</th>
-                                    <th>Inscrits/Places</th>
-                                    <th>Etat</th>
-                                    <th>Inscrit</th>
-                                    <th>Organisateur</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for trip in allTrips %}
-
-
-
-                                    <tr>
-                                        <td>{{ trip.id }}</td>
-                                        <td>{{ trip.name }}</td>
-                                        <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
-                                        <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
-                                        <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
-                                        <td> {{ trip.state.info }}</td>
-                                        <td>
-                                            {% if app.user.id is defined %}
-                                                {% for u in trip.users %}
-                                                    {% if u.id == app.user.id %}
-                                                        <a class="btn neumorphism-3"><i class="fas fa-check fa-1x"></i></a>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-
-
-                                        </td>
-
-                                        <td>
-                                            <a href="{{ path('user_detail', {'id' : trip.user.id}) }}">{{ trip.user.name }}</a>
-                                        </td>
-                                        <td>
-                                            {% if app.user is not null %}
-
-
-                                                {# Sortie: STATUT PASSEE #}
-
-                                                {% if trip.tripPast(trip.state.id) %}
-                                                    <a class="btn neumorphism-1" href="{{ path('trip_summary', {'id':trip.id}) }}">Récapitulatif</a>
-                                                {% endif %}
-
-                                                {# Sortie: STATUT EN CREATION / Organisateur connecté: OUI #}
-                                                {% if trip.tripCreation(trip.state.id) and trip.userOrOrganizer(app.user) %}
-                                                    <a class="btn neumorphism-1"
-                                                       href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
-
-                                                {% endif %}
-
-                                                {# Sortie: STATUT ANNULE / Organisateur connecté: OUI #}
-                                                {% if trip.isCanceled(trip.state.id) and trip.userOrOrganizer(app.user) %}
-                                                    <a class="btn neumorphism-1"
-                                                       href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
-                                                {% endif %}
-
-                                                {# Sortie: STATUT CLOTUREE #}
-                                                {% if trip.tripClosed(trip.state.id) %}
-                                                    <a class="btn neumorphism-1"
-                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-
-                                                {% endif %}
-
-                                                {# Sortie: STATUT EN COURS #}
-                                                {% if trip.isInProgress(trip.state.id) %}
-                                                    <a class="btn neumorphism-1"
-                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-                                                {% endif %}
-
-                                                {# Sortie: STATUT OUVERTE #}
-                                                {% if trip.tripOpen(trip.state.id) %}
-                                                    {# Utilisateur connecté: NON INSCRIT #}
-                                                    {% if trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
-                                                        <a class="btn neumorphism-1"
-                                                           href="{{ path('trip_inscription', {'id':trip.id }) }}"><span>S'inscrire</span></a>
-                                                        {# Utilisateur connecté: INSCRIT #}
-                                                    {% elseif trip.isSubscribed(app.user) %}
-                                                        <a class="btn neumorphism-1"
-                                                           href="{{ path('trip_unsubscribe', {'id':trip.id}) }}"><span>Se désister</span></a>
-                                                    {% endif %}
-                                                    <a class="btn neumorphism-1"
-                                                       href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-                                                {% endif %}
-
-                                                {# Sortie: STATUT OUVERTE / Organisateur connecté: OUI #}
-                                                {% if trip.tripOpen(trip.state.id) and trip.userOrOrganizer(app.user) %}
-                                                    <a class="btn neumorphism-1"
-                                                       href="{{ path('trip_cancel', {'id':trip.id}) }} ">Annuler</a>
-                                                {% endif %}
-
-                                            {% endif %}
-
-                                        </td>
-
-
-                                    </tr>
-
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            {% if app.user.id is defined %}
-                                <p class="text-center"><a class="btn neumorphism-1" href="{{ path('trip_create') }}">Créer
-                                        une
-                                        sortie</a></p>
-                            {% endif %}
+                        <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-6 col-xl-3 p-2 grid-item " >
+                            <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
+                                <span class="overlay" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
+                                <div class="content">
+                                    <div class="items head">
+                                        <h2>{{ trip.name }}</h2>
+                                        <hr>
+                                    </div>
+                                    <div class="items body ">
+                                        <p class="date text-dark">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                                        <p class="new text-dark">{{ trip.getLocation().getName() }}<br><small>{{ trip.getLocation().getCity().getName() }}</small></p>
+                                        <p class="users text-dark" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}">Participants : {{ trip.getUsers()|length }} / {{ trip.getNbRegistMax() }}</p>
+                                        <p class="text-dark">{{ trip.state.info }}</p>
+                                    </div>
+                                    <p class="school text-left d-none"><small>{{ trip.getSchool().getName() }}</small></p>
+                                    <p class="date text-center d-none">le {{ trip.getDateTimeStart()|date("l d M G:i") }}</p>
+                                    <p class="address d-none"><address class="d-none"><small>
+                                            {{ trip.getLocation().getName() }}<br>
+                                            {{ trip.getLocation().getStreet() }}<br>
+                                            {{ trip.getLocation().getCity().getName() }} ({{ trip.getLocation().getCity().getZipCode() }})
+                                        </small></address></p>
+                                </div>
+                            </a>
                         </div>
-                        <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab-tab">
-                            <h2 class="text-center">Sorties</h2>
+                    {% endfor %}
+                {% else %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 m-5">
+                                <div class="alert alert-warning text-center">
+                                    <h3>Aucune sortie ne correspond à vos recherches...</h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                {% endif %}
 
-                </div>
+
             </div>
         </div>
     </div>
+    <div class="container mt-5 bloc d-none">
+        <div class="row">
+
+            <div class="tab-content d-none" id="myTabContent">
+                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
+                    <h2 class="text-center">Liste des sorties</h2>
+                    <input class="form-control mb-4" id="tableSearch" type="text"
+                           placeholder="Search ...">
+                    {{ form_start(searchFormView) }}
+                    <br>
+                    {{ form_label(searchFormView.site) }}
+                    {{ form_widget(searchFormView.site) }}
+                    {{ form_errors(searchFormView.site) }}
+                    <br>
+                    {{ form_label(searchFormView.dateStart) }}
+                    {{ form_widget(searchFormView.dateStart) }}
+                    {{ form_errors(searchFormView.dateStart) }}
+                    <br>
+                    {{ form_label(searchFormView.dateEnd) }}
+                    {{ form_widget(searchFormView.dateEnd) }}
+                    {{ form_errors(searchFormView.dateEnd) }}
+                    <br>
+                    {{ form_label(searchFormView.TripOrganizer) }}
+                    {{ form_widget(searchFormView.TripOrganizer) }}
+                    {{ form_errors(searchFormView.TripOrganizer) }}
+                    <br>
+                    {{ form_label(searchFormView.TripRegistered) }}
+                    {{ form_widget(searchFormView.TripRegistered) }}
+                    {{ form_errors(searchFormView.TripRegistered) }}
+                    <br>
+                    {{ form_label(searchFormView.TripNotRegistered) }}
+                    {{ form_widget(searchFormView.TripNotRegistered) }}
+                    {{ form_errors(searchFormView.TripNotRegistered) }}
+                    <br>
+                    {{ form_label(searchFormView.TripPast) }}
+                    {{ form_widget(searchFormView.TripPast) }}
+                    {{ form_errors(searchFormView.TripPast) }}
+                    <br>
+
+                    {{ form_end(searchFormView) }}
+
+
+
+
+
+                    <table id="userTable" class="table table-bordered d-none">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom de la sortie</th>
+                            <th>Date de la sortie</th>
+                            <th>Clôture</th>
+                            <th>Inscrits/Places</th>
+                            <th>Etat</th>
+                            <th>Inscrit</th>
+                            <th>Organisateur</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for trip in allTrips %}
+
+
+
+                            <tr>
+                                <td>{{ trip.id }}</td>
+                                <td>{{ trip.name }}</td>
+                                <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
+                                <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
+                                <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
+                                <td> {{ trip.state.info }}</td>
+                                <td>
+                                    {% if app.user.id is defined %}
+                                        {% for u in trip.users %}
+                                            {% if u.id == app.user.id %}
+                                                <a class="btn neumorphism-3"><i class="fas fa-check fa-1x"></i></a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+
+
+                                </td>
+
+                                <td>
+                                    <a href="{{ path('user_detail', {'id' : trip.user.id}) }}">{{ trip.user.name }}</a>
+                                </td>
+                                <td>
+                                    {% if app.user is not null %}
+
+
+                                        {# Sortie: STATUT PASSEE #}
+
+                                        {% if trip.tripPast(trip.state.id) %}
+                                            <a class="btn neumorphism-1" href="{{ path('trip_summary', {'id':trip.id}) }}">Récapitulatif</a>
+                                        {% endif %}
+
+                                        {# Sortie: STATUT EN CREATION / Organisateur connecté: OUI #}
+                                        {% if trip.tripCreation(trip.state.id) and trip.userOrOrganizer(app.user) %}
+                                            <a class="btn neumorphism-1"
+                                               href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
+
+                                        {% endif %}
+
+                                        {# Sortie: STATUT ANNULE / Organisateur connecté: OUI #}
+                                        {% if trip.isCanceled(trip.state.id) and trip.userOrOrganizer(app.user) %}
+                                            <a class="btn neumorphism-1"
+                                               href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
+                                        {% endif %}
+
+                                        {# Sortie: STATUT CLOTUREE #}
+                                        {% if trip.tripClosed(trip.state.id) %}
+                                            <a class="btn neumorphism-1"
+                                               href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
+
+                                        {% endif %}
+
+                                        {# Sortie: STATUT EN COURS #}
+                                        {% if trip.isInProgress(trip.state.id) %}
+                                            <a class="btn neumorphism-1"
+                                               href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
+                                        {% endif %}
+
+                                        {# Sortie: STATUT OUVERTE #}
+                                        {% if trip.tripOpen(trip.state.id) %}
+                                            {# Utilisateur connecté: NON INSCRIT #}
+                                            {% if trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
+                                                <a class="btn neumorphism-1"
+                                                   href="{{ path('trip_inscription', {'id':trip.id }) }}"><span>S'inscrire</span></a>
+                                                {# Utilisateur connecté: INSCRIT #}
+                                            {% elseif trip.isSubscribed(app.user) %}
+                                                <a class="btn neumorphism-1"
+                                                   href="{{ path('trip_unsubscribe', {'id':trip.id}) }}"><span>Se désister</span></a>
+                                            {% endif %}
+                                            <a class="btn neumorphism-1"
+                                               href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
+                                        {% endif %}
+
+                                        {# Sortie: STATUT OUVERTE / Organisateur connecté: OUI #}
+                                        {% if trip.tripOpen(trip.state.id) and trip.userOrOrganizer(app.user) %}
+                                            <a class="btn neumorphism-1"
+                                               href="{{ path('trip_cancel', {'id':trip.id}) }} ">Annuler</a>
+                                        {% endif %}
+
+                                    {% endif %}
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if app.user.id is defined %}
+                        <p class="text-center"><a class="btn neumorphism-1" href="{{ path('trip_create') }}">Créer
+                                une
+                                sortie</a></p>
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab-tab">
+                    <h2 class="text-center">Sorties</h2>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
 {% endblock %}
 
 {% block javascripts %}
-<script scr="{{ asset('assets/js/search.js') }}"></script>
-<script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
-<script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script scr="{{ asset('assets/js/search.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
     <script>
+/*        $.fn.hasAttr = function(name) {
+            return this.attr(name) !== undefined;
+        };
+    function initCheck(){
+
+
+        $( ".check" ).each(function() {
+            if ($(this).is(':checked')) {
+                var otherClass = $(this).data('class');
+                $(otherClass).prop("disabled", true);
+                $(otherClass).prop("checked", false);
+            };
+        });
+    };
+
+
+$(document).ready(function(){
+    initCheck();
+    $('.check').change(function () {
+        var other = $(this).data('class');
+        if ($(this).is(':checked')) {
+            $(this).prop("disabled", false);
+            $(this).prop("checked", true);
+            $(other).prop("disabled", true);
+            $(other).prop("checked", false);
+        }else{
+            $(this).prop("disabled", true);
+            $(this).prop("checked", false);
+            $(other).prop("disabled", false);
+            $(other).prop("checked", true);
+        }
+
+
+        //initCheck();
+/!*        var otherClass = $(this).data('class');
+        console.log(otherClass)
+        $(otherClass).attr('disabled', function(_, attr){ return !attr});*!/
+    });
+});*/
+
         // Filter table
 
-        $(document).ready(function () {
+/*        $(document).ready(function () {
             $("#tableSearch").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $(".grid-item").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-        });
+        });*/
 
     </script>
 {% endblock %}

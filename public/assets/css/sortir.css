@@ -157,7 +157,12 @@ body#admin{padding-top:0;background: #f2f4f5;font-size:1.6rem}
 
 /*forms*/
 .form-control-sm,#admin .form-control-sm{font-size:1.4rem}
-.form-control, #admin .form-control,#admin .page-breadcrumb .breadcrumb{font-size:1.6rem}
+.form-control, #admin .form-control,#admin .page-breadcrumb .breadcrumb,
+.input-group-sm > .custom-select, .input-group-sm > .form-control, .input-group-sm > .input-group-append > .btn, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-prepend > .input-group-text{font-size:1.6rem}
+.form-check label{margin-left:10px}
+.check_part .form-check label{font-size:1.4rem}
+.check_part .form-check input{margin-top: .8rem;}
+
 /*btns*/
 .btn-group-sm > .btn, .btn-sm{font-size:1.4rem}
 .btn-group > .btn, .btn{font-size:1.6rem}
