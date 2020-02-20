@@ -55,7 +55,7 @@
                 <div class="bloc mt-2">
                     <h4>Participants</h4>
                     <div class="row">
-                        {% if currentTrip.users|length == 0 and not currentTrip.isCanceled(currentTrip.state.id) and not currentTrip.tripClosed(currentTrip.state.id) %}
+                        {% if currentTrip.users|length == 0 and not currentTrip.isCanceled(currentTrip.state.id) and not currentTrip.tripClosed(currentTrip.state.id) and not currentTrip.tripPast(currentTrip.state.id) %}
                             <h6 class="text-center"> Soyez le premier à vous inscrire </h6>
                         {% endif %}
                         {% for u in allUsers %}

@@ -47,16 +47,23 @@
                             {{ form_widget(searchFormView.TripOrganizer) }}
                             {{ form_errors(searchFormView.TripOrganizer) }}
                         </div>
+
                         <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
-                            {{ form_label(searchFormView.TripRegistered) }}
-                            {{ form_widget(searchFormView.TripRegistered) }}
-                            {{ form_errors(searchFormView.TripRegistered) }}
+                            {{ form_label(searchFormView.RadioOrNot) }}
+                            {{ form_widget(searchFormView.RadioOrNot) }}
+                            {{ form_errors(searchFormView.RadioOrNot) }}
                         </div>
-                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
-                            {{ form_label(searchFormView.TripNotRegistered) }}
-                            {{ form_widget(searchFormView.TripNotRegistered) }}
-                            {{ form_errors(searchFormView.TripNotRegistered) }}
-                        </div>
+
+{#                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">#}
+{#                            {{ form_label(searchFormView.TripRegistered) }}#}
+{#                            {{ form_widget(searchFormView.TripRegistered) }}#}
+{#                            {{ form_errors(searchFormView.TripRegistered) }}#}
+{#                        </div>#}
+{#                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">#}
+{#                            {{ form_label(searchFormView.TripNotRegistered) }}#}
+{#                            {{ form_widget(searchFormView.TripNotRegistered) }}#}
+{#                            {{ form_errors(searchFormView.TripNotRegistered) }}#}
+{#                        </div>#}
                         <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
                             {{ form_label(searchFormView.TripPast) }}
                             {{ form_widget(searchFormView.TripPast) }}
