@@ -104,6 +104,18 @@ class TripRepository extends ServiceEntityRepository
         return $result;
     }
 
+    /**
+     * @Return Trip[] Returns an array of Trip objects ordered by date ASC
+     */
+    public function findAllByDate()
+    {
+        return $this->createQueryBuilder('t')
+                    ->orderBy('t.registDeadline', 'ASC')
+                    ->getQuery()
+                    ->getResult()
+            ;
+    }
+
 // /**
 //  * @return Trip[] Returns an array of Trip objects
 //  */

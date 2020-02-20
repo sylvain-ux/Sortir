@@ -33,8 +33,8 @@ Liste des sorties
    <tr>
     <td>{{ trip.id }}</td>
     <td>{{ trip.name }}</td>
-    <td>{{ trip.dateTimeStart|date("D d M y - H:i") }}</td>
-    <td>{{ trip.registDeadline|date("D d M y - H:i") }}</td>
+    <td>{{ trip.dateTimeStart|format_datetime('full', 'none', locale='fr') }}</td>
+    <td>{{ trip.registDeadline|format_datetime('full', 'none', locale='fr') }}</td>
     <td>{{ trip.duration }} mn</td>
     <td>{{ trip.nbRegistMax }}</td>
     <td>{{ trip.nbRegistMin }}</td>

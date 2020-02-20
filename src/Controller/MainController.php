@@ -25,7 +25,7 @@ class MainController extends AbstractController
     public function index(EntityManagerInterface $entityManager, Request $request, $id = 0)
     {
         $tripRepository = $entityManager->getRepository(Trip::class);
-        $allTrips = $tripRepository->findAll();
+        $allTrips = $tripRepository->findAllByDate();
 
         $schoolRepository = $entityManager->getRepository(School::class);
         $school = $schoolRepository->findAll();
