@@ -11,6 +11,9 @@
             <div class="bloc">
                 <h4 class="text-center">Sortie : {{ currentTrip.name }}</h4>
                 <hr>
+
+      {#          {{ form(tripFormView) }}#}
+
                 <dl>
                     <dt>Date et heure de la sortie :</dt>
                     <dd>{{ currentTrip.dateTimeStart|date("m/d/Y") }}</dd>
@@ -22,12 +25,13 @@
                     <dd>{{ currentTrip.location.name }}</dd>
                     <dd>{{ currentTrip.location.street }}</dd>
                     <dd>{{ currentTrip.location.city.zipCode }} {{ currentTrip.location.city.name }}</dd>
-
+                    {{ form_start(tripFormView) }}
                     <dt>Motif d'annulation :</dt>
                     <dd> {{ form_widget(tripFormView.reason) }}</dd>
                     <dd> {{ form_errors(tripFormView.reason) }}</dd>
+                    {{ form_end(tripFormView) }}
                 </dl>
-                <a class="btn neumorphism-1" type="submit" href="{{ path('trip_cancel', {'id':currentTrip.id} ) }}">Enregistrer</a>
+                {#<a class="btn neumorphism-1" type="submit" href="{{ path('trip_cancel', {'id':currentTrip.id} ) }}">Enregistrer</a>#}
 
 
             </div>

@@ -22,7 +22,7 @@ class TripCancelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'Nom de la sortie :', 'disabled' => true,])
+/*            ->add('name', TextType::class, ['label' => 'Nom de la sortie :', 'disabled' => true,])
             ->add(
                 'dateTimeStart',
                 DateTimeType::class,
@@ -42,7 +42,7 @@ class TripCancelType extends AbstractType
                 'location',
                 EntityType::class,
                 ['class' => TripLocation::class, 'choice_label' => 'name', 'disabled' => true,]
-            )
+            )*/
             ->add(
                 'reason',
                 TextareaType::class,
@@ -52,12 +52,13 @@ class TripCancelType extends AbstractType
                     'attr' => array('placeholder' => '...'),
                 ]
             )
-            ->add('save', SubmitType::class,
+            ->add('save', SubmitType::class, ['label' => 'Annuler la sortie']);
+/*            ->add('save', SubmitType::class,
                 [
                 'label' => 'Enregistrer',
                     'attr' => array(
                         'onclick' => 'return confirm("L\'annulation de votre sortie sera définitive. Voulez-vous continuer ?")')
-                ]);
+                ])*/;
 
     }
 
