@@ -13,14 +13,14 @@
                     <hr>
                     <div class="text-center">
                         <p>
-                            <i class="far fa-calendar-alt fa-1x"></i> {{ currentTrip.dateTimeStart|format_datetime('full', 'none', locale='fr') }}
+                            <i class="far fa-calendar-alt fa-1x" style="color: #4682B4"></i> {{ currentTrip.dateTimeStart|format_datetime('full', 'none', locale='fr') }}
                             <i class="far fa-clock fa-1x"></i> {{ currentTrip.dateTimeStart|format_datetime('none', 'short', locale='fr') }}
                         </p>
                         <p>
                             <i class="far fa-calendar-times fa-1x"></i> {{ currentTrip.registDeadline|format_datetime('full', 'none', locale='fr') }}
                         </p>
-                        <p><i class="fas fa-user fa-1x"></i> {{ currentTrip.nbRegistMin }}
-                            <i class="fas fa-users fa-1x"></i> {{ currentTrip.nbRegistMax }}</p>
+                        <p><span style="padding: 1em"><i class="fas fa-user fa-1x"></i> {{ currentTrip.nbRegistMin }}</span>
+                            <span><i class="fas fa-users fa-1x"></i> {{ currentTrip.nbRegistMax }}</span></p>
                         <p><i class="far fa-hourglass fa-1x"></i> {{ currentTrip.duration/60 }} heure(s)</p>
                         <p><i class="far fa-question-circle fa-1x"></i> {{ currentTrip.info }}</p>
                         <p><i class="fas fa-university fa-1x"></i> {{ currentTrip.school.name }}</p>
@@ -129,7 +129,7 @@
                             {% endif %}
 
                         {% endif %}
-                        <a class="btn neumorphism-1" href="{{ path('trip_list') }}">Retour</a>
+                        <a class="btn neumorphism-1" href="{{ path('home') }}">Retour</a>
                     </div>
                 </div>
             </div>
