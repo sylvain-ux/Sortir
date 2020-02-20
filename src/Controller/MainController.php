@@ -47,8 +47,7 @@ class MainController extends AbstractController
             $dateEndId = $searchForm->get('dateEnd')->getData();
             //Mon id connecté
             $organizerId = $searchForm->get('TripOrganizer')->getData();
-            $myRegistrationId = $searchForm->get('TripRegistered')->getData();
-            $myNotRegistrationId = $searchForm->get('TripNotRegistered')->getData();
+            $RadioOrNot  = $searchForm->get('RadioOrNot')->getData();
             $pastTrip = $searchForm->get('TripPast')->getData();
 
             $allTrips = $tripRepository->findFilters(
@@ -56,8 +55,7 @@ class MainController extends AbstractController
                 $dateStartId,
                 $dateEndId,
                 $organizerId,
-                $myRegistrationId,
-                $myNotRegistrationId,
+                $RadioOrNot,
                 $pastTrip,
                 $request,
                 $this->getUser()

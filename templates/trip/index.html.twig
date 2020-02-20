@@ -47,16 +47,23 @@
                             {{ form_widget(searchFormView.TripOrganizer) }}
                             {{ form_errors(searchFormView.TripOrganizer) }}
                         </div>
+
                         <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
-                            {{ form_label(searchFormView.TripRegistered) }}
-                            {{ form_widget(searchFormView.TripRegistered) }}
-                            {{ form_errors(searchFormView.TripRegistered) }}
+                            {{ form_label(searchFormView.RadioOrNot) }}
+                            {{ form_widget(searchFormView.RadioOrNot) }}
+                            {{ form_errors(searchFormView.RadioOrNot) }}
                         </div>
-                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
-                            {{ form_label(searchFormView.TripNotRegistered) }}
-                            {{ form_widget(searchFormView.TripNotRegistered) }}
-                            {{ form_errors(searchFormView.TripNotRegistered) }}
-                        </div>
+
+{#                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">#}
+{#                            {{ form_label(searchFormView.TripRegistered) }}#}
+{#                            {{ form_widget(searchFormView.TripRegistered) }}#}
+{#                            {{ form_errors(searchFormView.TripRegistered) }}#}
+{#                        </div>#}
+{#                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">#}
+{#                            {{ form_label(searchFormView.TripNotRegistered) }}#}
+{#                            {{ form_widget(searchFormView.TripNotRegistered) }}#}
+{#                            {{ form_errors(searchFormView.TripNotRegistered) }}#}
+{#                        </div>#}
                         <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
                             {{ form_label(searchFormView.TripPast) }}
                             {{ form_widget(searchFormView.TripPast) }}
@@ -136,172 +143,6 @@
 
 
             </div>
-        </div>
-    </div>
-    <div class="container mt-5 bloc d-none">
-        <div class="row">
-
-            <div class="tab-content d-none" id="myTabContent">
-                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="user-tab">
-                    <h2 class="text-center">Liste des sorties</h2>
-                    <input class="form-control mb-4" id="tableSearch" type="text"
-                           placeholder="Search ...">
-                    {{ form_start(searchFormView) }}
-                    <br>
-                    {{ form_label(searchFormView.site) }}
-                    {{ form_widget(searchFormView.site) }}
-                    {{ form_errors(searchFormView.site) }}
-                    <br>
-                    {{ form_label(searchFormView.dateStart) }}
-                    {{ form_widget(searchFormView.dateStart) }}
-                    {{ form_errors(searchFormView.dateStart) }}
-                    <br>
-                    {{ form_label(searchFormView.dateEnd) }}
-                    {{ form_widget(searchFormView.dateEnd) }}
-                    {{ form_errors(searchFormView.dateEnd) }}
-                    <br>
-                    {{ form_label(searchFormView.TripOrganizer) }}
-                    {{ form_widget(searchFormView.TripOrganizer) }}
-                    {{ form_errors(searchFormView.TripOrganizer) }}
-                    <br>
-                    {{ form_label(searchFormView.TripRegistered) }}
-                    {{ form_widget(searchFormView.TripRegistered) }}
-                    {{ form_errors(searchFormView.TripRegistered) }}
-                    <br>
-                    {{ form_label(searchFormView.TripNotRegistered) }}
-                    {{ form_widget(searchFormView.TripNotRegistered) }}
-                    {{ form_errors(searchFormView.TripNotRegistered) }}
-                    <br>
-                    {{ form_label(searchFormView.TripPast) }}
-                    {{ form_widget(searchFormView.TripPast) }}
-                    {{ form_errors(searchFormView.TripPast) }}
-                    <br>
-
-                    {{ form_end(searchFormView) }}
-
-
-
-
-
-                    <table id="userTable" class="table table-bordered d-none">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nom de la sortie</th>
-                            <th>Date de la sortie</th>
-                            <th>Clôture</th>
-                            <th>Inscrits/Places</th>
-                            <th>Etat</th>
-                            <th>Inscrit</th>
-                            <th>Organisateur</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for trip in allTrips %}
-
-
-
-                            <tr>
-                                <td>{{ trip.id }}</td>
-                                <td>{{ trip.name }}</td>
-                                <td>{{ trip.dateTimeStart|date("m/d/Y  g:ia") }}</td>
-                                <td>{{ trip.registDeadline|date("m/d/Y  g:ia") }}</td>
-                                <td>{{ trip.users|length }}{{ "/" }}{{ trip.nbRegistMax }}</td>
-                                <td> {{ trip.state.info }}</td>
-                                <td>
-                                    {% if app.user.id is defined %}
-                                        {% for u in trip.users %}
-                                            {% if u.id == app.user.id %}
-                                                <a class="btn neumorphism-3"><i class="fas fa-check fa-1x"></i></a>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-
-
-                                </td>
-
-                                <td>
-                                    <a href="{{ path('user_detail', {'id' : trip.user.id}) }}">{{ trip.user.name }}</a>
-                                </td>
-                                <td>
-                                    {% if app.user is not null %}
-
-
-                                        {# Sortie: STATUT PASSEE #}
-
-                                        {% if trip.tripPast(trip.state.id) %}
-                                            <a class="btn neumorphism-1" href="{{ path('trip_summary', {'id':trip.id}) }}">Récapitulatif</a>
-                                        {% endif %}
-
-                                        {# Sortie: STATUT EN CREATION / Organisateur connecté: OUI #}
-                                        {% if trip.tripCreation(trip.state.id) and trip.userOrOrganizer(app.user) %}
-                                            <a class="btn neumorphism-1"
-                                               href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
-
-                                        {% endif %}
-
-                                        {# Sortie: STATUT ANNULE / Organisateur connecté: OUI #}
-                                        {% if trip.isCanceled(trip.state.id) and trip.userOrOrganizer(app.user) %}
-                                            <a class="btn neumorphism-1"
-                                               href="{{ path('trip_update', {'id':trip.id}) }}">Modifier</a>
-                                        {% endif %}
-
-                                        {# Sortie: STATUT CLOTUREE #}
-                                        {% if trip.tripClosed(trip.state.id) %}
-                                            <a class="btn neumorphism-1"
-                                               href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-
-                                        {% endif %}
-
-                                        {# Sortie: STATUT EN COURS #}
-                                        {% if trip.isInProgress(trip.state.id) %}
-                                            <a class="btn neumorphism-1"
-                                               href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-                                        {% endif %}
-
-                                        {# Sortie: STATUT OUVERTE #}
-                                        {% if trip.tripOpen(trip.state.id) %}
-                                            {# Utilisateur connecté: NON INSCRIT #}
-                                            {% if trip.isNotSubscribed(app.user,trip.users|length,trip.nbRegistMax) %}
-                                                <a class="btn neumorphism-1"
-                                                   href="{{ path('trip_inscription', {'id':trip.id }) }}"><span>S'inscrire</span></a>
-                                                {# Utilisateur connecté: INSCRIT #}
-                                            {% elseif trip.isSubscribed(app.user) %}
-                                                <a class="btn neumorphism-1"
-                                                   href="{{ path('trip_unsubscribe', {'id':trip.id}) }}"><span>Se désister</span></a>
-                                            {% endif %}
-                                            <a class="btn neumorphism-1"
-                                               href="{{ path('trip_detail', {'id':trip.id}) }}">Détail</a>
-                                        {% endif %}
-
-                                        {# Sortie: STATUT OUVERTE / Organisateur connecté: OUI #}
-                                        {% if trip.tripOpen(trip.state.id) and trip.userOrOrganizer(app.user) %}
-                                            <a class="btn neumorphism-1"
-                                               href="{{ path('trip_cancel', {'id':trip.id}) }} ">Annuler</a>
-                                        {% endif %}
-
-                                    {% endif %}
-
-                                </td>
-
-
-                            </tr>
-
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% if app.user.id is defined %}
-                        <p class="text-center"><a class="btn neumorphism-1" href="{{ path('trip_create') }}">Créer
-                                une
-                                sortie</a></p>
-                    {% endif %}
-                </div>
-                <div class="tab-pane fade show" id="trips" role="tabpanel" aria-labelledby="trip-tab-tab">
-                    <h2 class="text-center">Sorties</h2>
-                </div>
-            </div>
-
         </div>
     </div>
 
