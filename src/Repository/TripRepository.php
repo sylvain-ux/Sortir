@@ -64,7 +64,6 @@ class TripRepository extends ServiceEntityRepository
 
         //Recherche pour afficher les sorties dont je suis l'organisatreur/trice :
         if ($organizerId != null) {
-            echo("coucou");
             $qb
                 ->andWhere('t.user = :organizerId')
                 ->setParameter(':organizerId', $user->getId());
