@@ -52,13 +52,13 @@ class TripCancelType extends AbstractType
                     'attr' => array('placeholder' => '...'),
                 ]
             )
-            ->add('save', SubmitType::class, ['label' => 'Annuler la sortie']);
-/*            ->add('save', SubmitType::class,
+/*            ->add('save', SubmitType::class, ['label' => 'Annuler la sortie']);*/
+            ->add('save', SubmitType::class,
                 [
                 'label' => 'Enregistrer',
                     'attr' => array(
                         'onclick' => 'return confirm("L\'annulation de votre sortie sera définitive. Voulez-vous continuer ?")')
-                ])*/;
+                ]);
 
     }
 
