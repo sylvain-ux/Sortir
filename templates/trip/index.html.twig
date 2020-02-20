@@ -90,7 +90,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script scr="{{ asset('assets/js/search.js') }}"></script>
     <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
     <script>
@@ -99,4 +98,18 @@
             $( ".filterBloc" ).toggleClass('d-none');
         });
     </script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#tableSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".grid-item").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+    </script>
+
 {% endblock %}
