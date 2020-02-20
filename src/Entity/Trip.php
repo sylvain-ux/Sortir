@@ -102,6 +102,8 @@ class Trip
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->dateTimeStart = new \DateTime();
+        $this->registDeadline = new \DateTime();
     }
 
 
