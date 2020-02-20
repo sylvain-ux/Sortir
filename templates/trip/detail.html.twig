@@ -11,34 +11,23 @@
                 <div class="bloc">
                     <h4 class="text-center">Sortie : {{ currentTrip.name }}</h4>
                     <hr>
-
-                    <dl>
-                        <dt>Date et heure de la sortie :</dt>
-                        <dd>{{ currentTrip.dateTimeStart|date("m/d/Y") }}</dd>
-
-                        <dt>Date limite d'inscription :</dt>
-                        <dd>{{ currentTrip.registDeadline|date("m/d/Y") }}</dd>
-
-                        <dt>Nombre de places minimum :</dt>
-                        <dd>{{ currentTrip.nbRegistMin }}</dd>
-
-                        <dt>Nombre de places maximum :</dt>
-                        <dd>{{ currentTrip.nbRegistMax }}</dd>
-
-                        <dt>Durée (en minutes) :</dt>
-                        <dd>{{ currentTrip.duration }}</dd>
-
-                        <dt>Description et infos :</dt>
-                        <dd>{{ currentTrip.info }}</dd>
-
-                        <dt>Ville organisatrice :</dt>
-                        <dd>{{ currentTrip.school.name }}</dd>
-
-                        <dt>Localisation :</dt>
-                        <dd>{{ currentTrip.location.name }}</dd>
-                        <dd>{{ currentTrip.location.street }}</dd>
-                        <dd>{{ currentTrip.location.city.zipCode }} {{ currentTrip.location.city.name }}</dd>
-                    </dl>
+                    <div class="text-center">
+                        <p>
+                            <i class="far fa-calendar-alt fa-1x"></i> {{ currentTrip.dateTimeStart|format_datetime('full', 'none', locale='fr') }}
+                            <i class="far fa-clock fa-1x"></i> {{ currentTrip.dateTimeStart|format_datetime('none', 'short', locale='fr') }}
+                        </p>
+                        <p>
+                            <i class="far fa-calendar-times fa-1x"></i> {{ currentTrip.registDeadline|format_datetime('full', 'none', locale='fr') }}
+                        </p>
+                        <p><i class="fas fa-user fa-1x"></i> {{ currentTrip.nbRegistMin }}
+                            <i class="fas fa-users fa-1x"></i> {{ currentTrip.nbRegistMax }}</p>
+                        <p><i class="far fa-hourglass fa-1x"></i> {{ currentTrip.duration/60 }} heure(s)</p>
+                        <p><i class="far fa-question-circle fa-1x"></i> {{ currentTrip.info }}</p>
+                        <p><i class="fas fa-university fa-1x"></i> {{ currentTrip.school.name }}</p>
+                        <p><i class="fas fa-map-marker-alt fa-1x"></i> {{ currentTrip.location.name }},
+                            {{ currentTrip.location.street }},
+                            {{ currentTrip.location.city.zipCode }} {{ currentTrip.location.city.name }}</p>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
@@ -58,7 +47,7 @@
                                      class="rounded-circle" width="50" height="50">
 
                             {% endif %}
-                            <a href="{{ path('user_detail', {'id' : currentTrip.user.id}) }}">{{ currentTrip.user.name }}
+                            <a href="{{ path('user_detail', {'id' : currentTrip.user.id, 'idtrip':currentTrip.id}) }}">{{ currentTrip.user.name }}
                                 {{ currentTrip.user.firstName }}</a>
                         </div>
                     </div>

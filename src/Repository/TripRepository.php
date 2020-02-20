@@ -98,7 +98,6 @@ class TripRepository extends ServiceEntityRepository
         }
 
         $result = $qb->getQuery()->getResult();
-
         return $result;
     }
 
