@@ -28,8 +28,8 @@ class Trip
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\GreaterThan("+2 day", message="La sortie doit être programmée au moins dans 2 jours")
-     */
+     * */
+     //@Assert\GreaterThan("+2 day", message="La sortie doit être programmée au moins dans 2 jours")
     private $dateTimeStart;
 
     /**
