@@ -28,9 +28,9 @@ class TripRepository extends ServiceEntityRepository
         $dateStartId,
         $dateEndId,
         $organizerId,
-        $myRegistrationId,
-        $myNotRegistrationId,
+        $RadioOrNot,
         $pastTrip,
+
         Request $request,
         UserInterface $user
     ) {
@@ -70,24 +70,27 @@ class TripRepository extends ServiceEntityRepository
                 ->setParameter(':organizerId', $user->getId());
         }
 
-        //Recherche pour afficher les sorties auxquelles je suis inscrit/e :
-        if ($myRegistrationId != null) {
-            $qb
-                ->innerJoin('t.users', 'sqb', 'with', "sqb.id in (:user)")
-                ->setParameter(':user', $user->getId());
-        }
 
-        //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
-        if ($myNotRegistrationId != null) {
-            $subQb
-                ->innerJoin('sq.users', 'sqb2', 'with', "sqb2.id in (:user)")
-                ->setParameter(':user', $user->getId());
+        if ($RadioOrNot != null) {
+            //Recherche pour afficher les sorties auxquelles je suis inscrit/e :
+            if ($RadioOrNot == 1) {
+                $qb
+                    ->innerJoin('t.users', 'sqb', 'with', "sqb.id in (:user)")
+                    ->setParameter(':user', $user->getId());
+            }
 
-            $qb
-                ->addselect('i')
-                ->leftJoin('t.users', 'i')
-                ->andWhere('t NOT IN ('.$subQb->getDQL().')')
-                ->setParameter(':user', $user);
+            //Recherche pour afficher les sorties auxquelles je ne suis pas inscrit/e :
+            if ($RadioOrNot == 0) {
+                $subQb
+                    ->innerJoin('sq.users', 'sqb2', 'with', "sqb2.id in (:user)")
+                    ->setParameter(':user', $user->getId());
+
+                $qb
+                    ->addselect('i')
+                    ->leftJoin('t.users', 'i')
+                    ->andWhere('t NOT IN ('.$subQb->getDQL().')')
+                    ->setParameter(':user', $user);
+            }
         }
 
         //Recherche pour afficher les sorties passées :

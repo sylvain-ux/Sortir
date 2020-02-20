@@ -47,16 +47,23 @@
                             {{ form_widget(searchFormView.TripOrganizer) }}
                             {{ form_errors(searchFormView.TripOrganizer) }}
                         </div>
+
                         <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
-                            {{ form_label(searchFormView.TripRegistered) }}
-                            {{ form_widget(searchFormView.TripRegistered) }}
-                            {{ form_errors(searchFormView.TripRegistered) }}
+                            {{ form_label(searchFormView.RadioOrNot) }}
+                            {{ form_widget(searchFormView.RadioOrNot) }}
+                            {{ form_errors(searchFormView.RadioOrNot) }}
                         </div>
-                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
-                            {{ form_label(searchFormView.TripNotRegistered) }}
-                            {{ form_widget(searchFormView.TripNotRegistered) }}
-                            {{ form_errors(searchFormView.TripNotRegistered) }}
-                        </div>
+
+{#                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">#}
+{#                            {{ form_label(searchFormView.TripRegistered) }}#}
+{#                            {{ form_widget(searchFormView.TripRegistered) }}#}
+{#                            {{ form_errors(searchFormView.TripRegistered) }}#}
+{#                        </div>#}
+{#                        <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">#}
+{#                            {{ form_label(searchFormView.TripNotRegistered) }}#}
+{#                            {{ form_widget(searchFormView.TripNotRegistered) }}#}
+{#                            {{ form_errors(searchFormView.TripNotRegistered) }}#}
+{#                        </div>#}
                         <div class="col-12 col-md-3 col-xl-1 form-group input-group-sm text-left check_part">
                             {{ form_label(searchFormView.TripPast) }}
                             {{ form_widget(searchFormView.TripPast) }}
@@ -143,63 +150,11 @@
     </div>
 
 
+
 {% endblock %}
 
 {% block javascripts %}
     <script scr="{{ asset('assets/js/search.js') }}"></script>
     <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
-    <script>
-/*        $.fn.hasAttr = function(name) {
-            return this.attr(name) !== undefined;
-        };
-    function initCheck(){
-
-
-        $( ".check" ).each(function() {
-            if ($(this).is(':checked')) {
-                var otherClass = $(this).data('class');
-                $(otherClass).prop("disabled", true);
-                $(otherClass).prop("checked", false);
-            };
-        });
-    };
-
-
-$(document).ready(function(){
-    initCheck();
-    $('.check').change(function () {
-        var other = $(this).data('class');
-        if ($(this).is(':checked')) {
-            $(this).prop("disabled", false);
-            $(this).prop("checked", true);
-            $(other).prop("disabled", true);
-            $(other).prop("checked", false);
-        }else{
-            $(this).prop("disabled", true);
-            $(this).prop("checked", false);
-            $(other).prop("disabled", false);
-            $(other).prop("checked", true);
-        }
-
-
-        //initCheck();
-/!*        var otherClass = $(this).data('class');
-        console.log(otherClass)
-        $(otherClass).attr('disabled', function(_, attr){ return !attr});*!/
-    });
-});*/
-
-        // Filter table
-
-/*        $(document).ready(function () {
-            $("#tableSearch").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $(".grid-item").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });*/
-
-    </script>
 {% endblock %}
