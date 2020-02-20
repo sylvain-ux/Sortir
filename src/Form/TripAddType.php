@@ -41,7 +41,7 @@ class TripAddType extends AbstractType
 
             //->add('city',TextType::class,['mapped' => false])
             ->add('dateTimeStart', DateTimeType::class,
-                    ['label' => 'Date de la sortie','widget' => 'single_text','data' => new \DateTime("now"),'html5' => true ]
+                    ['label' => 'Date de la sortie','widget' => 'single_text','data' => new \DateTime("now"),'html5' => true]
             )
             ->add('duration', NumberType::class,
                 [

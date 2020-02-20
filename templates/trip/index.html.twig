@@ -102,6 +102,7 @@
                                 <span class="overlay d-none d-lg-block" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover">
                                      <div class="items head">
                                         <h3 class="orange">{{ trip.name }}</h3>
+                                         <p class="text-center orange d-lg-block">{{ trip.state.info }}</p>
                                     </div>
                                 </span>
                                 <div class="content">
@@ -111,7 +112,7 @@
                                         <hr>
                                         <small>{{ trip.getLocation().getCity().getName() }}</small>
                                     </div>
-                                    <div class="items body d">
+                                    <div class="items body text-center">
                                         <p class="date text-dark">Le {{ trip.getDateTimeStart()|format_datetime('full', 'none', locale='fr') }}</p>
                                         <p class="new text-dark d-none d-lg-block">{{ trip.getLocation().getName() }}<br></p>
                                         <p class="users text-dark d-none d-lg-block" data-toggle="tooltip" data-placement="top" title="nb mini : {{ trip.getNbRegistMin() }}"><b>{{ trip.getUsers()|length }}</b> inscrit(s)</p>

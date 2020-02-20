@@ -13,18 +13,18 @@
                     <hr>
                     <div class="text-center">
                         <p>
-                            <i class="far fa-calendar-alt fa-1x"></i> {{ currentTrip.dateTimeStart|format_datetime('full', 'none', locale='fr') }}
-                            <i class="far fa-clock fa-1x"></i> {{ currentTrip.dateTimeStart|format_datetime('none', 'short', locale='fr') }}
+                            <i class="far fa-calendar-alt fa-1x orange"></i> {{ currentTrip.dateTimeStart|format_datetime('full', 'none', locale='fr') }}
+                            <i class="far fa-clock fa-1x orange"></i> {{ currentTrip.dateTimeStart|format_datetime('none', 'short', locale='fr') }}
                         </p>
                         <p>
-                            <i class="far fa-calendar-times fa-1x"></i> {{ currentTrip.registDeadline|format_datetime('full', 'none', locale='fr') }}
+                            <i class="far fa-calendar-times fa-1x orange"></i> {{ currentTrip.registDeadline|format_datetime('full', 'none', locale='fr') }}
                         </p>
-                        <p><span style="padding: 1em"><i class="fas fa-user fa-1x"></i> {{ currentTrip.nbRegistMin }}</span>
-                            <span><i class="fas fa-users fa-1x"></i> {{ currentTrip.nbRegistMax }}</span></p>
-                        <p><i class="far fa-hourglass fa-1x"></i> {{ currentTrip.duration/60 }} heure(s)</p>
-                        <p><i class="far fa-question-circle fa-1x"></i> {{ currentTrip.info }}</p>
-                        <p><i class="fas fa-university fa-1x"></i> {{ currentTrip.school.name }}</p>
-                        <p><i class="fas fa-map-marker-alt fa-1x"></i> {{ currentTrip.location.name }},
+                        <p><span style="padding: 1em"><i class="fas fa-user fa-1x orange"></i> {{ currentTrip.nbRegistMin }}</span>
+                            <span><i class="fas fa-users fa-1x orange"></i> {{ currentTrip.nbRegistMax }}</span></p>
+                        <p><i class="far fa-hourglass fa-1x orange"></i> {{ currentTrip.duration/60 }} heure(s)</p>
+                        <p><i class="far fa-question-circle fa-1x orange"></i> {{ currentTrip.info }}</p>
+                        <p><i class="fas fa-university fa-1x orange"></i> {{ currentTrip.school.name }}</p>
+                        <p><i class="fas fa-map-marker-alt fa-1x orange"></i> {{ currentTrip.location.name }},
                             {{ currentTrip.location.street }},
                             {{ currentTrip.location.city.zipCode }} {{ currentTrip.location.city.name }}</p>
                     </div>
