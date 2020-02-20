@@ -6,10 +6,11 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12 col-md-6 offset-md-3">
                 <div class="bloc">
-                    <h4 class="text-center">Création d'un lieu</h4>
-                    <hr>
+                    <h1 class="text-center">Création d'un lieu</h1>
+                    {{ form(trip_LocationFormView) }}
+                    {#
                     {{ form_start(trip_LocationFormView) }}
 
                     {{ form_label(trip_LocationFormView.name) }}
@@ -33,12 +34,30 @@
                     {{ form_widget(trip_LocationFormView.longitude) }}
                     {{ form_errors(trip_LocationFormView.longitude) }}
                     <br>
-                    {{ form_end(trip_LocationFormView) }}
+                    {{ form_end(trip_LocationFormView) }}#}
                 </div>
             </div>
-            <div class="col-md-4">
+
+            <div class="col-12 text-center">
                 <a class="btn neumorphism-1" href="{{ path('home') }}">Retour</a>
             </div>
         </div>
+        <hr>
+        <div class="col-12 ">
+            <div id="map"></div>
+        </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <!-- Include Google Maps JS API -->
+    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&key=AIzaSyCc4FIU239oleSDmVnMUvl2c7rUyLFYSW0&callback=initMap"></script>
+    <!-- Custom JS code to bind to Autocomplete API -->
+    <!-- find it here: https://github.com/lewagon/google-place-autocomplete/blob/gh-pages/autocomplete.js -->
+    <!-- We'll detail this file in the article -->
+    <script type="text/javascript" src="{{ asset('assets/js/autocomplete.js') }}"></script>
+
+
+    <script>
+        initMap(47.22683,-1.620615);
+    </script>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ResetPassword;
+use App\Entity\Trip;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\UploadAvatarType;
@@ -66,14 +67,14 @@ class UserController extends AbstractController
 
         $user = $this->getUser();
         dump($user->getRoles());
-       //die();
+        //die();
         if ($user->getRoles() == ['ROLE_BANISHED']) {
 
             $this->addFlash('danger', "Votre compte a été désactivé. Veuillez contacter un administrateur.");
 
             return $this->redirectToRoute('user_login');
 
-        } elseif (in_array('ROLE_ADMIN', $user->getRoles() ) ) {
+        } elseif (in_array('ROLE_ADMIN', $user->getRoles())) {
 
             return $this->redirectToRoute('admin_home');
         } else {
@@ -196,24 +197,33 @@ class UserController extends AbstractController
         }
 
 
-        return $this->render('user/password.html.twig', ['user'=>$user, 'mdpFormView' => $mdpForm->createView()]);
+        return $this->render('user/password.html.twig', ['user' => $user, 'mdpFormView' => $mdpForm->createView()]);
     }
 
 
     /**
-     * @route("/detail/{id}", name="detail", requirements={"id": "\d+"})
+     * @route("/detail/{id}/{idtrip}", name="detail", requirements={"id": "\d+","idtrip": "\d+"})
      */
 
     public
     function detail(
-        $id,
+        $id, $idtrip,
         EntityManagerInterface $entityManager
     ) {
 
         $userRepo = $entityManager->getRepository(User::class);
         $organizer = $userRepo->find($id);
 
-        return $this->render('user/detail.html.twig', compact('organizer'));
+
+        $tripRepository = $entityManager->getRepository(Trip::class);
+        if ($idtrip) {
+            $trip = $tripRepository->find($idtrip);
+        } else {
+            $trip = new Trip();
+        }
+
+
+        return $this->render('user/detail.html.twig', ['organizer'=>$organizer, 'currentTrip'=>$trip]);
 
     }
 

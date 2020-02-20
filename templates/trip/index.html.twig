@@ -18,22 +18,23 @@
                     <div class="filter_container">
                         {{ form_start(searchFormView) }}
                         <div class="row">
-                            <div class="col-12 col-md-3">
-                              <input class="form-control-sm" id="tableSearch" type="text" placeholder="recherche ...">
+                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                                <label>Recherche</label>
+                                <input class="form-control-sm" id="tableSearch" type="text" placeholder="">
                             </div>
 
-                            <div class="col-12 col-md-3 form-group input-group-sm">
-                            {#{{ form_label(searchFormView.site) }}#}
+                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                            {{ form_label(searchFormView.site) }}
                             {{ form_widget(searchFormView.site) }}
                             {{ form_errors(searchFormView.site) }}
                             </div>
-                            <div class="col-12 col-md-3 form-group input-group-sm">
-{#                        {{ form_label(searchFormView.dateStart) }}#}
+                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                        {{ form_label(searchFormView.dateStart) }}
                         {{ form_widget(searchFormView.dateStart) }}
                         {{ form_errors(searchFormView.dateStart) }}
                             </div>
-                            <div class="col-12 col-md-3 form-group input-group-sm">
-                        {#{{ form_label(searchFormView.dateEnd) }}#}
+                            <div class="col-12 col-md-3 form-group input-group-sm text-left">
+                        {{ form_label(searchFormView.dateEnd) }}
                         {{ form_widget(searchFormView.dateEnd) }}
                         {{ form_errors(searchFormView.dateEnd) }}
                             </div>
@@ -61,7 +62,17 @@
                         {{ form_errors(searchFormView.TripPast) }}
                             </div>
                         </div>
-                        {{ form_end(searchFormView) }}
+                        <div class="row">
+
+                            <div class="col-12  {% if app.user.id is defined %}col-md-6 text-right{% else %} text-center {% endif %} ">
+                                 {{ form_end(searchFormView) }}
+                            </div>
+
+                        {% if app.user.id is defined %}
+                            <div class="col-12 col-md-6 text-left">
+                            <a class="btn-success btn" href="{{ path('trip_create') }}">Créer une sortie</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
