@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="L'adresse {{ value }} existe déjà.")
  */
 class User implements UserInterface
 {
@@ -42,7 +43,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=1024)
-     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     * @Assert\Email(message = "L'adresse '{{ value }}' n'est pas valide.")
      */
     private $email;
 
