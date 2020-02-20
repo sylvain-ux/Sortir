@@ -21,9 +21,8 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $choices = [
-            'Aucun' => null,
-            'Je participe' => 1,
-            'Non inscrit(e)' => 0,
+            'Oui' => 1,
+            'Non' => 0,
         ];
         $builder
             ->add(
@@ -62,16 +61,23 @@ class SearchType extends AbstractType
             )
             ->add(
                 'TripOrganizer',
-                CheckboxType::class,
-                ['label' => "J'organise", 'required' => false, 'mapped' => false,]
+                ChoiceType::class,
+                [
+                    'choices' => $choices,
+                    'expanded' => false,
+                    'required' => false,
+                    'placeholder' => 'J\'organise ?',
+                    'label' => "J'organise ?"
+                ]
             )
             ->add(
                 'RadioOrNot',
                 ChoiceType::class,
                 [
                     'choices' => $choices,
-                    'expanded' => true,
-                    'required' => true,
+                    'expanded' => false,
+                    'required' => false,
+                    'placeholder' => 'Je participe ?',
                     'label' => "Je participe ?"
                 ]
             )
@@ -97,8 +103,14 @@ class SearchType extends AbstractType
 //            )
             ->add(
                 'TripPast',
-                CheckboxType::class,
-                ['label' => "Sorties passées", 'required' => false, 'mapped' => false,]
+                ChoiceType::class,
+                [
+                    'choices' => $choices,
+                    'expanded' => false,
+                    'required' => false,
+                    'placeholder' => 'Sorties passées ?',
+                    'label' => "Sorties passées ?"
+                ]
             )
             ->add('save', SubmitType::class, ['label' => 'Rechercher']);
 
