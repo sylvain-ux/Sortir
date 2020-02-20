@@ -67,6 +67,14 @@
                             {{ form_end(searchFormView) }}
                         </div>
 
+<<<<<<< HEAD
+=======
+{#                        {% if app.user.id is defined %}#}
+{#                            <div class="col-12 col-md-6 text-left">#}
+{#                                <a class="btn-success btn" href="{{ path('trip_create') }}">Créer une sortie</a>#}
+{#                            </div>#}
+{#                        {% endif %}#}
+>>>>>>> 2294abe5338bd2a50dbf6b185c75e0d3f461e3d5
                     </div>
                 </div>
             </div>
@@ -92,11 +100,13 @@
 
                         <div id="trip_{{ trip.getId() }}" class="col-12 col-sm-6 col-md-4 col-xl-3 p-2 grid-item " >
                             <a href="{{ path('trip_detail',{ 'id': trip.id }) }}" class="card bg_white p-2">
+
                                 <span class="overlay d-none d-lg-block" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover">
                                      <div class="items head">
                                         <h3 class="orange">{{ trip.name }}</h3>
                                     </div>
                                 </span>
+
                                 <div class="content">
                                     <span class="bg_cat d-block d-lg-none" style="background:url({{asset('img/categories/'~ cat ~'.jpg')}}) no-repeat center center /cover"></span>
                                     <div class="items head">
