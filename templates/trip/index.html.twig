@@ -18,7 +18,7 @@
         <button class="btn btn-sm btn-outline-info collapseFilter" data-toggle="collapse" href="#filterDiv" role="button" aria-expanded="false" aria-controls="filterDiv">Filtres</button>
         <div class="row">
             <div class="col-12 p-5">
-                <div class=" Xfilter_container collapse multi-collapse" id="filterDiv">
+                <div class=" Xfilter_container collapse multi-collapse show" id="filterDiv">
                     {{ form_start(searchFormView) }}
                     <div class="row ">
                         <div class="col-12 col-sm-6 12 col-md-3 form-group input-group-sm text-left">
@@ -62,11 +62,9 @@
                         </div>
                     </div>
                     <div class="row">
-
                         <div class="col-12  text-center ">
                             {{ form_end(searchFormView) }}
                         </div>
-
                     </div>
                 </div>
             </div>
