@@ -60,8 +60,10 @@ function onPlaceChanged() {
 
 
    // $('#location_add_search').blur(function() {
-        var lng = $('#location_add_longitude').val();
-        var lat = $('#location_add_latitude').val();
+/*        var lng = $('#location_add_longitude').val();
+        var lat = $('#location_add_latitude').val();*/
+    var lng = $('.search_lng').val();
+    var lat = $('.search_lat').val();
         initMap(parseFloat(lat),parseFloat(lng));
     //});
 
@@ -71,4 +73,6 @@ function onPlaceChanged() {
 google.maps.event.addDomListener(window, 'load', function() {
     initializeAutocomplete('location_add_search');
     initializeAutocomplete('trip_add_search');
+    initializeAutocomplete('trip_location_search');
+
 });

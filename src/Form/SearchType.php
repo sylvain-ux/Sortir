@@ -19,20 +19,20 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('site', EntityType::class, ['class' => School::class, 'choice_label' => 'name','required' => false, 'label' => 'Site :','mapped' => false,])
+            ->add('site', EntityType::class, ['class' => School::class, 'choice_label' => 'name','required' => false, 'label' => 'École :','mapped' => false,])
             ->add(
                 'dateStart',
                 DateType::class,
-                ['widget' => 'single_text', 'label' => 'Entre','required' => false,'mapped' => false,]
+                ['widget' => 'single_text', 'label' => 'À partir','required' => false,'mapped' => false,]
             )
             ->add(
                 'dateEnd',
                 DateType::class,
-                ['widget' => 'single_text', 'label' => 'et','required' => false,'mapped' => false,]
+                ['widget' => 'single_text', 'label' => 'Jusqu\'à','required' => false,'mapped' => false,]
             )
-            ->add('TripOrganizer', CheckboxType::class, ['label' => "Sorties dont je suis l'organisatreur/trice",'required' => false,'mapped' => false,])
-            ->add('TripRegistered', CheckboxType::class, ['label' => "Sorties auxquelles je suis inscrit/e",'required' => false,'mapped' => false,])
-            ->add('TripNotRegistered', CheckboxType::class, ['label' => "Sorties auxquelles je ne suis pas inscrit/e",'required' => false,'mapped' => false,])
+            ->add('TripOrganizer', CheckboxType::class, ['label' => "J'organise",'required' => false,'mapped' => false,])
+            ->add('TripRegistered', CheckboxType::class, ['label' => "Je participe",'required' => false,'mapped' => false,])
+            ->add('TripNotRegistered', CheckboxType::class, ['label' => "Non inscrit(e)",'required' => false,'mapped' => false,])
             ->add('TripPast', CheckboxType::class, ['label' => "Sorties passées",'required' => false,'mapped' => false,])
             ->add('save', SubmitType::class, ['label' => 'Rechercher']);
 

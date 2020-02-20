@@ -82,7 +82,7 @@ class MainController extends AbstractController
         }
         $data = json_encode($data);
         return $this->render(
-            'trip/list.html.twig',
+            'trip/index.html.twig',
             ['data'=>$data, 'allCategories'=>$allCategory, 'allSchools'=>$school, 'allTrips' => $allTrips, 'searchFormView' => $searchForm->createView()]
         );
 

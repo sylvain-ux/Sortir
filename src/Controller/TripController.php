@@ -165,17 +165,33 @@ class TripController extends AbstractController
         $trip_LocationForm->handleRequest($request);
 
         if ($trip_LocationForm->isSubmitted() && $trip_LocationForm->isValid()) {
-
-
+            //check if city in db
+            $city = $trip_LocationForm->get('city')->getData();
+            $zip_code = $trip_LocationForm->get('zip_code')->getData();
+            $checkRepository = $entityManager->getRepository(City::class);
+            $cityExists = $checkRepository->findOneByName($city);
+            if(!$cityExists){
+                $newCity = new City();
+                $newCity->setName($city);
+                $newCity->setZipCode($zip_code);
+                //insert new city in db
+                $entityManager->persist($newCity);
+                $entityManager->flush();
+                //$cityId = $newCity->setId();
+                $location->setCity($newCity);
+                //$locationForm = $this->createForm(LocationAddType::class, $location);
+                //$this->addFlash('danger', 'Cette ville ne semble pas être dans la limite');
+                //return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
+            }else {
+                $location->setCity($cityExists);
+            }
             $entityManager->persist($location);
-
             $entityManager->flush();
-            $this->addFlash(
-                'success',
-                'Lieu ajoutée !'
-            );
+            $locationId = $location->getId();
+            $this->addFlash('success', 'Lieu ajouté !');
 
-            return $this->redirectToRoute("trip_create");
+            return $this->redirectToRoute('trip_create');
+
         }
 
 
@@ -231,6 +247,8 @@ class TripController extends AbstractController
 
         //Message de success
         $this->addFlash('success', 'Vous êtes inscrit sur la sortie');
+
+
 
         return $this->render(
             'trip/detail.html.twig',
@@ -401,9 +419,20 @@ class TripController extends AbstractController
 
         $allUsers = $trip->getUsers();
 
+            $coordinates=array((float)$trip->getLocation()->getLongitude(),(float)$trip->getLocation()->getLatitude());
+            $city = $trip->getLocation()->getCity();
+            $cityName = $city->getName();
+            $data[0]['type']='Feature';
+            $data[0]['geometry']['type']= 'Point';
+            $data[0]['geometry']['coordinates']=$coordinates;
+            $data[0]['properties']['title']=$trip->getLocation()->getName();
+            $data[0]['properties']['address']=$trip->getLocation()->getStreet().' '.$cityName ;
+
+        $data = json_encode($data);
+
         return $this->render(
             'trip/detail.html.twig',
-            ['currentTrip' => $trip, 'allUsers' => $allUsers]
+            ['currentTrip' => $trip, 'allUsers' => $allUsers,'data' => $data]
         );
     }
 
