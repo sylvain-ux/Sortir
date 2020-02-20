@@ -26,14 +26,25 @@ class TripType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Nom de la sortie :'])
             ->add(
+                'location',
+                EntityType::class,
+                [
+                    'class'        => TripLocation::class,
+                    'choice_label' => 'name',
+                    'attr'         => ['class' => 'select2'],
+                    'help_html'     => true,
+                    'help' => 'Ajouter un nouveau lieu, <a href="/sortir/public/trip/createLocation">cliquez ici</a>',
+                ]
+            )
+            ->add(
                 'dateTimeStart',
                 DateTimeType::class,
-                ['widget' => 'single_text', 'label' => 'Date et heure de la sortie :']
+                ['label' => 'Date et heure de la sortie :']
             )
             ->add(
                 'registDeadline',
                 DateType::class,
-                ['widget' => 'single_text', 'label' => 'Date limite d\'inscription :']
+                ['label' => 'Date limite d\'inscription :']
             )
             ->add('nbRegistMax', TextType::class, ['label' => 'Nombre de places maximum :'])
             ->add('nbRegistMin', TextType::class, ['label' => 'Nombre de places minimum :'])
@@ -58,7 +69,7 @@ class TripType extends AbstractType
                     'label' => 'Ville organisatrice',
                     'disabled' => true
                 ])
-            ->add('location', EntityType::class, ['class' => TripLocation::class, 'choice_label' => 'name'])
+/*            ->add('location', EntityType::class, ['class' => TripLocation::class, 'choice_label' => 'name'])*/
 
 
 //            ->add('user',HiddenType::class)

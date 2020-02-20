@@ -151,11 +151,13 @@ h5,a{
 
 
 /*ADMIN*/
-body#admin{padding-top:0;background: #f2f4f5}
+body#admin{padding-top:0;background: #f2f4f5;font-size:1.6rem}
+#admin select.form-control:not([size]):not([multiple]){height:inherit}
+
 
 /*forms*/
-.form-control-sm{font-size:1.4rem}
-.form-control{font-size:1.6rem}
+.form-control-sm,#admin .form-control-sm{font-size:1.4rem}
+.form-control, #admin .form-control,#admin .page-breadcrumb .breadcrumb{font-size:1.6rem}
 /*btns*/
 .btn-group-sm > .btn, .btn-sm{font-size:1.4rem}
 .btn-group > .btn, .btn{font-size:1.6rem}
