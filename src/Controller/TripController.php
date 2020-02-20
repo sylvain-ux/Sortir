@@ -473,7 +473,7 @@ class TripController extends AbstractController
             //Message de success
             $this->addFlash('success', 'Vous avez annulé la sortie');
 
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("trip_detail",array('id' => $trip->getId()));
         }
 
         return $this->render('trip/cancel.html.twig', ['currentTrip'=>$trip, 'tripFormView' => $tripForm->createView()]);
