@@ -21,6 +21,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $choices = [
+            'Aucun' => null,
             'Je participe' => 1,
             'Non inscrit(e)' => 0,
         ];
