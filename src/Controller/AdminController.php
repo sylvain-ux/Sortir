@@ -330,7 +330,7 @@ class AdminController extends AbstractController
                 $this->addFlash('success', 'Lieu ajouté !');
 
                 return $this->redirectToRoute('admin_location_list');
-            
+
         }
         return $this->render('admin/location/add.html.twig', ['locationFormView' => $locationForm->createView()]);
     }

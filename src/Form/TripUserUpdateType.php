@@ -22,21 +22,25 @@ class TripUserUpdateType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add(
+                'location',
+                EntityType::class,
+                [
+                    'label' => 'Lieu',
+                    'class' => TripLocation::class,
+                    'choice_label' => 'name',
+                    'attr' => ['class' => 'select2'],
+                    'help_html'     => true,
+                    'help' => 'Ajouter un nouveau lieu, <a href="/sortir/public/trip/createLocation">cliquez ici</a>',
+                ]
+            )
             ->add('dateTimeStart', DateTimeType::class)
             ->add('duration', NumberType::class)
             ->add('registDeadline', DateTimeType::class)
             ->add('nbRegistMin', NumberType::class)
             ->add('nbRegistMax', NumberType::class)
             ->add('info', TextareaType::class)
-            ->add(
-                'location',
-                EntityType::class,
-                [
-                    'class' => TripLocation::class,
-                    'choice_label' => 'name',
-                    'attr' => ['class' => 'select2'],
-                ]
-            )
+
             ->add('save', SubmitType::class, ['label' => 'Enregistrer la modification'])
             ->add('published', SubmitType::class, ['label' => 'Publier la sortie'])
             ->add('drop', SubmitType::class,
