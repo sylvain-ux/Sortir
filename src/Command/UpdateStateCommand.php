@@ -85,7 +85,7 @@ class UpdateStateCommand extends Command
 
                         $this->log->info('L\'état de la sortie '.$t->getName().' est devenu: Cloturée');
                     } //Si la date de la sortie est égale à la date d'aujourd'hui, le status devient "En cours"
-                    elseif ($t->getDateTimeStart() <= $now) {
+                    if ($dateTrip < $now and $now < $dateTripClone) {
                         $t->setState($stateInProgress);
 
                         //MaJ BDD
