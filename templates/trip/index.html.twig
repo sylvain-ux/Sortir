@@ -29,7 +29,7 @@
                             {% set cat = "default" %}
                         {% endif %}
                         {% if loop.first or loop.index is divisible by(9) %}
-                            <div  class="col-12 col-sm-6 col-md-4 col-xl-3 p-2 grid-item  grid-item-add" >
+                            <div  class="col-12 col-sm-6 col-md-4 col-xl-3 p-2 grid-item  grid-item-add d-none d-md-block" >
                                 <a href="{{ path('trip_create') }}" class="card  text-center p-2">
                                     <h3><i class="fas fa-map-marked-alt fa-2x"></i><span class="d-block mt-2">Créer votre sortie !</span></h3>
                                 </a>
