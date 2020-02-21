@@ -29,6 +29,26 @@ h5,a{
     font-weight: 400;
 }
 
+.underlined
+{
+    /*border-bottom: 1px solid #cccccc;*/
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.underlined:after
+{
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    content: '';
+    height: 1px;
+    background: #cccccc;
+}
+
 /*colors*/
 .bleu-eni{color:#134a80}
 .bg_bleu_eni{background-color: #134a80}
