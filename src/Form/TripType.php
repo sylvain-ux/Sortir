@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\School;
 use App\Entity\State;
 use App\Entity\Trip;
@@ -25,6 +26,13 @@ class TripType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom de la sortie :'])
+            ->add('category',EntityType::class,
+                [
+                    'class'=>Category::class,
+                    'choice_label'=> 'name',
+                    'required' => false,
+                    'label'=>'Catégorie :'
+                ])
             ->add(
                 'location',
                 EntityType::class,

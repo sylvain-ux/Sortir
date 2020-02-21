@@ -12,12 +12,9 @@
             <div class="col-12 col-md-8 offset-md-2">
                 <div class="bloc">
                     <h1 class="text-center">Modification d'une sortie</h1>
-                    <hr>
                     {{ form(tripFormView) }}
+                    <a class="btn neumorphism-1" href="{{ path('trip_detail', {'id':trip.id}) }}">Retour</a>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <a class="btn neumorphism-1" href="{{ path('trip_detail', {'id':trip.id}) }}">Retour</a>
             </div>
         </div>
     </div>
