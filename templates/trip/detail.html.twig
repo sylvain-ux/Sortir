@@ -9,8 +9,7 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="bloc">
-                    <h4 class="text-center">Sortie : {{ currentTrip.name }}</h4>
-                    <hr>
+                    <h4 class="text-center underlined">Sortie : {{ currentTrip.name }}</h4>
                     <div class="text-center">
                         <p>
                             <i class="far fa-calendar-alt fa-1x orange"></i> {{ currentTrip.dateTimeStart|format_datetime('full', 'none', locale='fr') }}
@@ -22,7 +21,7 @@
                         <p><span style="padding: 1em"><i class="fas fa-user fa-1x orange"></i> {{ currentTrip.nbRegistMin }}</span>
                             <span><i class="fas fa-users fa-1x orange"></i> {{ currentTrip.nbRegistMax }}</span></p>
                         <p><i class="far fa-hourglass fa-1x orange"></i> {{ currentTrip.duration/60 }} heure(s)</p>
-                        <p><i class="far fa-question-circle fa-1x orange"></i> {{ currentTrip.info }}</p>
+                        <div><i class="far fa-question-circle fa-1x orange"></i><br> <p class="text-justify">{{ currentTrip.info }}</p></div>
                         <p><i class="fas fa-university fa-1x orange"></i> {{ currentTrip.school.name }}</p>
                         <p><i class="fas fa-map-marker-alt fa-1x orange"></i> {{ currentTrip.location.name }},
                             {{ currentTrip.location.street }},
@@ -32,11 +31,11 @@
             </div>
             <div class="col-md-3">
                 <div class="bloc">
-                    <h4 class="text-center">Etat de la sortie</h4>
+                    <h4 class="text-center underlined">Etat de la sortie</h4>
                     <h5 class="text-center">{{ currentTrip.state.info }}</h5>
                 </div>
                 <div class="bloc mt-2">
-                    <h4>Organisateur</h4>
+                    <h4 class="underlined">Organisateur</h4>
                     <div class="row">
                         <div class="col-12">
                             {% if currentTrip.user.avatarName is not empty %}
@@ -47,19 +46,53 @@
                                      class="rounded-circle" width="50" height="50">
 
                             {% endif %}
-                            <a href="{{ path('user_detail', {'id' : currentTrip.user.id, 'idtrip':currentTrip.id}) }}">{{ currentTrip.user.name }}
-                                {{ currentTrip.user.firstName }}</a>
+                            <a href="{{ path('user_detail', {'id' : currentTrip.user.id, 'idtrip':currentTrip.id}) }}">{{ currentTrip.user.firstName|slice(0,1)|capitalize }}. {{ currentTrip.user.name|capitalize }}
+                                </a>
                         </div>
                     </div>
                 </div>
                 <div class="bloc mt-2">
-                    <h4>Participants</h4>
+
+                    {# Modal des participants#}
+                    <div class="modal fade" id="usersmodal" tabindex="-1" role="dialog" aria-labelledby="usersmodal" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title" id="exampleModalLabel">Participants <small>({{ currentTrip.users|length }})</small></h2>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul class="list-unstyled">
+                                        {% for u in allUsers %}
+                                            <li class="list p-2">
+                                                {% if u.avatarName is not empty %}
+                                                    <img src="{{ asset('users/' ~ u.id ~ '/avatar/' ~ u.avatarName) }}"
+                                                         class="rounded-circle" width="50" height="50">
+                                                {% else %}
+                                                    <img src="{{ asset('users/defaultAvatar/default-avatar.jpg') }}"
+                                                         class="rounded-circle" width="50" height="50">
+
+                                                {% endif %}
+                                                  {{ u.name }}
+                                                    {{ u.firstName }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="underlined">Participants <a href="" data-toggle="modal" data-target="#usersmodal"><small> ({{ currentTrip.users|length }})</small></a> </h4>
                     <div class="row">
                         {% if currentTrip.users|length == 0 and not currentTrip.isCanceled(currentTrip.state.id) and not currentTrip.tripClosed(currentTrip.state.id) and not currentTrip.tripPast(currentTrip.state.id) %}
-                            <h6 class="text-center"> Soyez le premier à vous inscrire </h6>
+                            <p class="text-center"> Soyez le premier à vous inscrire </p>
                         {% endif %}
+                        <ul class="list-inline">
                         {% for u in allUsers %}
-                            <div class="col-md-12 py-1">
+                            <li class="list-inline-item" data-toggle="tooltip" data-placement="top" title="{{ u.name}} {{ u.firstName }}">
                                 {% if u.avatarName is not empty %}
                                     <img src="{{ asset('users/' ~ u.id ~ '/avatar/' ~ u.avatarName) }}"
                                          class="rounded-circle" width="50" height="50">
@@ -68,10 +101,11 @@
                                          class="rounded-circle" width="50" height="50">
 
                                 {% endif %}
-                                {{ u.name }}
-                                {{ u.firstName }}
-                            </div>
+{#                                {{ u.name }}#}
+{#                                {{ u.firstName }}#}
+                            </li>
                         {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
