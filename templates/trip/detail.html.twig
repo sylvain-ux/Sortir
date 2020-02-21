@@ -20,8 +20,8 @@
                         </p>
                         <p><span style="padding: 1em"><i class="fas fa-user fa-1x orange"></i> {{ currentTrip.nbRegistMin }}</span>
                             <span><i class="fas fa-users fa-1x orange"></i> {{ currentTrip.nbRegistMax }}</span></p>
-                        <p><i class="far fa-hourglass fa-1x orange"></i> {{ currentTrip.duration/60 }} heure(s)</p>
-                        <div><i class="far fa-question-circle fa-1x orange"></i><br> <p class="text-center">{{ currentTrip.info }}</p></div>
+                        <p><i class="far fa-hourglass fa-1x orange"></i> {{ (currentTrip.duration/60)|round(1,'floor') }} heure(s)</p>
+                        <div><i class="far fa-question-circle fa-1x orange"></i><br> <p class="text-justify">{{ currentTrip.info }}</p></div>
                         <p><i class="fas fa-university fa-1x orange"></i> {{ currentTrip.school.name }}</p>
                         <p><i class="fas fa-map-marker-alt fa-1x orange"></i> {{ currentTrip.location.name }},
                             {{ currentTrip.location.street }},
